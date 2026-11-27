@@ -1,1 +1,21 @@
-gonna be added soon
+IDENTITY PROJECT — ALL RIGHTS RESERVED
+
+Copyright (c) 2026 Identity project maintainer and contributors, to the extent they own the relevant material.
+
+Unless the relevant copyright owner gives prior written permission, you may not copy, modify, adapt, redistribute, publish, sublicense, or commercially use the project-authored source code, original design elements, or original written project documentation in this repository.
+
+This notice is not an open-source licence and does not grant any public reuse rights. Making this repository publicly viewable on GitHub does not, by itself, grant permission to reuse its contents.
+
+THIRD-PARTY AND CONTRIBUTED MATERIAL
+
+This notice does not claim ownership of third-party or user-contributed material. Profile facts, quotations, photographs, logos, fonts, and other assets may be owned by their respective authors or rights holders and may be subject to separate licences, permissions, privacy rights, or other restrictions. Anyone adding material is responsible for ensuring that it is appropriate and lawful to publish and that required permissions and attribution are in place.
+
+NO WARRANTY
+
+The project is provided on an "AS IS" and "AS AVAILABLE" basis, without warranties to the extent permitted by applicable law. Nothing in this notice excludes or limits rights or liabilities that cannot legally be excluded or limited.
+
+CONTACT
+
+For permission requests or project questions, contact: nursifat@proton.me
+
+Last updated: 27 November 2026

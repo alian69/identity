@@ -1,9 +1,1030 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-    <title>Identity</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0f12">
+  <meta name="description" content="Identity — a searchable collection of people and their stories.">
+  <title>Identity — People, clearly</title>
+  <link rel="icon" type="image/png" href="https://alian69.github.io/identity/icon.png">
+  <link rel="apple-touch-icon" href="https://alian69.github.io/identity/icon.png">
+  <link rel="preconnect" href="https://api.github.com">
+  <link rel="preconnect" href="https://raw.githubusercontent.com">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0f12;
+      --surface: #171a20;
+      --ink: #edf0f4;
+      --muted: color-mix(in srgb, var(--ink) 66%, transparent);
+      --line: color-mix(in srgb, var(--ink) 13%, transparent);
+      --soft: color-mix(in srgb, var(--ink) 5%, transparent);
+      --strong-soft: color-mix(in srgb, var(--ink) 10%, transparent);
+      --shadow: 0 24px 80px color-mix(in srgb, var(--bg) 70%, transparent);
+      --header-height: 74px;
+      --radius: 22px;
+      --ease: cubic-bezier(.2,.75,.25,1);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f3f5f7;
+      --surface: #ffffff;
+      --ink: #202631;
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 320px; scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      transition: background-color .35s var(--ease), color .35s var(--ease);
+    }
+    button, input, textarea { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 4px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      height: var(--header-height);
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: rise-in .65s var(--ease) both;
+    }
+    .header-inner {
+      width: min(1180px, calc(100% - 44px));
+      height: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand { display: inline-flex; align-items: center; min-width: 0; text-decoration: none; }
+    .brand img { display: block; width: auto; max-width: min(190px, 42vw); height: 39px; object-fit: contain; object-position: left center; }
+    .brand-fallback { display: none; font-size: 1.14rem; font-weight: 780; letter-spacing: -.07em; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .icon-button, .language-button {
+      min-width: 42px; height: 42px; border: 1px solid transparent; border-radius: 14px;
+      background: transparent; display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background .22s ease, border-color .22s ease, transform .22s ease;
+    }
+    .icon-button:hover, .language-button:hover { background: var(--soft); border-color: var(--line); transform: translateY(-1px); }
+    .icon-button svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .language-button { padding: 0 12px; gap: 7px; font-size: .85rem; font-weight: 650; }
+    .language-button .flag { font-size: 1.05rem; }
+    .page-shell { width: min(1040px, calc(100% - 40px)); margin: 0 auto; padding: calc(var(--header-height) + 44px) 0 70px; min-height: 100vh; }
+    .home-view { min-height: calc(100vh - var(--header-height) - 110px); display: grid; place-items: center; }
+    .hero { width: min(720px, 100%); text-align: center; padding: 50px 0 76px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--muted); font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .17em; }
+    .eyebrow::before, .eyebrow::after { content: ""; width: 22px; height: 1px; background: var(--line); }
+    .hero h1 { margin: 18px 0 12px; font-size: clamp(3.4rem, 10vw, 6.3rem); line-height: .98; font-weight: 780; letter-spacing: -.085em; }
+    .hero-copy { max-width: 510px; margin: 0 auto; color: var(--muted); font-size: clamp(.98rem, 2.5vw, 1.1rem); }
+    .search-form {
+      width: min(640px, 100%); margin: 34px auto 0; padding: 7px;
+      border: 1px solid var(--line); border-radius: 19px; background: var(--surface);
+      display: flex; align-items: center; gap: 9px; box-shadow: 0 16px 50px color-mix(in srgb, var(--ink) 4%, transparent);
+      transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+    .search-form:focus-within { border-color: color-mix(in srgb, var(--ink) 42%, transparent); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .search-symbol { width: 22px; height: 22px; margin-left: 12px; flex: 0 0 auto; opacity: .68; }
+    .search-symbol svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+    .search-form input {
+      width: 100%; min-width: 0; height: 48px; border: 0; outline: 0; background: transparent;
+      color: var(--ink); font-size: 1rem; padding: 0 5px;
+    }
+    .search-form input::placeholder { color: var(--muted); opacity: .9; }
+    .search-submit {
+      min-width: 48px; height: 46px; padding: 0 17px; border: 0; border-radius: 14px;
+      background: var(--ink); color: var(--bg); font-weight: 750; cursor: pointer;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .search-submit:hover { transform: translateY(-1px); opacity: .88; }
+    .moving-hints { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin: 23px auto 0; }
+    .hint-pill { border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; color: var(--muted); font-size: .78rem; background: var(--soft); animation: float-soft 5s ease-in-out infinite; }
+    .hint-pill:nth-child(2) { animation-delay: -.9s; }
+    .hint-pill:nth-child(3) { animation-delay: -1.8s; }
+    .hint-pill:nth-child(4) { animation-delay: -2.7s; }
+    .home-footnote { margin: 30px 0 0; color: var(--muted); font-size: .82rem; }
+    .status-line { min-height: 22px; margin: 18px auto 0; color: var(--muted); font-size: .82rem; }
+    .results-wrap { width: min(720px, 100%); margin: 23px auto 0; text-align: left; }
+    .results-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 3px 10px; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .results-list { display: grid; gap: 9px; }
+    .result-card {
+      width: 100%; border: 1px solid var(--line); border-radius: 17px; background: var(--surface);
+      display: flex; align-items: center; gap: 14px; padding: 12px 15px; text-align: left; cursor: pointer;
+      animation: rise-in .48s var(--ease) both; animation-delay: var(--delay, 0ms);
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+    .result-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--ink) 35%, transparent); }
+    .result-avatar { width: 48px; height: 48px; border-radius: 14px; object-fit: cover; background: var(--soft); flex: 0 0 auto; }
+    .avatar-placeholder { display: grid; place-items: center; color: var(--muted); font-size: 1.15rem; font-weight: 750; }
+    .result-copy { min-width: 0; flex: 1; }
+    .result-name { margin: 0; font-size: .98rem; font-weight: 720; letter-spacing: -.02em; }
+    .result-summary { margin: 3px 0 0; color: var(--muted); font-size: .82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .result-arrow { opacity: .48; font-size: 1.2rem; flex: 0 0 auto; }
+    .empty-state { padding: 24px; border: 1px dashed var(--line); border-radius: 17px; color: var(--muted); text-align: center; font-size: .9rem; animation: rise-in .4s var(--ease) both; }
+    .identity-view, .legal-view { animation: rise-in .55s var(--ease) both; }
+    .back-button { display: inline-flex; align-items: center; gap: 9px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; font-size: .85rem; margin-bottom: 25px; }
+    .profile-hero { display: grid; grid-template-columns: minmax(150px, 230px) 1fr; gap: 28px; align-items: center; padding: 23px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .profile-image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 17px; background: var(--soft); }
+    .profile-image-placeholder { display: grid; place-items: center; font-size: 3rem; font-weight: 800; color: var(--muted); }
+    .profile-kicker { color: var(--muted); text-transform: uppercase; letter-spacing: .14em; font-size: .73rem; font-weight: 750; }
+    .profile-title { margin: 8px 0 9px; font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.065em; overflow-wrap: anywhere; }
+    .profile-summary { max-width: 620px; margin: 0; color: var(--muted); }
+    .profile-aliases { margin-top: 14px; color: var(--muted); font-size: .82rem; }
+    .fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; margin: 15px 0 0; }
+    .fact-card { padding: 14px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 15px; }
+    .fact-label { display: block; margin-bottom: 3px; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .fact-value { font-size: .91rem; font-weight: 620; overflow-wrap: anywhere; }
+    .quote-card { margin: 15px 0 0; padding: 19px 22px; border-left: 3px solid var(--ink); border-radius: 0 15px 15px 0; background: var(--soft); font-size: 1.04rem; }
+    .markdown-content { max-width: 820px; margin: 28px auto 0; padding: 0 4px; overflow-wrap: anywhere; }
+    .markdown-content h1, .markdown-content h2, .markdown-content h3 { line-height: 1.2; letter-spacing: -.035em; margin: 1.7em 0 .65em; }
+    .markdown-content h1 { font-size: 1.9rem; }
+    .markdown-content h2 { font-size: 1.45rem; border-bottom: 1px solid var(--line); padding-bottom: 9px; }
+    .markdown-content h3 { font-size: 1.14rem; }
+    .markdown-content p, .markdown-content li { color: var(--muted); }
+    .markdown-content strong { color: var(--ink); }
+    .markdown-content a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .markdown-content blockquote { margin: 18px 0; padding: 3px 0 3px 17px; border-left: 2px solid var(--line); color: var(--muted); }
+    .markdown-content ul, .markdown-content ol { padding-left: 1.35rem; }
+    .markdown-content li { margin: 6px 0; }
+    .markdown-content img { display: block; max-width: min(100%, 560px); max-height: 560px; object-fit: contain; border-radius: 16px; margin: 18px auto; background: var(--surface); }
+    .markdown-content code { border-radius: 6px; padding: 2px 5px; background: var(--soft); font-size: .9em; }
+    .markdown-content pre { padding: 15px; overflow: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+    .markdown-content table { width: 100%; border-collapse: collapse; margin: 18px 0; display: block; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    .markdown-content th, .markdown-content td { min-width: 110px; padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .markdown-content th { color: var(--ink); background: var(--soft); font-weight: 720; }
+    .markdown-content td { color: var(--muted); }
+    .profile-source-note { margin: 30px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; color: var(--muted); font-size: .8rem; }
+    .legal-view { max-width: 800px; margin: 0 auto; }
+    .legal-card { padding: clamp(22px, 5vw, 42px); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .legal-card h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.08; letter-spacing: -.06em; }
+    .legal-card h2 { margin: 28px 0 8px; font-size: 1.15rem; }
+    .legal-card p, .legal-card li { color: var(--muted); }
+    .legal-updated { color: var(--muted); font-size: .78rem; margin-bottom: 25px; }
+    .site-footer { padding: 25px 0 0; text-align: center; color: var(--muted); font-size: .75rem; }
+    [hidden] { display: none !important; }
+    .scrim { position: fixed; inset: 0; z-index: 49; background: color-mix(in srgb, var(--bg) 58%, transparent); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .scrim.open { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: fixed; z-index: 50; inset: 0 auto 0 0; width: min(460px, 88vw); height: 100dvh;
+      overflow-y: auto; padding: 25px 24px 34px; background: var(--surface); border-right: 1px solid var(--line);
+      box-shadow: var(--shadow); transform: translateX(-105%); visibility: hidden;
+      transition: transform .42s var(--ease), visibility .42s;
+    }
+    .drawer.open { transform: translateX(0); visibility: visible; }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+    .drawer-title { margin: 0; font-size: 1.26rem; letter-spacing: -.04em; }
+    .close-button { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 12px; background: transparent; cursor: pointer; font-size: 1.25rem; }
+    .drawer-section { padding: 20px 0; border-top: 1px solid var(--line); animation: rise-in .45s var(--ease) both; }
+    .drawer-section:nth-of-type(2) { animation-delay: 50ms; }
+    .drawer-section:nth-of-type(3) { animation-delay: 100ms; }
+    .drawer-section:nth-of-type(4) { animation-delay: 150ms; }
+    .drawer-section:nth-of-type(5) { animation-delay: 200ms; }
+    .section-label { display: block; margin: 0 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: .7rem; font-weight: 800; }
+    .segmented { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; gap: 4px; border-radius: 13px; background: var(--soft); }
+    .segmented button { min-height: 40px; border: 0; border-radius: 10px; background: transparent; cursor: pointer; color: var(--muted); font-weight: 650; }
+    .segmented button[aria-pressed="true"] { color: var(--bg); background: var(--ink); }
+    .drawer-link { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; cursor: pointer; font-weight: 620; }
+    .drawer-link:last-child { border-bottom: 0; }
+    .drawer-link span:last-child { color: var(--muted); font-size: 1.1rem; }
+    .drawer-form label { display: block; margin: 14px 0 6px; color: var(--muted); font-size: .82rem; font-weight: 650; }
+    .drawer-form input, .drawer-form textarea {
+      width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 12px 13px;
+      background: var(--bg); color: var(--ink); resize: vertical;
+    }
+    .drawer-form textarea { min-height: 125px; }
+    .primary-action { width: 100%; min-height: 46px; margin-top: 14px; border: 0; border-radius: 13px; background: var(--ink); color: var(--bg); font-weight: 750; cursor: pointer; }
+    .form-note { color: var(--muted); font-size: .77rem; margin: 9px 0 0; }
+    .search-scrim { position: fixed; inset: var(--header-height) 0 0; z-index: 35; background: color-mix(in srgb, var(--bg) 46%, transparent); opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+    .search-sheet {
+      position: fixed; z-index: 36; inset: var(--header-height) 0 auto; max-height: calc(100dvh - var(--header-height)); overflow-y: auto;
+      padding: 22px max(22px, calc((100vw - 760px) / 2)) 28px; background: var(--bg); border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow); opacity: 0; transform: translateY(-12px); pointer-events: none; visibility: hidden;
+      transition: opacity .3s ease, transform .35s var(--ease), visibility .3s;
+    }
+    .search-sheet.open { opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; }
+    .search-scrim.open { opacity: 1; pointer-events: auto; }
+    .search-sheet-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .search-sheet-top strong { font-size: .92rem; }
+    .mini-close { border: 0; background: transparent; cursor: pointer; color: var(--muted); padding: 5px; }
+    .quick-language {
+      position: fixed; z-index: 45; top: calc(var(--header-height) - 2px); right: max(20px, calc((100vw - 1180px) / 2 + 65px));
+      width: 180px; padding: 8px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); box-shadow: var(--shadow);
+      opacity: 0; transform: translateY(-8px); pointer-events: none; visibility: hidden; transition: .25s var(--ease);
+    }
+    .quick-language.open { opacity: 1; transform: translateY(8px); pointer-events: auto; visibility: visible; }
+    .quick-language button { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; border-radius: 10px; padding: 10px; background: transparent; text-align: left; cursor: pointer; }
+    .quick-language button:hover { background: var(--soft); }
+    .quick-language button[aria-checked="true"] { font-weight: 800; background: var(--soft); }
+    .animate-in { animation: rise-in .52s var(--ease) both; }
+    @keyframes rise-in { from { opacity: 0; transform: translate3d(0, 22px, 0); filter: blur(5px); } to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); } }
+    @keyframes float-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @media (max-width: 640px) {
+      :root { --header-height: 66px; }
+      .header-inner { width: calc(100% - 28px); }
+      .brand img { height: 33px; max-width: 145px; }
+      .header-actions { gap: 3px; }
+      .icon-button { min-width: 39px; height: 39px; }
+      .language-button { min-width: 39px; height: 39px; padding: 0 8px; font-size: .78rem; }
+      .page-shell { width: calc(100% - 28px); padding-top: calc(var(--header-height) + 23px); }
+      .hero { padding: 42px 0 54px; }
+      .hero h1 { font-size: clamp(3.1rem, 18vw, 5rem); }
+      .search-form { margin-top: 27px; }
+      .search-submit { min-width: 44px; padding: 0 12px; }
+      .profile-hero { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
+      .profile-image { width: min(210px, 65vw); margin: 0 auto; }
+      .profile-hero-copy { text-align: center; }
+      .profile-title { font-size: 2.25rem; }
+      .fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .drawer { width: min(420px, 90vw); padding: 21px 19px 30px; }
+      .search-sheet { padding: 17px 14px 23px; }
+      .quick-language { right: 12px; }
+    }
+    @media (max-width: 380px) {
+      .language-button .language-short { display: none; }
+      .language-button { padding: 0; width: 39px; }
+      .fact-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Identity</h1>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="Identity home">
+        <img id="brandLogo" src="https://alian69.github.io/identity/in-website-logo-dark-theme.png" alt="Identity">
+        <span class="brand-fallback" id="brandFallback">identity</span>
+      </a>
+      <nav class="header-actions" aria-label="Main controls">
+        <button class="icon-button" id="headerSearchButton" type="button" aria-label="Open search" title="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+        </button>
+        <button class="language-button" id="headerLanguageButton" type="button" aria-label="Choose language" aria-expanded="false">
+          <span class="flag" id="headerFlag">🇬🇧</span><span class="language-short" id="headerLanguageShort">EN</span>
+        </button>
+        <button class="icon-button" id="menuButton" type="button" aria-label="Open menu" title="Menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.35" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.35" fill="currentColor" stroke="none"></circle><circle cx="19" cy="12" r="1.35" fill="currentColor" stroke="none"></circle></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell" id="pageMain">
+    <section class="home-view" id="homeView">
+      <div class="hero">
+        <div class="eyebrow animate-in" data-delay="0">A PEOPLE DIRECTORY</div>
+        <h1 class="animate-in" data-delay="70">Identity<span aria-hidden="true">.</span></h1>
+        <p class="hero-copy animate-in" data-delay="130" data-i18n="heroCopy">Find a person by their name, nickname, a famous line, or a detail you remember.</p>
+        <form class="search-form animate-in" id="homeSearchForm" data-delay="190" role="search">
+          <label class="sr-only" for="homeSearchInput" data-i18n="searchLabel">Search people and details</label>
+          <span class="search-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg></span>
+          <input id="homeSearchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Search a name, nickname, or detail…" data-i18n-placeholder="searchPlaceholder">
+          <button class="search-submit" type="submit" data-i18n="searchButton">Search</button>
+        </form>
+        <div class="moving-hints animate-in" data-delay="260" aria-label="Search examples">
+          <span class="hint-pill" data-i18n="hintName">Names</span>
+          <span class="hint-pill" data-i18n="hintNickname">Nicknames</span>
+          <span class="hint-pill" data-i18n="hintFacts">Facts</span>
+          <span class="hint-pill" data-i18n="hintQuotes">Famous lines</span>
+        </div>
+        <p class="status-line animate-in" id="databaseStatus" data-delay="320" role="status" aria-live="polite">Connecting to the public profile collection…</p>
+        <div class="results-wrap" id="homeResults" aria-live="polite"></div>
+        <p class="home-footnote animate-in" data-delay="390" data-i18n="homeFootnote">Search works in English and বাংলা. Profiles are read from this project’s Markdown files.</p>
+      </div>
+    </section>
+
+    <section class="identity-view" id="identityView" hidden></section>
+    <section class="legal-view" id="legalView" hidden></section>
+    <footer class="site-footer" id="siteFooter" data-i18n="footer">Identity · A community-maintained collection</footer>
+  </main>
+
+  <div class="search-scrim" id="searchScrim"></div>
+  <section class="search-sheet" id="searchSheet" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
+    <div class="search-sheet-top"><strong data-i18n="searchPeople">Search people</strong><button class="mini-close" id="searchCloseButton" type="button" data-i18n="close">Close ×</button></div>
+    <form class="search-form" id="sheetSearchForm" role="search">
+      <label class="sr-only" for="sheetSearchInput" data-i18n="searchLabel">Search people and details</label>
+      <span class="search-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg></span>
+      <input id="sheetSearchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Search a name, nickname, or detail…" data-i18n-placeholder="searchPlaceholder">
+      <button class="search-submit" type="submit" data-i18n="searchButton">Search</button>
+    </form>
+    <div class="results-wrap" id="sheetResults" aria-live="polite"></div>
+  </section>
+
+  <div class="scrim" id="drawerScrim"></div>
+  <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+    <div class="drawer-header"><h2 class="drawer-title" id="drawerTitle" data-i18n="menuTitle">Menu</h2><button class="close-button" id="drawerCloseButton" type="button" aria-label="Close menu">×</button></div>
+    <section class="drawer-section">
+      <span class="section-label" data-i18n="themeLabel">Theme</span>
+      <div class="segmented" role="group" aria-label="Theme">
+        <button type="button" id="darkThemeButton" aria-pressed="true" data-i18n="dark">Dark</button>
+        <button type="button" id="lightThemeButton" aria-pressed="false" data-i18n="light">Light</button>
+      </div>
+    </section>
+    <section class="drawer-section">
+      <span class="section-label" data-i18n="languageLabel">Language</span>
+      <div class="segmented" role="group" aria-label="Language">
+        <button type="button" id="englishButton" aria-pressed="true">🇬🇧 English</button>
+        <button type="button" id="banglaButton" aria-pressed="false">🇧🇩 বাংলা</button>
+      </div>
+    </section>
+    <section class="drawer-section">
+      <span class="section-label" data-i18n="contactLabel">Contact</span>
+      <button class="drawer-link" id="reportButton" type="button"><span data-i18n="report">Report a problem</span><span>↗</span></button>
+      <button class="drawer-link" id="feedbackButton" type="button"><span data-i18n="feedback">Send feedback</span><span>↗</span></button>
+    </section>
+    <section class="drawer-section">
+      <span class="section-label" data-i18n="informationLabel">Information</span>
+      <button class="drawer-link" id="termsButton" type="button"><span data-i18n="terms">Terms of Service</span><span>→</span></button>
+      <button class="drawer-link" id="privacyButton" type="button"><span data-i18n="privacy">Privacy Policy</span><span>→</span></button>
+    </section>
+    <section class="drawer-section" id="contactFormSection" hidden>
+      <span class="section-label" id="contactFormHeading">Report a problem</span>
+      <form class="drawer-form" id="contactForm">
+        <label for="contactEmail" data-i18n="emailOptional">Your email (optional)</label>
+        <input id="contactEmail" type="email" autocomplete="email" placeholder="you@example.com">
+        <label for="contactMessage" data-i18n="messageLabel">Message</label>
+        <textarea id="contactMessage" required maxlength="4000" data-i18n-placeholder="messagePlaceholder" placeholder="Describe the issue or share your thoughts…"></textarea>
+        <button class="primary-action" type="submit" data-i18n="openEmail">Continue to email</button>
+        <p class="form-note" data-i18n="emailNote">Your email app will open with a draft. Review it and press Send.</p>
+      </form>
+    </section>
+    <p class="form-note" data-i18n="drawerFooter">Identity is a static, public GitHub Pages project.</p>
+  </aside>
+
+  <div class="quick-language" id="quickLanguageMenu" role="menu" aria-label="Choose language">
+    <button type="button" data-language="en" role="menuitemradio" aria-checked="true"><span>🇬🇧</span><span>English</span></button>
+    <button type="button" data-language="bn" role="menuitemradio" aria-checked="false"><span>🇧🇩</span><span>বাংলা</span></button>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const OWNER = "alian69";
+      const REPO = "identity";
+      const BRANCH = "main";
+      const PAGES_ROOT = `https://${OWNER}.github.io/${REPO}/`;
+      const API_TREE = `https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`;
+      const RAW_ROOT = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/`;
+      const CONTACT_EMAIL = "nursifat@proton.me";
+      const DARK_LOGO = `${PAGES_ROOT}in-website-logo-dark-theme.png`;
+      const LIGHT_LOGO = `${PAGES_ROOT}in-website-logo-light-theme.png`;
+
+      const translations = {
+        en: {
+          heroCopy: "Find a person by their name, nickname, a famous line, or a detail you remember.",
+          searchLabel: "Search people and details", searchPlaceholder: "Search a name, nickname, or detail…", searchButton: "Search",
+          hintName: "Names", hintNickname: "Nicknames", hintFacts: "Facts", hintQuotes: "Famous lines",
+          homeFootnote: "Search works in English and বাংলা. Profiles are read from this project’s Markdown files.",
+          footer: "Identity · A community-maintained collection", menuTitle: "Menu", themeLabel: "Theme", dark: "Dark", light: "Light",
+          languageLabel: "Language", contactLabel: "Contact", report: "Report a problem", feedback: "Send feedback", informationLabel: "Information",
+          terms: "Terms of Service", privacy: "Privacy Policy", close: "Close ×", searchPeople: "Search people",
+          emailOptional: "Your email (optional)", messageLabel: "Message", messagePlaceholder: "Describe the issue or share your thoughts…",
+          openEmail: "Continue to email", emailNote: "Your email app will open with a draft. Review it and press Send.",
+          drawerFooter: "Identity is a static, public GitHub Pages project.",
+          loading: "Loading public Markdown profiles…", loaded: count => `${count} ${count === 1 ? "profile" : "profiles"} available`,
+          emptyCollection: "No profiles found yet. Add a Markdown file inside the people/ folder to publish the first profile.",
+          startTyping: "Start typing to search names, aliases, quotes, and profile details.",
+          noResults: query => `No close matches for “${query}”. Try another spelling or a shorter search.`,
+          resultsFor: query => `RESULTS FOR “${query}”`, matches: count => `${count} ${count === 1 ? "match" : "matches"}`,
+          loadError: "The profile collection could not be loaded. Check your connection and try again.",
+          partialError: "Some profiles could not be loaded. Results may be incomplete.",
+          back: "Back", profileLabel: "IDENTITY PROFILE", aliases: "Also known as", birth: "Date of birth", death: "Date of death",
+          nationality: "Nationality", occupation: "Occupation", nickname: "Nickname", noDetails: "No additional details have been added to this profile yet.",
+          sourceNote: "Profile content is provided for general information. Check the listed sources before relying on a detail.",
+          termsIntro: "These Terms of Service explain the basic rules for using Identity, a public, static directory hosted through GitHub Pages.",
+          termsSections: [
+            ["1. Purpose and information quality", "Identity displays Markdown profiles maintained in this project’s public GitHub repository. Profiles are informational, may be incomplete or outdated, and are not official records, identity verification, professional advice, or an endorsement of any person. Verify important claims using reliable original sources."],
+            ["2. Respect for people and privacy", "Only publish information that is lawful to share and appropriate for a public website. Do not publish private contact details, home or school addresses, account credentials, private conversations, financial details, health information, or other sensitive personal data. Do not publish information or images about a private individual without their informed permission. Take extra care with children and teenagers: do not create public profiles about minors or upload their photographs or personal details without the permission required by applicable law and their parent or guardian."],
+            ["3. Accuracy, fairness, and prohibited content", "Do not knowingly add false, misleading, defamatory, threatening, harassing, discriminatory, or unlawful material. Distinguish verified facts from opinions, identify uncertainty, and cite sources where possible. The project maintainer may correct or remove material at their discretion."],
+            ["4. Copyright and images", "Upload only images and text that you created, are licensed to use, are in the public domain, or have permission to publish. Public access to a photograph or a GitHub repository does not automatically grant permission to reuse it. Credit the creator and include a source or licence where appropriate. Rights in third-party material remain with their respective owners."],
+            ["5. Availability and changes", "The site is provided on an as-available basis. It may be changed, unavailable, or discontinued without notice. Profiles and these terms may be updated. No promise is made that every entry is complete, current, or error-free."],
+            ["6. Reports and contact", "You may use the Report or Feedback form to prepare an email to the project contact. Your email application must send the message; the website does not transmit it automatically. Include enough information to identify the relevant page, but do not include sensitive personal information."],
+            ["7. No blanket exclusion of legal rights", "To the extent permitted by applicable law, the project is provided without warranties. Nothing in these terms removes rights or responsibilities that cannot legally be excluded or limited."],
+            ["8. Acceptance", "By using the website, you agree to follow these terms. If you do not agree, stop using the website."]
+          ],
+          privacyIntro: "This policy describes what the Identity website itself does and what happens when you use its public GitHub-hosted content.",
+          privacySections: [
+            ["1. No account or site-owned submission database", "Identity is a static website. It does not provide user accounts, a server-side profile submission form, or a site-owned database for visitors. Searches are performed in your browser using public Markdown files from this project’s GitHub repository."],
+            ["2. Network requests to GitHub", "When the site loads profiles, your browser requests public files and repository metadata from GitHub and GitHub’s raw-content service. Those services may process technical information such as your IP address, browser details, request time, and requested resources under their own terms and privacy notices. Identity does not control GitHub’s independent data practices."],
+            ["3. Local preferences", "The site stores your theme and language preference in your browser’s local storage so those choices can be remembered on that device. The site does not use those preferences to identify you. Clearing the site’s browser storage resets them."],
+            ["4. Reports and feedback", "Choosing Report or Feedback opens an email draft addressed to nursifat@proton.me in your own email application. The site does not send or receive that email. When you send it, your email provider processes the message and the recipient receives the information you chose to include. Do not send sensitive information."],
+            ["5. External links and images", "Profiles may link to external websites or display images hosted in this repository or elsewhere. External services have their own privacy practices. Review their policies before using them."],
+            ["6. Children and personal information", "Do not use this website to publish private information about children or teenagers. Profiles about minors, their photographs, and identifying details should not be published without the permissions required by applicable law and a parent or guardian. Do not add sensitive or unnecessary personal information about any individual."],
+            ["7. Changes and contact", "This policy may be revised when the site changes. The current version will be published on this page. Questions or privacy concerns can be sent to nursifat@proton.me using your email application."]
+          ]
+        },
+        bn: {
+          heroCopy: "নাম, ডাকনাম, বিখ্যাত উক্তি অথবা মনে থাকা কোনো তথ্য দিয়ে একজন ব্যক্তিকে খুঁজুন।",
+          searchLabel: "ব্যক্তি ও তথ্য খুঁজুন", searchPlaceholder: "নাম, ডাকনাম অথবা কোনো তথ্য লিখুন…", searchButton: "খুঁজুন",
+          hintName: "নাম", hintNickname: "ডাকনাম", hintFacts: "তথ্য", hintQuotes: "বিখ্যাত উক্তি",
+          homeFootnote: "English ও বাংলা—দুই ভাষাতেই খুঁজতে পারবেন। প্রোফাইলগুলো এই প্রকল্পের Markdown ফাইল থেকে পড়া হয়।",
+          footer: "Identity · সবার সহযোগিতায় তৈরি তথ্যসংগ্রহ", menuTitle: "মেনু", themeLabel: "থিম", dark: "ডার্ক", light: "লাইট",
+          languageLabel: "ভাষা", contactLabel: "যোগাযোগ", report: "সমস্যা জানান", feedback: "মতামত পাঠান", informationLabel: "তথ্য",
+          terms: "ব্যবহারের শর্তাবলি", privacy: "গোপনীয়তা নীতি", close: "বন্ধ করুন ×", searchPeople: "ব্যক্তি খুঁজুন",
+          emailOptional: "আপনার ইমেইল (ঐচ্ছিক)", messageLabel: "বার্তা", messagePlaceholder: "সমস্যাটি লিখুন অথবা আপনার মতামত জানান…",
+          openEmail: "ইমেইলে যান", emailNote: "আপনার ইমেইল অ্যাপে একটি খসড়া খুলবে। দেখে Send চাপুন।",
+          drawerFooter: "Identity একটি পাবলিক GitHub Pages ওয়েবসাইট।",
+          loading: "পাবলিক Markdown প্রোফাইল লোড হচ্ছে…", loaded: count => `${count}টি প্রোফাইল পাওয়া গেছে`,
+          emptyCollection: "এখনো কোনো প্রোফাইল নেই। প্রথম প্রোফাইল প্রকাশ করতে people/ ফোল্ডারে একটি Markdown ফাইল যোগ করুন।",
+          startTyping: "নাম, বিকল্প নাম, উক্তি ও প্রোফাইলের তথ্য দিয়ে খোঁজা শুরু করুন।",
+          noResults: query => `“${query}”–এর কাছাকাছি কোনো ফল পাওয়া যায়নি। বানান বা ছোট কোনো শব্দ দিয়ে চেষ্টা করুন।`,
+          resultsFor: query => `“${query}”–এর অনুসন্ধান ফলাফল`, matches: count => `${count}টি ফলাফল`,
+          loadError: "প্রোফাইল লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
+          partialError: "কিছু প্রোফাইল লোড হয়নি। ফলাফল অসম্পূর্ণ হতে পারে।",
+          back: "ফিরে যান", profileLabel: "পরিচিতি প্রোফাইল", aliases: "পরিচিত নাম", birth: "জন্মতারিখ", death: "মৃত্যুর তারিখ",
+          nationality: "জাতীয়তা", occupation: "পেশা", nickname: "ডাকনাম", noDetails: "এই প্রোফাইলে এখনো অতিরিক্ত তথ্য যোগ করা হয়নি।",
+          sourceNote: "প্রোফাইলের তথ্য সাধারণ জ্ঞানের জন্য দেওয়া। কোনো তথ্যের ওপর নির্ভর করার আগে উল্লেখিত উৎস যাচাই করুন।",
+          termsIntro: "এই ব্যবহারের শর্তাবলিতে GitHub Pages-এ হোস্ট করা পাবলিক Identity ওয়েবসাইট ব্যবহারের মৌলিক নিয়ম ব্যাখ্যা করা হয়েছে।",
+          termsSections: [
+            ["১. উদ্দেশ্য ও তথ্যের নির্ভুলতা", "Identity এই প্রকল্পের পাবলিক GitHub রিপোজিটরিতে থাকা Markdown প্রোফাইল দেখায়। তথ্যগুলো অসম্পূর্ণ বা পুরোনো হতে পারে; এগুলো সরকারি নথি, পরিচয় যাচাই, পেশাগত পরামর্শ বা কোনো ব্যক্তির প্রতি সমর্থন নয়। গুরুত্বপূর্ণ তথ্য নির্ভরযোগ্য মূল উৎস থেকে যাচাই করুন।"],
+            ["২. ব্যক্তির প্রতি সম্মান ও গোপনীয়তা", "শুধু আইনসম্মত ও পাবলিক ওয়েবসাইটে প্রকাশের উপযুক্ত তথ্য প্রকাশ করুন। ব্যক্তিগত ফোন নম্বর, বাসা বা স্কুলের ঠিকানা, অ্যাকাউন্টের পাসওয়ার্ড, ব্যক্তিগত কথোপকথন, আর্থিক বা স্বাস্থ্যসংক্রান্ত তথ্য এবং সংবেদনশীল ব্যক্তিগত তথ্য প্রকাশ করবেন না। কোনো ব্যক্তিগত ব্যক্তির তথ্য বা ছবি তাঁর জ্ঞাতসম্মতি ছাড়া প্রকাশ করবেন না। শিশু ও কিশোর-কিশোরীদের ক্ষেত্রে বিশেষ সতর্ক থাকুন; প্রযোজ্য আইন এবং অভিভাবকের প্রয়োজনীয় অনুমতি ছাড়া অপ্রাপ্তবয়স্কদের প্রোফাইল, ছবি বা শনাক্তকারী তথ্য প্রকাশ করবেন না।"],
+            ["৩. নির্ভুলতা, ন্যায্যতা ও নিষিদ্ধ বিষয়বস্তু", "জেনেশুনে মিথ্যা, বিভ্রান্তিকর, মানহানিকর, হুমকিমূলক, হয়রানিমূলক, বৈষম্যমূলক বা বেআইনি তথ্য যোগ করবেন না। যাচাইকৃত তথ্য ও মতামত আলাদা রাখুন, অনিশ্চয়তা উল্লেখ করুন এবং সম্ভব হলে উৎস দিন। প্রকল্পের রক্ষণাবেক্ষণকারী প্রয়োজন অনুযায়ী তথ্য সংশোধন বা সরিয়ে দিতে পারেন।"],
+            ["৪. কপিরাইট ও ছবি", "শুধু নিজের তৈরি, ব্যবহারের লাইসেন্সপ্রাপ্ত, পাবলিক ডোমেইনে থাকা অথবা প্রকাশের অনুমতিপ্রাপ্ত ছবি ও লেখা আপলোড করুন। কোনো ছবি বা GitHub রিপোজিটরি পাবলিক হলেই সেটি পুনর্ব্যবহারের অনুমতি পাওয়া যায় না। প্রয়োজন অনুযায়ী নির্মাতার নাম, উৎস ও লাইসেন্স উল্লেখ করুন। তৃতীয় পক্ষের কনটেন্টের অধিকার সংশ্লিষ্ট মালিকের কাছেই থাকবে।"],
+            ["৫. প্রাপ্যতা ও পরিবর্তন", "ওয়েবসাইটটি যতক্ষণ পাওয়া যায়, সেই ভিত্তিতে দেওয়া হয়। নোটিশ ছাড়াই এটি পরিবর্তিত, সাময়িকভাবে বন্ধ বা স্থায়ীভাবে সরানো হতে পারে। প্রোফাইল ও শর্তাবলি হালনাগাদ করা হতে পারে। সব তথ্য সম্পূর্ণ, হালনাগাদ বা ভুলমুক্ত—এমন নিশ্চয়তা দেওয়া হয় না।"],
+            ["৬. রিপোর্ট ও যোগাযোগ", "Report বা Feedback ফর্ম ব্যবহার করলে প্রকল্পের যোগাযোগের ঠিকানায় একটি ইমেইল খসড়া তৈরি হবে। ওয়েবসাইট নিজে থেকে ইমেইল পাঠায় না; আপনার ইমেইল অ্যাপ থেকে Send করতে হবে। সংশ্লিষ্ট পৃষ্ঠা শনাক্ত করার মতো তথ্য দিন, তবে সংবেদনশীল ব্যক্তিগত তথ্য দেবেন না।"],
+            ["৭. আইনগত অধিকার", "প্রযোজ্য আইন যতটুকু অনুমতি দেয়, সেই সীমার মধ্যে ওয়েবসাইটটি কোনো অতিরিক্ত ওয়ারেন্টি ছাড়া দেওয়া হয়। আইন অনুযায়ী যে অধিকার বা দায়িত্ব বাদ দেওয়া বা সীমিত করা যায় না, এই শর্তাবলি তা বাতিল করে না।"],
+            ["৮. সম্মতি", "ওয়েবসাইট ব্যবহার করলে আপনি এই শর্তাবলি মেনে চলতে সম্মত হচ্ছেন। সম্মত না হলে ওয়েবসাইট ব্যবহার বন্ধ করুন।"]
+          ],
+          privacyIntro: "এই নীতিতে Identity ওয়েবসাইট নিজে কী করে এবং পাবলিক GitHub-এ থাকা কনটেন্ট ব্যবহার করলে কী ঘটে, তা ব্যাখ্যা করা হয়েছে।",
+          privacySections: [
+            ["১. অ্যাকাউন্ট বা নিজস্ব জমা-ডেটাবেস নেই", "Identity একটি স্ট্যাটিক ওয়েবসাইট। এখানে ব্যবহারকারীর অ্যাকাউন্ট, সার্ভার-ভিত্তিক প্রোফাইল জমা দেওয়ার ফর্ম বা ভিজিটরদের জন্য ওয়েবসাইটের নিজস্ব ডেটাবেস নেই। আপনার ব্রাউজার এই প্রকল্পের পাবলিক GitHub রিপোজিটরির Markdown ফাইল ব্যবহার করে অনুসন্ধান করে।"],
+            ["২. GitHub-এ নেটওয়ার্ক অনুরোধ", "প্রোফাইল লোড করার সময় আপনার ব্রাউজার GitHub এবং GitHub-এর raw-content সেবায় পাবলিক ফাইল ও রিপোজিটরির তথ্য চায়। এসব সেবা তাদের নিজস্ব শর্ত ও গোপনীয়তা নীতি অনুযায়ী IP ঠিকানা, ব্রাউজারের তথ্য, অনুরোধের সময় এবং চাওয়া ফাইলের মতো প্রযুক্তিগত তথ্য প্রক্রিয়া করতে পারে। GitHub-এর স্বাধীন ডেটা ব্যবস্থাপনা Identity নিয়ন্ত্রণ করে না।"],
+            ["৩. ব্রাউজারে পছন্দ সংরক্ষণ", "থিম ও ভাষার পছন্দ একই ডিভাইসে মনে রাখার জন্য ওয়েবসাইট আপনার ব্রাউজারের local storage-এ সংরক্ষণ করে। এই তথ্য দিয়ে আপনাকে শনাক্ত করা হয় না। ব্রাউজারের সাইট-ডেটা মুছে দিলে পছন্দগুলোও রিসেট হবে।"],
+            ["৪. রিপোর্ট ও মতামত", "Report বা Feedback নির্বাচন করলে আপনার নিজের ইমেইল অ্যাপে nursifat@proton.me ঠিকানায় একটি খসড়া তৈরি হবে। ওয়েবসাইট ইমেইল পাঠায় বা গ্রহণ করে না। আপনি Send করলে আপনার ইমেইল সেবা বার্তাটি প্রক্রিয়া করবে এবং প্রাপক আপনার দেওয়া তথ্য পাবেন। সংবেদনশীল তথ্য পাঠাবেন না।"],
+            ["৫. বাইরের লিংক ও ছবি", "প্রোফাইলে বাইরের ওয়েবসাইটের লিংক বা এই রিপোজিটরি কিংবা অন্য কোথাও হোস্ট করা ছবি থাকতে পারে। বাইরের সেবাগুলোর নিজস্ব গোপনীয়তা নীতি রয়েছে। সেগুলো ব্যবহারের আগে নীতিমালা দেখে নিন।"],
+            ["৬. শিশু-কিশোর ও ব্যক্তিগত তথ্য", "শিশু-কিশোরদের ব্যক্তিগত তথ্য প্রকাশ করতে এই ওয়েবসাইট ব্যবহার করবেন না। প্রযোজ্য আইন ও অভিভাবকের প্রয়োজনীয় অনুমতি ছাড়া অপ্রাপ্তবয়স্কদের প্রোফাইল, ছবি বা শনাক্তকারী তথ্য প্রকাশ করা উচিত নয়। কারও সংবেদনশীল বা অপ্রয়োজনীয় ব্যক্তিগত তথ্য যোগ করবেন না।"],
+            ["৭. পরিবর্তন ও যোগাযোগ", "ওয়েবসাইট পরিবর্তিত হলে এই নীতিও সংশোধিত হতে পারে। বর্তমান সংস্করণ এই পাতায় থাকবে। প্রশ্ন বা গোপনীয়তা-সংক্রান্ত উদ্বেগ জানাতে নিজের ইমেইল অ্যাপ থেকে nursifat@proton.me-এ লিখুন।"]
+          ]
+        }
+      };
+
+      const $ = selector => document.querySelector(selector);
+      const state = {
+        language: localStorage.getItem("identity-language") === "bn" ? "bn" : "en",
+        theme: localStorage.getItem("identity-theme") === "light" ? "light" : "dark",
+        profiles: [], view: "home", currentProfile: null, contactMode: null,
+        loaded: false, loadingError: false, searchTimer: null
+      };
+      const t = key => translations[state.language][key];
+
+      function applyTheme(theme) {
+        state.theme = theme === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = state.theme;
+        document.documentElement.style.colorScheme = state.theme;
+        localStorage.setItem("identity-theme", state.theme);
+        $("#brandLogo").src = state.theme === "dark" ? DARK_LOGO : LIGHT_LOGO;
+        $("#brandLogo").onerror = () => { $("#brandLogo").style.display = "none"; $("#brandFallback").style.display = "inline"; };
+        $("#darkThemeButton").setAttribute("aria-pressed", String(state.theme === "dark"));
+        $("#lightThemeButton").setAttribute("aria-pressed", String(state.theme === "light"));
+        document.querySelector('meta[name="theme-color"]').content = state.theme === "dark" ? "#0d0f12" : "#f3f5f7";
+      }
+
+      function applyLanguage(language) {
+        state.language = language === "bn" ? "bn" : "en";
+        document.documentElement.lang = state.language;
+        document.title = state.language === "en" ? "Identity — People, clearly" : "Identity — মানুষের পরিচিতি";
+        document.querySelector('meta[name="description"]').content = state.language === "en"
+          ? "Identity — a searchable collection of people and their stories."
+          : "Identity — ব্যক্তি ও তাঁদের পরিচিতির অনুসন্ধানযোগ্য সংগ্রহ।";
+        localStorage.setItem("identity-language", state.language);
+        document.querySelectorAll("[data-i18n]").forEach(node => {
+          const key = node.dataset.i18n;
+          if (typeof t(key) === "string") node.textContent = t(key);
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(node => { node.placeholder = t(node.dataset.i18nPlaceholder); });
+        $("#headerFlag").textContent = state.language === "en" ? "🇬🇧" : "🇧🇩";
+        $("#headerLanguageShort").textContent = state.language === "en" ? "EN" : "বাংলা";
+        $("#englishButton").setAttribute("aria-pressed", String(state.language === "en"));
+        $("#banglaButton").setAttribute("aria-pressed", String(state.language === "bn"));
+        document.querySelectorAll("[data-language]").forEach(btn => btn.setAttribute("aria-checked", String(btn.dataset.language === state.language)));
+        $("#headerSearchButton").setAttribute("aria-label", state.language === "en" ? "Open search" : "অনুসন্ধান খুলুন");
+        $("#headerLanguageButton").setAttribute("aria-label", state.language === "en" ? "Choose language" : "ভাষা নির্বাচন করুন");
+        $("#menuButton").setAttribute("aria-label", state.language === "en" ? "Open menu" : "মেনু খুলুন");
+        if (state.loaded && state.view === "home") updateSearchResults($("#homeSearchInput").value, "home");
+        if (state.loaded && $("#searchSheet").classList.contains("open")) updateSearchResults($("#sheetSearchInput").value, "sheet");
+        if (state.loaded && state.view === "identity" && state.currentProfile) renderIdentity(state.currentProfile, false);
+        if (state.view === "legal") renderLegal(state.currentProfile);
+        if (state.contactMode) setContactMode(state.contactMode, false);
+      }
+
+      function setMainView(view) {
+        state.view = view;
+        $("#homeView").hidden = view !== "home";
+        $("#identityView").hidden = view !== "identity";
+        $("#legalView").hidden = view !== "legal";
+        $("#siteFooter").hidden = view !== "home";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function openDrawer() {
+        closeQuickLanguage(); closeSearchSheet();
+        $("#menuDrawer").classList.add("open"); $("#drawerScrim").classList.add("open");
+        $("#menuDrawer").setAttribute("aria-hidden", "false"); $("#menuButton").setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden"; $("#drawerCloseButton").focus();
+      }
+      function closeDrawer() {
+        $("#menuDrawer").classList.remove("open"); $("#drawerScrim").classList.remove("open");
+        $("#menuDrawer").setAttribute("aria-hidden", "true"); $("#menuButton").setAttribute("aria-expanded", "false");
+        document.body.style.overflow = ""; state.contactMode = null; $("#contactFormSection").hidden = true;
+      }
+      function toggleQuickLanguage() {
+        const menu = $("#quickLanguageMenu"); const opened = menu.classList.toggle("open");
+        $("#headerLanguageButton").setAttribute("aria-expanded", String(opened));
+        if (opened) closeSearchSheet();
+      }
+      function closeQuickLanguage() {
+        $("#quickLanguageMenu").classList.remove("open"); $("#headerLanguageButton").setAttribute("aria-expanded", "false");
+      }
+      function openSearchSheet() {
+        closeDrawer(); closeQuickLanguage();
+        $("#searchSheet").classList.add("open"); $("#searchScrim").classList.add("open");
+        $("#searchSheet").setAttribute("aria-hidden", "false");
+        $("#sheetSearchInput").value = $("#homeSearchInput").value;
+        renderSearchInto($("#sheetSearchInput").value, "sheet");
+        setTimeout(() => $("#sheetSearchInput").focus(), 80);
+      }
+      function closeSearchSheet() {
+        $("#searchSheet").classList.remove("open"); $("#searchScrim").classList.remove("open");
+        $("#searchSheet").setAttribute("aria-hidden", "true");
+      }
+
+      function safeText(value) { return String(value ?? "").trim(); }
+      function decodeEntities(value) {
+        return String(value).replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      }
+      function escapeHtml(value) {
+        return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      }
+      function splitList(value) {
+        if (Array.isArray(value)) return value.map(safeText).filter(Boolean);
+        return safeText(value).split(/[;,|]/).map(s => s.trim()).filter(Boolean);
+      }
+      function parseFrontMatter(markdown) {
+        const text = String(markdown || "").replace(/^\uFEFF/, "");
+        if (!text.startsWith("---\n") && !text.startsWith("---\r\n")) return { meta: {}, body: text };
+        const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+        if (!match) return { meta: {}, body: text };
+        const meta = {};
+        match[1].split(/\r?\n/).forEach(line => {
+          const colon = line.indexOf(":"); if (colon < 1) return;
+          const key = line.slice(0, colon).trim().toLowerCase().replace(/[^a-z0-9_]/g, "_");
+          let value = line.slice(colon + 1).trim();
+          if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) value = value.slice(1, -1);
+          if (value.startsWith("[") && value.endsWith("]")) value = value.slice(1, -1).split(",").map(s => s.trim().replace(/^['"]|['"]$/g, ""));
+          meta[key] = value;
+        });
+        return { meta, body: match[2] || "" };
+      }
+      function profileFromMarkdown(path, markdown) {
+        const { meta, body } = parseFrontMatter(markdown);
+        const fileName = path.split("/").pop().replace(/\.md$/i, "").replace(/[-_]+/g, " ");
+        const nameEn = safeText(meta.name_en || meta.name || fileName);
+        const nameBn = safeText(meta.name_bn || meta.bangla_name || "");
+        const aliases = [...splitList(meta.aliases), ...splitList(meta.alternative_names), ...splitList(meta.alternate_names)];
+        const nickname = safeText(meta.nickname);
+        const imageMeta = safeText(meta.image || meta.image_url || splitList(meta.images)[0] || "");
+        const firstMarkdownImage = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
+        const image = imageMeta || (firstMarkdownImage ? firstMarkdownImage[1].trim() : "");
+        const summary = safeText(meta.summary || meta.description || meta.short_bio);
+        const searchable = [path, ...Object.values(meta).flatMap(v => Array.isArray(v) ? v : [v]), body].join(" ");
+        const tokenBuckets = {};
+        for (const token of new Set(normalize(searchable).split(" ").filter(word => Array.from(word).length > 1))) {
+          const tokenLength = Array.from(token).length;
+          (tokenBuckets[tokenLength] ||= []).push(token);
+        }
+        return {
+          path, nameEn, nameBn,
+          aliases: [...new Set([...aliases, ...(nickname ? [nickname] : [])])], nickname,
+          image, summary, body, meta, searchable, tokenBuckets,
+          birth: safeText(meta.date_of_birth || meta.birth_date || meta.born),
+          death: safeText(meta.date_of_death || meta.death_date || meta.died),
+          nationality: safeText(meta.nationality), occupation: safeText(meta.occupation || meta.profession),
+          famousLine: safeText(meta.famous_line || meta.quote)
+        };
+      }
+
+      function normalize(value) {
+        return String(value || "").toLocaleLowerCase().normalize("NFC")
+          .replace(/[\u200b-\u200f\uFEFF]/g, "")
+          .replace(/[“”‘’'"`]/g, "")
+          .replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ")
+          .replace(/\s+/g, " ").trim();
+      }
+      function levenshtein(a, b) {
+        const aa = Array.from(a), bb = Array.from(b);
+        if (!aa.length) return bb.length; if (!bb.length) return aa.length;
+        if (Math.abs(aa.length - bb.length) > 3) return 4;
+        let previous = Array.from({ length: bb.length + 1 }, (_, i) => i);
+        for (let i = 1; i <= aa.length; i++) {
+          const current = [i]; let rowMin = i;
+          for (let j = 1; j <= bb.length; j++) {
+            const cost = aa[i - 1] === bb[j - 1] ? 0 : 1;
+            current[j] = Math.min(current[j - 1] + 1, previous[j] + 1, previous[j - 1] + cost);
+            rowMin = Math.min(rowMin, current[j]);
+          }
+          if (rowMin > 3) return 4;
+          previous = current;
+        }
+        return previous[bb.length];
+      }
+      function diceSimilarity(a, b) {
+        if (a === b) return 1;
+        if (a.length < 2 || b.length < 2) return 0;
+        const grams = value => { const set = new Map(); for (let i = 0; i < value.length - 1; i++) { const g = value.slice(i, i + 2); set.set(g, (set.get(g) || 0) + 1); } return set; };
+        const A = grams(a), B = grams(b); let overlap = 0;
+        for (const [gram, count] of A) overlap += Math.min(count, B.get(gram) || 0);
+        return (2 * overlap) / (Array.from(A.values()).reduce((x,y)=>x+y,0) + Array.from(B.values()).reduce((x,y)=>x+y,0));
+      }
+      function matchToken(queryToken, candidateToken) {
+        if (!queryToken || !candidateToken) return 0;
+        if (candidateToken === queryToken) return 1;
+        if (candidateToken.startsWith(queryToken) || queryToken.startsWith(candidateToken)) return .88;
+        const distance = levenshtein(queryToken, candidateToken);
+        const length = Math.max(Array.from(queryToken).length, Array.from(candidateToken).length);
+        if (distance <= 1 && length >= 4) return .82;
+        if (distance <= 2 && length >= 8) return .68;
+        return diceSimilarity(queryToken, candidateToken) * .78;
+      }
+      function scoreProfile(query, profile) {
+        const q = normalize(query); if (!q) return 0;
+        const name = normalize([profile.nameEn, profile.nameBn].join(" "));
+        const aliases = normalize(profile.aliases.join(" "));
+        const path = normalize(profile.path.replace(/\.md$/i, "").replace(/[\/_-]/g, " "));
+        const all = normalize(profile.searchable);
+        if (name === q) return 120;
+        if (aliases === q || path === q) return 112;
+        if (name.includes(q)) return 106;
+        if (aliases.includes(q)) return 100;
+        if (path.includes(q)) return 94;
+        if (all.includes(q)) return 83;
+
+        const queryTokens = q.split(" ").filter(Boolean);
+        const nameTokens = name.split(" ");
+        const aliasTokens = aliases.split(" ");
+        const pathTokens = path.split(" ");
+        let nameTotal = 0, aliasTotal = 0, allTotal = 0;
+        queryTokens.forEach(token => {
+          const bestName = Math.max(0, ...nameTokens.map(candidate => matchToken(token, candidate)));
+          const bestAlias = Math.max(0, ...aliasTokens.map(candidate => matchToken(token, candidate)));
+          const bestPath = Math.max(0, ...pathTokens.map(candidate => matchToken(token, candidate)));
+          const queryLength = Array.from(token).length;
+          let bestAll = 0;
+          for (let length = Math.max(2, queryLength - 2); length <= queryLength + 2; length++) {
+            for (const candidate of (profile.tokenBuckets[length] || [])) {
+              const similarity = matchToken(token, candidate);
+              if (similarity > bestAll) bestAll = similarity;
+              if (bestAll >= 1) break;
+            }
+            if (bestAll >= 1) break;
+          }
+          nameTotal += bestName; aliasTotal += Math.max(bestAlias, bestPath); allTotal += bestAll;
+        });
+        const count = queryTokens.length || 1;
+        const nameScore = (nameTotal / count) * 88;
+        const aliasScore = (aliasTotal / count) * 79;
+        const allScore = (allTotal / count) * 65;
+        const coverage = queryTokens.filter(token => all.includes(token)).length / count;
+        return Math.max(nameScore, aliasScore, allScore) + coverage * 9;
+      }
+
+      function resolvePageAsset(reference, markdownPath) {
+        const raw = safeText(reference).replace(/^<|>$/g, "");
+        if (!raw) return "";
+        if (/^(https?:|data:image\/)/i.test(raw)) return raw;
+        if (/^(javascript:|vbscript:|file:)/i.test(raw)) return "";
+        try {
+          const base = new URL(`${PAGES_ROOT}${markdownPath.split("/").map(encodeURIComponent).join("/")}`);
+          const url = new URL(raw, base);
+          if (url.origin !== new URL(PAGES_ROOT).origin) return "";
+          return url.href;
+        } catch (_) { return ""; }
+      }
+      function renderInline(markdown, filePath) {
+        let text = escapeHtml(markdown);
+        text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
+          const safeUrl = resolvePageAsset(decodeEntities(url.trim()), filePath);
+          return safeUrl ? `<img src="${escapeHtml(safeUrl)}" alt="${alt}" loading="lazy">` : escapeHtml(alt);
+        });
+        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, url) => {
+          const target = decodeEntities(url.trim());
+          let safeUrl = "";
+          if (/^https?:\/\//i.test(target) || /^mailto:/i.test(target)) safeUrl = target;
+          else if (!/^(javascript:|data:|vbscript:|file:)/i.test(target)) safeUrl = resolvePageAsset(target, filePath);
+          return safeUrl ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">${label}</a>` : label;
+        });
+        text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+        text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        text = text.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+        text = text.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, "$1<em>$2</em>");
+        text = text.replace(/(^|[^_])_([^_]+)_(?!_)/g, "$1<em>$2</em>");
+        text = text.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+        return text;
+      }
+      function renderMarkdown(markdown, filePath) {
+        const lines = String(markdown || "").replace(/\r/g, "").split("\n");
+        const html = []; let paragraph = []; let listType = ""; let quote = [];
+        let codeLines = null;
+        const flushParagraph = () => { if (paragraph.length) { html.push(`<p>${renderInline(paragraph.join(" "), filePath)}</p>`); paragraph = []; } };
+        const flushList = () => { if (listType) { html.push(`</${listType}>`); listType = ""; } };
+        const flushQuote = () => { if (quote.length) { html.push(`<blockquote>${quote.map(line => `<p>${renderInline(line, filePath)}</p>`).join("")}</blockquote>`); quote = []; } };
+        const splitTableRow = line => line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(cell => cell.trim());
+        const isTableDivider = line => {
+          const cells = splitTableRow(line);
+          return cells.length > 0 && cells.every(cell => /^:?-{3,}:?$/.test(cell));
+        };
+        const flushCode = () => {
+          if (codeLines !== null) { html.push(`<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`); codeLines = null; }
+        };
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i]; const trimmed = line.trim();
+          if (codeLines !== null) {
+            if (/^```\s*$/.test(trimmed) || /^~~~\s*$/.test(trimmed)) flushCode();
+            else codeLines.push(line);
+            continue;
+          }
+          if (/^(```|~~~)/.test(trimmed)) { flushParagraph(); flushList(); flushQuote(); codeLines = []; continue; }
+          if (!trimmed) { flushParagraph(); flushList(); flushQuote(); continue; }
+          if (i + 1 < lines.length && trimmed.includes("|") && isTableDivider(lines[i + 1])) {
+            flushParagraph(); flushList(); flushQuote();
+            const headers = splitTableRow(line);
+            const rows = [];
+            i += 2;
+            while (i < lines.length && lines[i].trim().includes("|")) { rows.push(splitTableRow(lines[i])); i++; }
+            i--;
+            const head = headers.map(cell => `<th>${renderInline(cell, filePath)}</th>`).join("");
+            const bodyRows = rows.map(row => `<tr>${headers.map((_, index) => `<td>${renderInline(row[index] || "", filePath)}</td>`).join("")}</tr>`).join("");
+            html.push(`<table><thead><tr>${head}</tr></thead><tbody>${bodyRows}</tbody></table>`);
+            continue;
+          }
+          const heading = trimmed.match(/^(#{1,6})\s+(.+)$/);
+          if (heading) { flushParagraph(); flushList(); flushQuote(); const level = heading[1].length; html.push(`<h${level}>${renderInline(heading[2], filePath)}</h${level}>`); continue; }
+          if (/^(---+|\*\*\*+|___+)$/.test(trimmed)) { flushParagraph(); flushList(); flushQuote(); html.push("<hr>"); continue; }
+          if (trimmed.startsWith(">")) { flushParagraph(); flushList(); quote.push(trimmed.replace(/^>\s?/, "")); continue; }
+          const unordered = trimmed.match(/^[-*+]\s+(.+)$/);
+          const ordered = trimmed.match(/^\d+[.)]\s+(.+)$/);
+          if (unordered || ordered) {
+            flushParagraph(); flushQuote(); const nextType = unordered ? "ul" : "ol";
+            if (listType && listType !== nextType) flushList();
+            if (!listType) { listType = nextType; html.push(`<${listType}>`); }
+            html.push(`<li>${renderInline((unordered || ordered)[1], filePath)}</li>`); continue;
+          }
+          flushList(); flushQuote(); paragraph.push(trimmed);
+        }
+        if (codeLines !== null) flushCode();
+        flushParagraph(); flushList(); flushQuote();
+        return html.join("\n");
+      }
+
+      async function loadProfiles() {
+        $("#databaseStatus").textContent = t("loading"); state.loadingError = false;
+        try {
+          const response = await fetch(API_TREE, { headers: { Accept: "application/vnd.github+json" }, cache: "no-store" });
+          if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+          const treeData = await response.json();
+          if (!Array.isArray(treeData.tree)) throw new Error("Unexpected repository tree response");
+          const files = treeData.tree.filter(item => item.type === "blob" && /^people\/.+\.md$/i.test(item.path) && !/(^|\/)(readme|template|index)\.md$/i.test(item.path));
+          if (files.length === 0) {
+            state.profiles = []; state.loaded = true;
+            $("#databaseStatus").textContent = t("loaded")(0);
+            renderSearchInto($("#homeSearchInput").value, "home"); return;
+          }
+          let failed = 0; const profiles = [];
+          for (let start = 0; start < files.length; start += 8) {
+            const batch = files.slice(start, start + 8);
+            const loaded = await Promise.all(batch.map(async file => {
+              try {
+                const url = RAW_ROOT + file.path.split("/").map(encodeURIComponent).join("/");
+                const result = await fetch(url, { cache: "default" });
+                if (!result.ok) throw new Error(`HTTP ${result.status}`);
+                return profileFromMarkdown(file.path, await result.text());
+              } catch (_) { failed++; return null; }
+            }));
+            profiles.push(...loaded.filter(Boolean));
+          }
+          state.profiles = profiles; state.loaded = true; state.loadingError = failed > 0;
+          const status = t("loaded")(profiles.length);
+          $("#databaseStatus").textContent = failed ? `${status} · ${t("partialError")}` : status;
+          renderSearchInto($("#homeSearchInput").value, "home");
+          if (state.view === "identity" && state.currentProfile) {
+            const updated = state.profiles.find(p => p.path === state.currentProfile.path);
+            if (updated) { state.currentProfile = updated; renderIdentity(updated, false); }
+          }
+        } catch (error) {
+          state.loaded = true; state.loadingError = true;
+          $("#databaseStatus").textContent = t("loadError");
+          console.error("Identity profile loading failed:", error);
+          renderSearchInto($("#homeSearchInput").value, "home");
+        }
+      }
+
+      function profileDisplayName(profile) {
+        return state.language === "bn" ? (profile.nameBn || profile.nameEn) : (profile.nameEn || profile.nameBn);
+      }
+      function renderResults(target, query, matches) {
+        const container = target === "home" ? $("#homeResults") : $("#sheetResults");
+        container.innerHTML = "";
+        if (!query.trim()) {
+          if (state.loaded && state.profiles.length === 0) container.innerHTML = `<div class="empty-state">${escapeHtml(t("emptyCollection"))}</div>`;
+          else if (state.loaded) container.innerHTML = `<div class="empty-state">${escapeHtml(t("startTyping"))}</div>`;
+          return;
+        }
+        const heading = document.createElement("div"); heading.className = "results-heading";
+        const left = document.createElement("span"); left.textContent = t("resultsFor")(query);
+        const right = document.createElement("span"); right.textContent = t("matches")(matches.length);
+        heading.append(left, right); container.append(heading);
+        if (!matches.length) {
+          const empty = document.createElement("div"); empty.className = "empty-state"; empty.textContent = t("noResults")(query); container.append(empty); return;
+        }
+        const list = document.createElement("div"); list.className = "results-list";
+        matches.slice(0, 12).forEach((match, index) => {
+          const profile = match.profile;
+          const card = document.createElement("button"); card.type = "button"; card.className = "result-card";
+          card.style.setProperty("--delay", `${Math.min(index * 45, 360)}ms`);
+          const imageUrl = profile.image ? resolvePageAsset(profile.image, profile.path) : "";
+          if (imageUrl) {
+            const img = document.createElement("img"); img.className = "result-avatar"; img.src = imageUrl; img.alt = ""; img.loading = "lazy";
+            img.onerror = () => { const fallback = document.createElement("div"); fallback.className = "result-avatar avatar-placeholder"; fallback.textContent = (profileDisplayName(profile) || "?").trim().slice(0, 1).toUpperCase(); img.replaceWith(fallback); };
+            card.append(img);
+          } else {
+            const fallback = document.createElement("div"); fallback.className = "result-avatar avatar-placeholder"; fallback.textContent = (profileDisplayName(profile) || "?").trim().slice(0, 1).toUpperCase(); card.append(fallback);
+          }
+          const copy = document.createElement("span"); copy.className = "result-copy";
+          const name = document.createElement("span"); name.className = "result-name"; name.textContent = profileDisplayName(profile);
+          const summary = document.createElement("span"); summary.className = "result-summary";
+          summary.textContent = profile.summary || profile.aliases.join(" · ") || profile.occupation || profile.nameEn;
+          copy.append(name, summary); card.append(copy);
+          const arrow = document.createElement("span"); arrow.className = "result-arrow"; arrow.textContent = "↗"; card.append(arrow);
+          card.addEventListener("click", () => openIdentity(profile)); list.append(card);
+        });
+        container.append(list);
+      }
+      function updateSearchResults(query, target) {
+        if (!state.loaded) return;
+        const clean = safeText(query);
+        if (!clean) { renderResults(target, "", []); return; }
+        const matches = state.profiles.map(profile => ({ profile, score: scoreProfile(clean, profile) }))
+          .filter(item => item.score >= (normalize(clean).split(" ").length > 1 ? 27 : 34))
+          .sort((a, b) => b.score - a.score || a.profile.nameEn.localeCompare(b.profile.nameEn));
+        renderResults(target, clean, matches);
+      }
+      function renderSearchInto(query, target) {
+        if (state.loaded && state.profiles.length === 0 && !query.trim()) { renderResults(target, "", []); return; }
+        updateSearchResults(query, target);
+      }
+      function queueSearch(query, target) {
+        clearTimeout(state.searchTimer);
+        state.searchTimer = setTimeout(() => updateSearchResults(query, target), 90);
+      }
+
+      function makeFact(label, value) {
+        if (!value) return "";
+        return `<div class="fact-card"><span class="fact-label">${escapeHtml(label)}</span><span class="fact-value">${escapeHtml(value)}</span></div>`;
+      }
+      function renderIdentity(profile, animate = true) {
+        const identity = $("#identityView");
+        const image = profile.image ? resolvePageAsset(profile.image, profile.path) : "";
+        const imgHtml = image
+          ? `<img class="profile-image" src="${escapeHtml(image)}" alt="${escapeHtml(profileDisplayName(profile))}" loading="lazy">`
+          : `<div class="profile-image profile-image-placeholder" aria-hidden="true">${escapeHtml((profileDisplayName(profile) || "?").slice(0, 1).toUpperCase())}</div>`;
+        const facts = [
+          makeFact(t("birth"), profile.birth), makeFact(t("death"), profile.death),
+          makeFact(t("nationality"), profile.nationality), makeFact(t("occupation"), profile.occupation),
+          makeFact(t("nickname"), profile.nickname)
+        ].filter(Boolean).join("");
+        const aliasLine = profile.aliases.length ? `<p class="profile-aliases"><strong>${escapeHtml(t("aliases"))}:</strong> ${escapeHtml(profile.aliases.join(" · "))}</p>` : "";
+        const summary = profile.summary ? `<p class="profile-summary">${escapeHtml(profile.summary)}</p>` : "";
+        const quote = profile.famousLine ? `<blockquote class="quote-card">${escapeHtml(profile.famousLine)}</blockquote>` : "";
+        const body = renderMarkdown(profile.body, profile.path) || `<p>${escapeHtml(t("noDetails"))}</p>`;
+        identity.innerHTML = `
+          <button class="back-button" id="backFromIdentity" type="button">← ${escapeHtml(t("back"))}</button>
+          <div class="profile-hero ${animate ? "animate-in" : ""}">${imgHtml}<div class="profile-hero-copy"><span class="profile-kicker">${escapeHtml(t("profileLabel"))}</span><h1 class="profile-title">${escapeHtml(profileDisplayName(profile))}</h1>${summary}${aliasLine}</div></div>
+          ${facts ? `<div class="fact-grid animate-in">${facts}</div>` : ""}${quote}
+          <article class="markdown-content ${animate ? "animate-in" : ""}">${body}</article>
+          <p class="profile-source-note">${escapeHtml(t("sourceNote"))}</p>`;
+        const profileImage = identity.querySelector("img.profile-image");
+        if (profileImage) profileImage.addEventListener("error", () => {
+          const fallback = document.createElement("div");
+          fallback.className = "profile-image profile-image-placeholder";
+          fallback.textContent = (profileDisplayName(profile) || "?").slice(0, 1).toUpperCase();
+          profileImage.replaceWith(fallback);
+        }, { once: true });
+        $("#backFromIdentity").addEventListener("click", goHome);
+      }
+      function openIdentity(profile) {
+        state.currentProfile = profile; setMainView("identity"); renderIdentity(profile, true);
+        history.pushState({ view: "identity", path: profile.path }, "", `#person/${encodeURIComponent(profile.path)}`);
+        closeSearchSheet();
+      }
+      function goHome() {
+        state.currentProfile = null; setMainView("home");
+        if (location.hash) history.pushState({ view: "home" }, "", `${location.pathname}${location.search}`);
+        $("#homeSearchInput").focus({ preventScroll: true });
+      }
+      function renderLegal(which) {
+        const page = which === "privacy" ? "privacy" : "terms";
+        const legal = $("#legalView"); const dict = translations[state.language];
+        const title = page === "privacy" ? dict.privacy : dict.terms;
+        const intro = page === "privacy" ? dict.privacyIntro : dict.termsIntro;
+        const sections = page === "privacy" ? dict.privacySections : dict.termsSections;
+        legal.innerHTML = `<button class="back-button" id="backFromLegal" type="button">← ${escapeHtml(dict.back)}</button><article class="legal-card"><h1>${escapeHtml(title)}</h1><p class="legal-updated">${state.language === "bn" ? "সর্বশেষ হালনাগাদ: ২৭ নভেম্বর ২০২৬" : "Last updated: 27 November 2026"}</p><p>${escapeHtml(intro)}</p>${sections.map(([heading, body]) => `<section><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></section>`).join("")}</article>`;
+        $("#backFromLegal").addEventListener("click", goHome);
+      }
+      function openLegal(which) {
+        closeDrawer(); state.currentProfile = which; setMainView("legal"); renderLegal(which);
+        history.pushState({ view: "legal", page: which }, "", `#${which}`);
+      }
+      function setContactMode(mode, showDrawer = true) {
+        state.contactMode = mode;
+        $("#contactFormSection").hidden = false;
+        $("#contactFormHeading").textContent = mode === "report" ? t("report") : t("feedback");
+        if (showDrawer) {
+          $("#contactMessage").value = ""; $("#contactEmail").value = "";
+          openDrawer(); setTimeout(() => $("#contactMessage").focus(), 100);
+        }
+      }
+      function submitContact(event) {
+        event.preventDefault();
+        const message = safeText($("#contactMessage").value);
+        if (!message) return;
+        const email = safeText($("#contactEmail").value);
+        const subject = state.language === "bn"
+          ? (state.contactMode === "report" ? "Identity ওয়েবসাইট — সমস্যা জানান" : "Identity ওয়েবসাইট — মতামত")
+          : (state.contactMode === "report" ? "Identity website — Problem report" : "Identity website — Feedback");
+        const body = [
+          `Type: ${state.contactMode === "report" ? "Problem report" : "Feedback"}`,
+          `Page: ${location.href}`,
+          email ? `Reply email: ${email}` : "",
+          "", message
+        ].filter(Boolean).join("\n");
+        const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+      }
+
+      $("#menuButton").addEventListener("click", openDrawer);
+      $("#drawerCloseButton").addEventListener("click", closeDrawer);
+      $("#drawerScrim").addEventListener("click", closeDrawer);
+      $("#headerLanguageButton").addEventListener("click", toggleQuickLanguage);
+      $("#quickLanguageMenu").querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => { applyLanguage(button.dataset.language); closeQuickLanguage(); }));
+      $("#headerSearchButton").addEventListener("click", openSearchSheet);
+      $("#searchCloseButton").addEventListener("click", closeSearchSheet);
+      $("#searchScrim").addEventListener("click", closeSearchSheet);
+      $("#darkThemeButton").addEventListener("click", () => applyTheme("dark"));
+      $("#lightThemeButton").addEventListener("click", () => applyTheme("light"));
+      $("#englishButton").addEventListener("click", () => applyLanguage("en"));
+      $("#banglaButton").addEventListener("click", () => applyLanguage("bn"));
+      $("#reportButton").addEventListener("click", () => setContactMode("report"));
+      $("#feedbackButton").addEventListener("click", () => setContactMode("feedback"));
+      $("#termsButton").addEventListener("click", () => openLegal("terms"));
+      $("#privacyButton").addEventListener("click", () => openLegal("privacy"));
+      $("#contactForm").addEventListener("submit", submitContact);
+      $("#homeSearchInput").addEventListener("input", event => queueSearch(event.target.value, "home"));
+      $("#sheetSearchInput").addEventListener("input", event => { $("#homeSearchInput").value = event.target.value; queueSearch(event.target.value, "sheet"); queueSearch(event.target.value, "home"); });
+      $("#homeSearchForm").addEventListener("submit", event => { event.preventDefault(); updateSearchResults($("#homeSearchInput").value, "home"); });
+      $("#sheetSearchForm").addEventListener("submit", event => { event.preventDefault(); updateSearchResults($("#sheetSearchInput").value, "sheet"); });
+      $("#brandLogo").addEventListener("error", () => { $("#brandLogo").style.display = "none"; $("#brandFallback").style.display = "inline"; });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") { closeDrawer(); closeSearchSheet(); closeQuickLanguage(); }
+      });
+      document.addEventListener("click", event => {
+        if (!$("#quickLanguageMenu").contains(event.target) && !$("#headerLanguageButton").contains(event.target)) closeQuickLanguage();
+      });
+      window.addEventListener("popstate", () => {
+        const hash = location.hash;
+        if (hash.startsWith("#person/")) {
+          const path = decodeURIComponent(hash.slice(8)); const profile = state.profiles.find(p => p.path === path);
+          if (profile) { state.currentProfile = profile; setMainView("identity"); renderIdentity(profile, true); }
+          else goHome();
+        } else if (hash === "#terms" || hash === "#privacy") {
+          setMainView("legal"); renderLegal(hash.slice(1));
+        } else { state.currentProfile = null; setMainView("home"); }
+      });
+
+      applyTheme(state.theme);
+      applyLanguage(state.language);
+      const initialHash = location.hash;
+      loadProfiles().then(() => {
+        if (initialHash.startsWith("#person/")) {
+          const path = decodeURIComponent(initialHash.slice(8)); const profile = state.profiles.find(p => p.path === path);
+          if (profile) { state.currentProfile = profile; setMainView("identity"); renderIdentity(profile, true); }
+        } else if (initialHash === "#terms" || initialHash === "#privacy") {
+          setMainView("legal"); renderLegal(initialHash.slice(1));
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
