@@ -32,7 +32,7 @@
       --ink: #202631;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html { min-width: 0; max-width: 100%; overflow-x: hidden; overflow-x: clip; scroll-behavior: smooth; background: var(--bg); }
+    html { min-width: 0; max-width: 100%; overflow-x: hidden; overflow-x: clip; scroll-behavior: auto; background: var(--bg); }
     body {
       margin: 0;
       min-height: 100vh;
@@ -43,7 +43,7 @@
       color: var(--ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.55;
-      transition: background-color .35s var(--ease), color .35s var(--ease);
+      transition: none;
     }
     button, input, textarea { font: inherit; }
     button { color: inherit; }
@@ -63,9 +63,9 @@
       height: var(--header-height);
       background: color-mix(in srgb, var(--bg) 90%, transparent);
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      animation: rise-in .65s var(--ease) both;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      animation: none;
     }
     .header-inner {
       width: min(1180px, calc(100% - 44px));
@@ -79,9 +79,9 @@
     .icon-button, .language-button {
       min-width: 42px; height: 42px; border: 1px solid transparent; border-radius: 14px;
       background: transparent; display: inline-flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background .22s ease, border-color .22s ease, transform .22s ease;
+      cursor: pointer; transition: background .12s ease, border-color .12s ease;
     }
-    .icon-button:hover, .language-button:hover { background: var(--soft); border-color: var(--line); transform: translateY(-1px); }
+    .icon-button:hover, .language-button:hover { background: var(--soft); border-color: var(--line); transform: none; }
     .icon-button svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .language-button { padding: 0 12px; gap: 7px; font-size: .85rem; font-weight: 650; }
     .language-button .flag { font-size: 1.05rem; }
@@ -96,9 +96,9 @@
       width: min(640px, 100%); min-width: 0; margin: 34px auto 0; padding: 7px;
       border: 1px solid var(--line); border-radius: 19px; background: var(--surface);
       display: flex; align-items: center; gap: 9px; box-shadow: 0 16px 50px color-mix(in srgb, var(--ink) 4%, transparent);
-      transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+      transition: border-color .12s ease;
     }
-    .search-form:focus-within { border-color: color-mix(in srgb, var(--ink) 42%, transparent); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .search-form:focus-within { border-color: color-mix(in srgb, var(--ink) 42%, transparent); transform: none; box-shadow: none; }
     .search-symbol { width: 22px; height: 22px; margin-left: 12px; flex: 0 0 auto; opacity: .68; }
     .search-symbol svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
     .search-form input {
@@ -111,9 +111,9 @@
       flex: 0 0 auto; white-space: nowrap; background: var(--ink); color: var(--bg); font-weight: 750; cursor: pointer;
       transition: transform .2s ease, opacity .2s ease;
     }
-    .search-submit:hover { transform: translateY(-1px); opacity: .88; }
+    .search-submit:hover { transform: none; opacity: .88; }
     .moving-hints { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin: 23px auto 0; }
-    .hint-pill { border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; color: var(--muted); font-size: .78rem; background: var(--soft); animation: float-soft 5s ease-in-out infinite; }
+    .hint-pill { border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; color: var(--muted); font-size: .78rem; background: var(--soft); animation: none; }
     .hint-pill:nth-child(2) { animation-delay: -.9s; }
     .hint-pill:nth-child(3) { animation-delay: -1.8s; }
     .hint-pill:nth-child(4) { animation-delay: -2.7s; }
@@ -125,20 +125,20 @@
     .result-card {
       width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 17px; background: var(--surface);
       display: flex; align-items: center; gap: 14px; padding: 12px 15px; text-align: left; cursor: pointer;
-      animation: rise-in .48s var(--ease) both; animation-delay: var(--delay, 0ms);
-      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+      animation: none;
+      transition: border-color .12s ease, background .12s ease;
     }
-    .result-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--ink) 35%, transparent); }
+    .result-card:hover { transform: none; border-color: color-mix(in srgb, var(--ink) 35%, transparent); }
     .result-avatar { width: 48px; height: 48px; border-radius: 14px; object-fit: cover; background: var(--soft); flex: 0 0 auto; }
     .avatar-placeholder { display: grid; place-items: center; color: var(--muted); font-size: 1.15rem; font-weight: 750; }
     .result-copy { min-width: 0; flex: 1; }
     .result-name { margin: 0; font-size: .98rem; font-weight: 720; letter-spacing: -.02em; }
     .result-summary { margin: 3px 0 0; color: var(--muted); font-size: .82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .result-arrow { opacity: .48; font-size: 1.2rem; flex: 0 0 auto; }
-    .empty-state { padding: 24px; border: 1px dashed var(--line); border-radius: 17px; color: var(--muted); text-align: center; font-size: .9rem; animation: rise-in .4s var(--ease) both; }
-    .identity-view, .legal-view { animation: rise-in .55s var(--ease) both; }
+    .empty-state { padding: 24px; border: 1px dashed var(--line); border-radius: 17px; color: var(--muted); text-align: center; font-size: .9rem; animation: none; }
+    .identity-view, .legal-view { animation: none; }
     .back-button { display: inline-flex; align-items: center; gap: 9px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; font-size: .85rem; margin-bottom: 25px; }
-    .profile-hero { display: grid; grid-template-columns: minmax(0, 230px) minmax(0, 1fr); gap: 28px; min-width: 0; align-items: center; padding: 23px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .profile-hero { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px; min-width: 0; align-items: center; padding: 23px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
     .profile-image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 17px; background: var(--soft); }
     .profile-image-placeholder { display: grid; place-items: center; font-size: 3rem; font-weight: 800; color: var(--muted); }
     .profile-kicker { color: var(--muted); text-transform: uppercase; letter-spacing: .14em; font-size: .73rem; font-weight: 750; }
@@ -177,19 +177,19 @@
     .legal-updated { color: var(--muted); font-size: .78rem; margin-bottom: 25px; }
     .site-footer { padding: 25px 0 0; text-align: center; color: var(--muted); font-size: .75rem; }
     [hidden] { display: none !important; }
-    .scrim { position: fixed; inset: 0; z-index: 49; background: color-mix(in srgb, var(--bg) 58%, transparent); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .scrim { position: fixed; inset: 0; z-index: 49; background: color-mix(in srgb, var(--bg) 58%, transparent); opacity: 0; pointer-events: none; transition: opacity .14s ease; }
     .scrim.open { opacity: 1; pointer-events: auto; }
     .drawer {
       position: fixed; z-index: 50; inset: 0 0 0 auto; width: min(460px, 88vw); height: 100vh; height: 100dvh;
       overflow-y: auto; padding: 25px 24px 34px; background: var(--surface); border-left: 1px solid var(--line);
       box-shadow: var(--shadow); transform: translateX(105%); visibility: hidden;
-      transition: transform .42s var(--ease), visibility .42s;
+      transition: transform .18s ease, visibility .18s;
     }
     .drawer.open { transform: translateX(0); visibility: visible; }
     .drawer-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
     .drawer-title { margin: 0; font-size: 1.26rem; letter-spacing: -.04em; }
     .close-button { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 12px; background: transparent; cursor: pointer; font-size: 1.25rem; }
-    .drawer-section { padding: 20px 0; border-top: 1px solid var(--line); animation: rise-in .45s var(--ease) both; }
+    .drawer-section { padding: 20px 0; border-top: 1px solid var(--line); animation: none; }
     .drawer-section:nth-of-type(2) { animation-delay: 50ms; }
     .drawer-section:nth-of-type(3) { animation-delay: 100ms; }
     .drawer-section:nth-of-type(4) { animation-delay: 150ms; }
@@ -214,7 +214,7 @@
       position: fixed; z-index: 36; inset: var(--header-height) 0 auto; max-height: calc(100dvh - var(--header-height)); overflow-y: auto;
       padding: 22px max(22px, calc((100vw - 760px) / 2)) 28px; background: var(--bg); border-bottom: 1px solid var(--line);
       box-shadow: var(--shadow); opacity: 0; transform: translateY(-12px); pointer-events: none; visibility: hidden;
-      transition: opacity .3s ease, transform .35s var(--ease), visibility .3s;
+      transition: opacity .14s ease, transform .14s ease, visibility .14s;
     }
     .search-sheet.open { opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; }
     .search-scrim.open { opacity: 1; pointer-events: auto; }
@@ -224,7 +224,7 @@
     .quick-language {
       position: fixed; z-index: 45; top: calc(var(--header-height) - 2px); right: max(20px, calc((100vw - 1180px) / 2 + 65px));
       width: min(180px, calc(100vw - 24px)); padding: 8px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); box-shadow: var(--shadow);
-      opacity: 0; transform: translateY(-8px); pointer-events: none; visibility: hidden; transition: .25s var(--ease);
+      opacity: 0; transform: translateY(-8px); pointer-events: none; visibility: hidden; transition: opacity .14s ease, transform .14s ease, visibility .14s;
     }
     .quick-language.open { opacity: 1; transform: translateY(8px); pointer-events: auto; visibility: visible; }
     .quick-language button { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; border-radius: 10px; padding: 10px; background: transparent; text-align: left; cursor: pointer; }
@@ -233,9 +233,9 @@
     .page-shell, .hero, .results-wrap, .results-list, .profile-hero-copy, .markdown-content, .legal-view, .legal-card, .fact-grid { min-width: 0; }
     .profile-hero-copy, .profile-aliases, .quote-card, .legal-card h1, .legal-card h2, .drawer-link, .section-label, .home-footnote, .status-line { overflow-wrap: anywhere; }
     .drawer-link { align-items: flex-start; }
-    .animate-in { animation: rise-in .52s var(--ease) both; }
-    @keyframes rise-in { from { opacity: 0; transform: translate3d(0, 22px, 0); filter: blur(5px); } to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); } }
-    @keyframes float-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    .animate-in { animation: rise-in .2s ease both; }
+    @keyframes rise-in { from { opacity: 0; transform: translate3d(0, 7px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+    
     @media (max-width: 640px) {
       :root { --header-height: 66px; }
       .header-inner { width: calc(100% - 28px); }
@@ -249,7 +249,7 @@
       .search-form { margin-top: 27px; }
       .search-submit { min-width: 44px; padding: 0 12px; }
       .profile-hero { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
-      .profile-image { width: min(210px, 65vw); margin: 0 auto; }
+      .profile-image { width: min(320px, 84vw); max-width: 100%; margin: 0 auto; }
       .profile-hero-copy { text-align: center; }
       .profile-title { font-size: 2.25rem; }
       .fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -275,7 +275,33 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
+
+    .bn-text { font-family: 'Noto Sans Bengali', 'Inter', sans-serif; line-height: 1.75; }
+    .err-strike { background: rgba(239,68,68,.16); color: #dc2626; text-decoration: line-through; padding: 1px 4px; border-radius: 4px; }
+    .fix-badge { background: rgba(16,185,129,.16); color: #059669; padding: 1px 5px; border-radius: 4px; font-weight: 600; }
+    .bot-modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 14px; background: rgba(0,0,0,.66); }
+    .bot-modal[hidden] { display: none !important; }
+    .bot-modal-card { width: min(920px, 100%); max-height: min(92dvh, 900px); overflow: auto; border: 1px solid var(--line); border-radius: 20px; background: var(--bg); box-shadow: 0 18px 55px rgba(0,0,0,.28); overscroll-behavior: contain; }
+    .bot-modal-header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--line); }
+    .bot-modal-close { width: 38px; height: 38px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 11px; background: transparent; color: var(--ink); cursor: pointer; font-size: 1.2rem; }
+    .bot-status { margin: 8px 0 0; color: var(--muted); font-size: .76rem; }
+    .translation-status { color: var(--muted); font-size: .78rem; margin: 9px 0 0; }
+    .result-card { content-visibility: auto; contain-intrinsic-size: 82px; }
+    .result-card .result-avatar { width: 68px; height: 68px; border-radius: 17px; }
+    .profile-hero { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); }
+    .profile-image { max-width: 320px; }
+    @media (max-width: 640px) {
+      .result-card .result-avatar { width: 62px; height: 62px; }
+      .profile-hero { grid-template-columns: 1fr; }
+      .profile-image { width: min(320px, 84vw); max-width: 100%; }
+    }
+    @media (prefers-color-scheme: dark) { .err-strike { background: rgba(239,68,68,.25); color: #fca5a5; } .fix-badge { background: rgba(16,185,129,.25); color: #6ee7b7; } }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'Noto Sans Bengali', 'sans-serif'], bengali: ['Noto Sans Bengali', 'Inter', 'sans-serif'] } } } };
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -285,6 +311,9 @@
         <span class="brand-fallback" id="brandFallback">identity</span>
       </a>
       <nav class="header-actions" aria-label="Main controls">
+        <button class="icon-button" id="bhasaBotButton" type="button" aria-label="Open BhasaBot" title="BhasaBot">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"/><path d="m19 14 .9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14Z"/></svg>
+        </button>
         <button class="icon-button" id="headerSearchButton" type="button" aria-label="Open search" title="Search">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
         </button>
@@ -385,6 +414,3633 @@
     <button type="button" data-language="bn" role="menuitemradio" aria-checked="false"><span>🇧🇩</span><span>বাংলা</span></button>
   </div>
 
+
+
+  <section class="bot-modal" id="bhasaBotModal" hidden aria-modal="true" role="dialog" aria-label="BhasaBot assistant">
+    <div class="bot-modal-card">
+      <div class="bot-modal-header">
+        <div><strong>BhasaBot</strong><div class="bot-status">Bangla ⇄ English translation · spelling · typing · grammar</div></div>
+        <button class="bot-modal-close" id="bhasaBotClose" type="button" aria-label="Close BhasaBot">×</button>
+      </div>
+      <div id="mainBotMount"></div>
+    </div>
+  </section>
+  <div id="toastBanner" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[90] px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-medium shadow-xl"></div>
+
+<template id="botAppTemplate">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+      <!-- Two-Task Navigation Tabs -->
+      <div class="grid grid-cols-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/40 p-1.5 gap-1.5">
+        <button type="button" data-tab="translate"
+          class="tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+          </svg>
+          <span>1. Translate (BN ⇄ EN)</span>
+        </button>
+
+        <button type="button" data-tab="fixer"
+          class="tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>2. Typo &amp; Grammar Fixer</span>
+        </button>
+      </div>
+
+      <!-- ===============================================================
+           TASK 1: BANGLA <-> ENGLISH TRANSLATOR VIEW
+      ================================================================ -->
+      <section data-panel="translate" class="p-4 sm:p-5 space-y-4">
+        <!-- Direction & Quick Samples Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <!-- Direction Pills -->
+          <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1 text-xs font-medium">
+            <button type="button" data-dir="auto" class="dir-btn px-2.5 py-1.5 rounded-lg transition">
+              Auto-Detect
+            </button>
+            <button type="button" data-dir="en-bn" class="dir-btn px-2.5 py-1.5 rounded-lg transition">
+              EN → BN
+            </button>
+            <button type="button" data-dir="bn-en" class="dir-btn px-2.5 py-1.5 rounded-lg transition">
+              BN → EN
+            </button>
+          </div>
+
+          <!-- Sample Chips -->
+          <div class="flex items-center gap-1.5 text-xs">
+            <span class="text-slate-400 hidden sm:inline">Try:</span>
+            <button type="button" data-sample="trans-en"
+              class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 transition">
+              English Sample
+            </button>
+            <button type="button" data-sample="trans-bn"
+              class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-300 hover:bg-emerald-100 transition bn-text">
+              বাংলা নমুনা
+            </button>
+          </div>
+        </div>
+
+        <!-- Input & Output Split Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <!-- Source Box -->
+          <div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 focus-within:border-indigo-500 transition">
+            <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-200/70 dark:border-slate-700/70 text-xs">
+              <span class="detected-lang-label font-semibold text-slate-500 dark:text-slate-400">
+                Source (Auto: English / বাংলা)
+              </span>
+              <div class="flex items-center gap-2">
+                <span class="char-count text-slate-400">0 chars</span>
+                <button type="button" class="clear-trans-btn text-slate-400 hover:text-rose-500 transition" title="Clear text">
+                  Clear
+                </button>
+              </div>
+            </div>
+            <textarea rows="5"
+              class="trans-input w-full p-3.5 bg-transparent resize-none focus:outline-none text-sm sm:text-base bn-text"
+              placeholder="Type or paste English or বাংলা text here to translate..."></textarea>
+          </div>
+
+          <!-- Target Box -->
+          <div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+            <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-200/70 dark:border-slate-700/70 text-xs">
+              <span class="target-lang-label font-semibold text-indigo-600 dark:text-indigo-400">
+                Translation Output
+              </span>
+              <div class="flex items-center gap-1.5">
+                <button type="button" class="swap-trans-btn px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition" title="Use output as new input">
+                  ⇄ Swap
+                </button>
+                <button type="button" class="copy-trans-btn px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-600 dark:text-indigo-300 font-medium transition">
+                  Copy
+                </button>
+              </div>
+            </div>
+            <div class="trans-output flex-1 p-3.5 text-sm sm:text-base bn-text min-h-[132px] whitespace-pre-wrap text-slate-700 dark:text-slate-200">
+              <span class="text-slate-400 italic text-sm">Translation will appear here...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Action Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <!-- Network Mode Switcher -->
+            <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-0.5 text-[11px] font-medium">
+              <button type="button" data-netmode="hybrid" class="netmode-btn px-2 py-1 rounded-lg transition">
+                Auto Hybrid
+              </button>
+              <button type="button" data-netmode="offline" class="netmode-btn px-2 py-1 rounded-lg transition">
+                Offline Only
+              </button>
+            </div>
+            <span class="engine-badge inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>Massive Lexicon + Neural Ready</span>
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button type="button"
+              class="fix-before-trans-btn flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs sm:text-sm font-medium transition">
+              Fix Typos &amp; Translate
+            </button>
+            <button type="button"
+              class="run-trans-btn flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center justify-center gap-2">
+              <span>Translate Now</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           TASK 2: TYPO, SPELLING & GRAMMAR CATCHER + AUTO-FIXER VIEW
+      ================================================================ -->
+      <section data-panel="fixer" class="hidden p-4 sm:p-5 space-y-4">
+        <!-- Language Mode & Quick Broken Samples -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1 text-xs font-medium">
+            <button type="button" data-fixlang="auto" class="fixlang-btn px-2.5 py-1.5 rounded-lg transition">
+              Auto (BN / EN)
+            </button>
+            <button type="button" data-fixlang="en" class="fixlang-btn px-2.5 py-1.5 rounded-lg transition">
+              English
+            </button>
+            <button type="button" data-fixlang="bn" class="fixlang-btn px-2.5 py-1.5 rounded-lg transition bn-text">
+              বাংলা
+            </button>
+          </div>
+
+          <div class="flex items-center gap-1.5 text-xs">
+            <span class="text-slate-400 hidden sm:inline">Test typos:</span>
+            <button type="button" data-sample="fix-en"
+              class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 hover:bg-amber-100 transition">
+              Broken English
+            </button>
+            <button type="button" data-sample="fix-bn"
+              class="px-2.5 py-1 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 hover:bg-rose-100 transition bn-text">
+              ভুল বাংলা বাক্য
+            </button>
+          </div>
+        </div>
+
+        <!-- Input Textarea for Checking -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 focus-within:border-emerald-500 transition">
+          <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-200/70 dark:border-slate-700/70 text-xs">
+            <span class="fixer-lang-status font-semibold text-slate-500 dark:text-slate-400">
+              Paste English or বাংলা text with spelling, typing, or grammar mistakes
+            </span>
+            <button type="button" class="clear-fixer-btn text-slate-400 hover:text-rose-500 transition">
+              Clear
+            </button>
+          </div>
+          <textarea rows="4"
+            class="fixer-input w-full p-3.5 bg-transparent resize-none focus:outline-none text-sm sm:text-base bn-text"
+            placeholder="Write text with spelling, typing, or grammar mistakes... (e.g., 'I has alot of freinds' or 'আমি ভাত খাচ্ছে এবং সাকুল্যে পড়াশুনা করি ।')"></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="fixer-summary-badge text-xs font-medium text-slate-500 dark:text-slate-400">
+            Catches spelling, keyboard typos, punctuation &amp; grammar agreement
+          </span>
+          <button type="button"
+            class="run-fixer-btn w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center justify-center gap-2">
+            <span>Catch Mistakes &amp; Auto-Fix</span>
+          </button>
+        </div>
+
+        <!-- Results Container (Hidden until analysis runs) -->
+        <div class="fixer-results hidden space-y-3.5 pt-2 border-t border-slate-200 dark:border-slate-800">
+          <!-- Fixed Clean Output Card -->
+          <div class="rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/20 p-3.5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                  Corrected Text
+                </span>
+                <span class="issue-count-pill text-xs px-2 py-0.5 rounded-full bg-emerald-600 text-white font-medium">
+                  0 fixes
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" class="apply-fixed-btn px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium hover:border-emerald-500 transition">
+                  Replace Input
+                </button>
+                <button type="button" class="send-to-trans-btn px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 text-xs font-medium hover:bg-indigo-100 transition">
+                  Translate →
+                </button>
+                <button type="button" class="copy-fixed-btn px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-medium hover:bg-emerald-700 transition">
+                  Copy Fixed
+                </button>
+              </div>
+            </div>
+            <div class="fixed-clean-output text-sm sm:text-base bn-text font-medium text-slate-800 dark:text-slate-100 whitespace-pre-wrap"></div>
+          </div>
+
+          <!-- Diff View & Mistake Breakdown List -->
+          <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/30 p-3.5 space-y-2.5">
+            <div class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Mistakes Caught &amp; Explanations
+            </div>
+            <div class="diff-preview text-sm bn-text leading-relaxed p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800"></div>
+            <ul class="mistakes-list space-y-1.5 text-xs"></ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </template>
+<script>
+    (function () {
+      'use strict';
+
+      /* -------------------------------------------------------------------
+         1. LANGUAGE DETECTOR & TYPO / GRAMMAR RULE DATASETS
+      -------------------------------------------------------------------- */
+      function detectLanguage(text) {
+        const s = (text || '').trim();
+        if (!s) return 'en';
+        const bnMatches = s.match(/[\u0980-\u09FF]/g) || [];
+        const enMatches = s.match(/[A-Za-z]/g) || [];
+        return bnMatches.length >= enMatches.length && bnMatches.length > 0 ? 'bn' : 'en';
+      }
+
+      const ENGLISH_COMMON_TYPOS = {
+        "teh": "the", "hte": "the", "adn": "and", "nad": "and", "taht": "that",
+        "wiht": "with", "wtih": "with", "fo": "of", "ot": "to", "si": "is",
+        "ti": "it", "waht": "what", "whta": "what", "hwat": "what", "whens": "when",
+        "wher": "where", "whre": "where", "becuase": "because", "beacuse": "because",
+        "recieve": "receive", "beleive": "believe", "acheive": "achieve", "freind": "friend",
+        "freinds": "friends", "alot": "a lot", "definately": "definitely", "definatly": "definitely",
+        "seperate": "separate", "occured": "occurred", "untill": "until", "tommorow": "tomorrow",
+        "tomorow": "tomorrow", "langauge": "language", "languge": "language", "bengli": "Bengali",
+        "bangla": "Bangla", "english": "English", "grammer": "grammar", "speling": "spelling",
+        "transalte": "translate", "trnaslate": "translate", "wrod": "word", "sentance": "sentence",
+        "thier": "their", "theyre": "they're", "youre": "you're", "dont": "don't",
+        "doesnt": "doesn't", "didnt": "didn't", "cant": "can't", "wont": "won't",
+        "isnt": "isn't", "arent": "aren't", "wasnt": "wasn't", "werent": "weren't",
+        "havent": "haven't", "hasnt": "hasn't", "hadnt": "hadn't", "im": "I'm",
+        "ive": "I've", "ill": "I'll", "id": "I'd", "gonna": "going to", "wanna": "want to",
+        "gotta": "got to", "kinda": "kind of", "sorta": "sort of", "bcz": "because",
+        "pls": "please", "plz": "please", "thx": "thanks", "ty": "thank you",
+        "u": "you", "ur": "your", "r": "are", "gud": "good", "nite": "night",
+        "enviroment": "environment", "goverment": "government", "independant": "independent",
+        "knowlege": "knowledge", "neccessary": "necessary", "occassion": "occasion",
+        "publically": "publicly", "reccomend": "recommend", "refered": "referred",
+        "sucess": "success", "truely": "truly", "wierd": "weird", "writting": "writing"
+      };
+
+      const BANGLA_SPELLING_RULES = [
+        { wrong: "পড়াশুনা", right: "পড়াশোনা", reason: "বাংলা একাডেমি প্রমিত বানান: 'পড়াশোনা' (ও-কার যুক্ত)" },
+        { wrong: "পড়াশুনা", right: "পড়াশোনা", reason: "বাংলা একাডেমি প্রমিত বানান: 'পড়াশোনা' (ও-কার যুক্ত)" },
+        { wrong: "ভূল", right: "ভুল", reason: "প্রমিত বানান: 'ভুল' (হ্রস্ব উ-কার)" },
+        { wrong: "ব্যাকরন", right: "ব্যাকরণ", reason: "ণত্ব বিধান: ঋ, র, ষ-এর পর 'ণ' হয় ('ব্যাকরণ')" },
+        { wrong: "সাধারন", right: "সাধারণ", reason: "ণত্ব বিধান: 'র'-এর পর 'ণ' হয় ('সাধারণ')" },
+        { wrong: "কারন", right: "কারণ", reason: "ণত্ব বিধান: 'র'-এর পর 'ণ' হয় ('কারণ')" },
+        { wrong: "ধরন", right: "ধরন", reason: "তদ্ভব শব্দে 'ন' হয়" },
+        { wrong: "পুরষ্কার", right: "পুরস্কার", reason: "সন্ধির নিয়ম: অ-কারের পর স-কার হয় ('পুরস্কার')" },
+        { wrong: "নমষ্কার", right: "নমস্কার", reason: "সন্ধির নিয়ম: অ-কারের পর স-কার হয় ('নমস্কার')" },
+        { wrong: "আবিস্কার", right: "আবিষ্কার", reason: "ষত্ব বিধান: ই-কারের পর 'ষ' হয় ('আবিষ্কার')" },
+        { wrong: "পরিষ্কার", right: "পরিষ্কার", reason: "ষত্ব বিধান: সঠিক বানান 'পরিষ্কার'" },
+        { wrong: "পরিস্কার", right: "পরিষ্কার", reason: "ষত্ব বিধান: ই-কারের পর 'ষ' হয় ('পরিষ্কার')" },
+        { wrong: "শহীদ", right: "শহিদ", reason: "বাংলা একাডেমি প্রমিত বানান: বিদেশি শব্দে ই-কার ('শহিদ')" },
+        { wrong: "ঈদ", right: "ইদ", reason: "প্রমিত বানান রীতি অনুযায়ী 'ইদ' বা প্রচলিত 'ঈদ'" },
+        { wrong: "কিভাবে", right: "কীভাবে", reason: "প্রশ্নবোধক অর্থে দীর্ঘ ঈ-কার ('কীভাবে')" },
+        { wrong: "কি জন্য", right: "কী জন্য", reason: "প্রশ্নবোধক অর্থে দীর্ঘ ঈ-কার ('কী জন্য')" },
+        { wrong: "সাকুল্যে", right: "সকালে", reason: "সম্ভাব্য টাইপিং ভুল: 'সাকুল্যে' (মোট) এর বদলে 'সকালে'" },
+        { wrong: "দূর্ঘটনা", right: "দুর্ঘটনা", reason: "উপসর্গ 'দুর'-এ হ্রস্ব উ-কার হয় ('দুর্ঘটনা')" },
+        { wrong: "মূহুর্ত", right: "মুহূর্ত", reason: "প্রমিত বানান: প্রথম হ্রস্ব উ-কার, পরে দীর্ঘ ঊ-কার ('মুহূর্ত')" },
+        { wrong: "মুহুর্ত", right: "মুহূর্ত", reason: "প্রমিত বানান: 'মুহূর্ত' (ঊ-কার)" },
+        { wrong: "স্বরন", right: "স্মরণ", reason: "সঠিক বানান: 'স্মরণ' (ম-ফলা ও ণ-ত্ব বিধান)" },
+        { wrong: "লক্ষন", right: "লক্ষণ", reason: "ণত্ব বিধান: 'ক্ষ'-এর পর 'ণ' হয় ('লক্ষণ')" },
+        { wrong: "ভবিষৎ", right: "ভবিষ্যৎ", reason: "সঠিক বানান: 'ভবিষ্যৎ' (ষ এবং ৎ)" },
+        { wrong: "হঠাৎ", right: "হঠাৎ", reason: "খণ্ড ত (ৎ) ব্যবহার হবে" },
+        { wrong: "হঠাত", right: "হঠাৎ", reason: "শব্দের শেষে খণ্ড ত (ৎ) হবে ('হঠাৎ')" },
+        { wrong: "অর্থাৎ", right: "অর্থাৎ", reason: "খণ্ড ত (ৎ) ব্যবহার হবে" },
+        { wrong: "অর্থাত", right: "অর্থাৎ", reason: "শব্দের শেষে খণ্ড ত (ৎ) হবে ('অর্থাৎ')" },
+        { wrong: "জগৎ", right: "জগৎ", reason: "খণ্ড ত (ৎ) ব্যবহার হবে" },
+        { wrong: "জগত", right: "জগৎ", reason: "শব্দের শেষে খণ্ড ত (ৎ) হবে ('জগৎ')" }
+      ];
+
+      const BANGLA_GRAMMAR_PATTERNS = [
+        {
+          regex: /(সব|সকল|সমস্ত)\s+([\u0980-\u09FF]+?)(গুলো|গুলি|রা|গণ|বৃন্দ)/g,
+          replace: (_, quant, noun) => `${quant} ${noun}`,
+          reason: "বাহুল্য দোষ: 'সব/সকল' এবং বহুবচন প্রত্যয় (-গুলো/-রা) একসাথে বসে না"
+        },
+        {
+          regex: /\bআমি\s+([\u0980-\u09FF]{1,12}?)চ্ছে\b/g,
+          replace: (_, stem) => `আমি ${stem}চ্ছি`,
+          reason: "পুরুষ ও ক্রিয়াপদের অন্বয়: 'আমি' কর্তার সাথে উত্তম পুরুষের ক্রিয়া (-চ্ছি) বসে"
+        },
+        {
+          regex: /\bআমি\s+([\u0980-\u09FF]{1,12}?)ছে\b/g,
+          replace: (_, stem) => `আমি ${stem}ছি`,
+          reason: "পুরুষ ও ক্রিয়াপদের অন্বয়: 'আমি' কর্তার সাথে '-ছি' বিভক্তি বসে"
+        },
+        {
+          regex: /\bআপনি\s+([\u0980-\u09FF]{1,12}?)ছ\b/g,
+          replace: (_, stem) => `আপনি ${stem}ছেন`,
+          reason: "সম্ভ্রমাত্মক অন্বয়: 'আপনি' কর্তার সাথে '-ছেন' ক্রিয়াবিভক্তি বসে"
+        },
+        {
+          regex: /\bতুমি\s+([\u0980-\u09FF]{1,12}?)ছেন\b/g,
+          replace: (_, stem) => `তুমি ${stem}ছো`,
+          reason: "পুরুষ অন্বয়: 'তুমি' কর্তার সাথে '-ছো' ক্রিয়াবিভক্তি বসে"
+        }
+      ];
+
+      /* -------------------------------------------------------------------
+         2. ULTRA-LARGE COMPACT PIPE-DELIMITED OFFLINE ENGLISH-BANGLA LEXICON
+         Thousands of distinct real English <-> Bangla word pairs across
+         every major domain (A-Z verbs, nouns, adjectives, adverbs, science,
+         tech, medicine, law, commerce, nature, culture, grammar & idioms).
+      -------------------------------------------------------------------- */
+      const COMPACT_LEXICON_BLOB = `
+hello|হ্যালো
+hi|হাই
+greetings|শুভেচ্ছা
+welcome|স্বাগতম
+good morning|শুভ সকাল
+good afternoon|শুভ অপরাহ্ন
+good evening|শুভ সন্ধ্যা
+good night|শুভ রাত্রি
+how are you|আপনি কেমন আছেন
+i am fine|আমি ভালো আছি
+what is your name|আপনার নাম কী
+my name is|আমার নাম
+nice to meet you|আপনার সাথে দেখা হয়ে ভালো লাগলো
+thank you|ধন্যবাদ
+thanks|ধন্যবাদ
+you are welcome|আপনাকে স্বাগতম
+please|দয়া করে
+kindly|অনুগ্রহ করে
+sorry|দুঃখিত
+excuse me|মাফ করবেন
+pardon|ক্ষমা করা
+no problem|কোনো সমস্যা নেই
+alright|ঠিক আছে
+yes|হ্যাঁ
+no|না
+maybe|হয়তো
+perhaps|সম্ভবত
+of course|অবশ্যই
+certainly|নিশ্চয়ই
+sure|নিশ্চিত
+really|সত্যিই
+congratulations|অভিনন্দন
+good luck|শুভকামনা
+happy birthday|শুভ জন্মদিন
+happy new year|শুভ নববর্ষ
+i love you|আমি তোমাকে ভালোবাসি
+i love bangladesh|আমি বাংলাদেশকে ভালোবাসি
+take care|যত্ন নিও
+see you later|পরে দেখা হবে
+i|আমি
+me|আমাকে
+my|আমার
+mine|আমার
+myself|আমি নিজে
+we|আমরা
+us|আমাদেরকে
+our|আমাদের
+ours|আমাদের
+ourselves|আমরা নিজেরা
+you|তুমি
+your|তোমার
+yours|তোমার
+yourself|তুমি নিজে
+he|সে
+him|তাকে
+his|তার
+himself|সে নিজে
+she|সে
+her|তাকে
+hers|তার
+herself|সে নিজে
+it|এটা
+its|এটার
+itself|এটা নিজে
+they|তারা
+them|তাদেরকে
+their|তাদের
+theirs|তাদের
+themselves|তারা নিজেরা
+this|এই
+that|ওই
+these|এইগুলো
+those|ওইগুলো
+who|কে
+whom|কাকে
+whose|কার
+what|কী
+which|কোনটি
+where|কোথায়
+when|কখন
+why|কেন
+how|কীভাবে
+all|সব
+every|প্রতিটি
+everyone|সবাই
+everybody|প্রত্যেকে
+everything|সবকিছু
+someone|কেউ
+somebody|কেউ একজন
+something|কিছু
+anyone|যেকোনো কেউ
+anything|যেকোনো কিছু
+nobody|কেউ না
+nothing|কিছুই না
+some|কিছু
+many|অনেক
+much|অনেক
+few|অল্প
+little|সামান্য
+several|বেশ কয়েকটি
+both|উভয়
+each|প্রত্যেক
+either|যেকোনো একটি
+neither|কোনোটিই না
+other|অন্য
+another|আরেকটি
+same|একই
+different|ভিন্ন
+such|এমন
+in|ভিতরে
+on|উপরে
+at|তে
+to|দিকে
+from|থেকে
+with|সাথে
+without|ছাড়া
+for|জন্য
+of|এর
+by|দ্বারা
+about|সম্পর্কে
+above|উপরে
+below|নিচে
+under|নিচে
+over|উপর দিয়ে
+between|মাঝখানে
+among|মধ্যে
+through|মধ্য দিয়ে
+into|ভিতরে
+during|চলাকালীন
+before|আগে
+after|পরে
+since|থেকে
+until|পর্যন্ত
+against|বিরুদ্ধে
+along|বরাবর
+around|চারপাশে
+behind|পিছনে
+beside|পাশে
+beyond|বাইরে
+inside|ভিতরে
+outside|বাইরে
+near|কাছে
+far|দূরে
+toward|দিকে
+upon|উপরে
+within|মধ্যে
+and|এবং
+or|অথবা
+but|কিন্তু
+so|তাই
+because|কারণ
+if|যদি
+unless|যদি না
+although|যদিও
+though|যদিও
+while|যখন
+whereas|যেখানে
+therefore|অতএব
+however|যাইহোক
+moreover|তাছাড়া
+besides|এছাড়াও
+otherwise|অন্যথায়
+meanwhile|ইতিমধ্যে
+yet|তবুও
+now|এখন
+then|তখন
+today|আজ
+tomorrow|আগামীকাল
+yesterday|গতকাল
+tonight|আজ রাতে
+soon|শীঘ্রই
+later|পরে
+early|তাড়াতাড়ি
+late|দেরি
+always|সবসময়
+never|কখনো না
+often|প্রায়ই
+sometimes|মাঝে মাঝে
+usually|সাধারণত
+rarely|কদাচিৎ
+seldom|খুব কমই
+already|ইতোমধ্যে
+still|এখনও
+again|আবার
+once|একবার
+twice|দুইবার
+here|এখানে
+there|সেখানে
+everywhere|সব জায়গায়
+nowhere|কোথাও না
+somewhere|কোথাও
+anywhere|যেকোনো জায়গায়
+up|উপরে
+down|নিচে
+away|দূরে
+back|পিছনে
+forward|সামনে
+together|একসাথে
+alone|একা
+very|খুব
+too|অত্যধিক
+quite|বেশ
+rather|বরং
+almost|প্রায়
+nearly|প্রায়
+enough|যথেষ্ট
+only|শুধুমাত্র
+just|মাত্র
+even|এমনকি
+also|ও
+especially|বিশেষ করে
+exactly|ঠিক
+completely|সম্পূর্ণরূপে
+quickly|দ্রুত
+slowly|ধীরে ধীরে
+carefully|সাবধানে
+easily|সহজেই
+hardly|কষ্টে
+suddenly|হঠাৎ
+quietly|নীরবে
+loudly|জোরে
+happily|আনন্দের সাথে
+sadly|দুঃখের সাথে
+truly|সত্যিকার অর্থে
+clearly|স্পষ্টভাবে
+zero|শূন্য
+one|এক
+two|দুই
+three|তিন
+four|চার
+five|পাঁচ
+six|ছয়
+seven|সাত
+eight|আট
+nine|নয়
+ten|দশ
+eleven|এগারো
+twelve|বারো
+thirteen|তেরো
+fourteen|চৌদ্দ
+fifteen|পনেরো
+sixteen|ষোলো
+seventeen|সতেরো
+eighteen|আঠারো
+nineteen|উনিশ
+twenty|বিশ
+thirty|ত্রিশ
+forty|চল্লিশ
+fifty|পঞ্চাশ
+sixty|ষাট
+seventy|সত্তর
+eighty|আশি
+ninety|নব্বই
+hundred|শত
+thousand|হাজার
+lakh|লক্ষ
+million|মিলিয়ন
+crore|কোটি
+billion|বিলিয়ন
+first|প্রথম
+second|দ্বিতীয়
+third|তৃতীয়
+fourth|চতুর্থ
+fifth|পঞ্চম
+sixth|ষষ্ঠ
+seventh|সপ্তম
+eighth|অষ্টম
+ninth|নবম
+tenth|দশম
+last|শেষ
+next|পরবর্তী
+previous|পূর্ববর্তী
+half|অর্ধেক
+quarter|এক চতুর্থাংশ
+double|দ্বিগুণ
+triple|তিনগুণ
+single|একক
+pair|জোড়া
+dozen|ডজন
+time|সময়
+moment|মুহূর্ত
+minute|মিনিট
+hour|ঘণ্টা
+day|দিন
+week|সপ্তাহ
+month|মাস
+year|বছর
+decade|দশক
+century|শতাব্দী
+era|যুগ
+morning|সকাল
+noon|দুপুর
+afternoon|বিকেল
+evening|সন্ধ্যা
+night|রাত
+midnight|মধ্যরাত
+dawn|ভোর
+sunrise|সূর্যোদয়
+sunset|সূর্যাস্ত
+twilight|গোধূলি
+saturday|শনিবার
+sunday|রবিবার
+monday|সোমবার
+tuesday|মঙ্গলবার
+wednesday|বুধবার
+thursday|বৃহস্পতিবার
+friday|শুক্রবার
+january|জানুয়ারি
+february|ফেব্রুয়ারি
+march|মার্চ
+april|এপ্রিল
+may|মে
+june|জুন
+july|জুলাই
+august|আগস্ট
+september|সেপ্টেম্বর
+october|অক্টোবর
+november|নভেম্বর
+december|ডিসেম্বর
+summer|গ্রীষ্মকাল
+rainy season|বর্ষাকাল
+autumn|শরৎকাল
+winter|শীতকাল
+spring|বসন্তকাল
+calendar|পঞ্জিকা
+clock|ঘড়ি
+watch|হাতঘড়ি
+alarm|অ্যালার্ম
+schedule|সময়সূচী
+holiday|ছুটির দিন
+vacation|অবকাশ
+weekend|সাপ্তাহিক ছুটি
+person|ব্যক্তি
+people|মানুষ
+human|মানব
+mankind|মানবজাতি
+man|পুরুষ
+woman|নারী
+boy|বালক
+girl|বালিকা
+child|শিশু
+children|শিশুরা
+baby|বাচ্চা
+infant|নবজাতক
+youth|যুবক
+teenager|কিশোর
+adult|প্রাপ্তবয়স্ক
+elder|বয়স্ক
+family|পরিবার
+relative|আত্মীয়
+parent|অভিভাবক
+parents|পিতামাতা
+father|বাবা
+mother|মা
+dad|আব্বু
+mom|আম্মু
+son|ছেলে
+daughter|মেয়ে
+brother|ভাই
+sister|বোন
+husband|স্বামী
+wife|স্ত্রী
+spouse|জীবনসঙ্গী
+marriage|বিবাহ
+wedding|বিয়ে
+bride|কনে
+groom|বর
+couple|দম্পতি
+grandfather|দাদা
+grandmother|দাদি
+grandson|নাতি
+granddaughter|নাতনি
+uncle|চাচা
+aunt|চাচি
+nephew|ভাতিজা
+niece|ভাতিজি
+cousin|চাচাতো ভাই
+friend|বন্ধু
+friendship|বন্ধুত্ব
+companion|সঙ্গী
+neighbor|প্রতিবেশী
+guest|অতিথি
+host|আয়োজক
+stranger|অপরিচিত ব্যক্তি
+enemy|শত্রু
+hero|নায়ক
+heroine|নায়িকা
+leader|নেতা
+member|সদস্য
+citizen|নাগরিক
+society|সমাজ
+community|সম্প্রদায়
+body|শরীর
+head|মাথা
+hair|চুল
+face|মুখমণ্ডল
+forehead|কপাল
+eye|চোখ
+eyebrow|ভ্রু
+ear|কান
+nose|নাক
+mouth|মুখ
+lip|ঠোঁট
+tooth|দাঁত
+teeth|দাঁতগুলো
+tongue|জিহ্বা
+neck|গলা
+throat|কণ্ঠনালী
+shoulder|কাঁধ
+arm|বাহু
+elbow|কনুই
+hand|হাত
+wrist|কব্জি
+finger|আঙুল
+thumb|বৃদ্ধাঙ্গুলি
+nail|নখ
+chest|বুক
+stomach|পেট
+waist|কোমর
+leg|পা
+thigh|উরু
+knee|হাঁটু
+ankle|গোড়ালি
+foot|পায়ের পাতা
+toe|পায়ের আঙুল
+skin|ত্বক
+bone|হাড়
+muscle|পেশী
+blood|রক্ত
+heart|হৃদয়
+brain|মস্তিষ্ক
+lung|ফুসফুস
+liver|যকৃত
+kidney|বৃক্ক
+nerve|স্নায়ু
+health|স্বাস্থ্য
+healthy|সুস্থ
+sick|অসুস্থ
+illness|অসুস্থতা
+disease|রোগ
+fever|জ্বর
+cold|সর্দি
+cough|কাশি
+headache|মাথাব্যথা
+pain|ব্যথা
+wound|ক্ষত
+injury|আঘাত
+infection|সংক্রমণ
+medicine|ঔষধ
+tablet|বড়ি
+injection|ইনজেকশন
+vaccine|টিকা
+doctor|ডাক্তার
+nurse|নার্স
+patient|রোগী
+hospital|হাসপাতাল
+clinic|ক্লিনিক
+pharmacy|ফার্মেসি
+treatment|চিকিৎসা
+surgery|অস্ত্রোপচার
+exercise|ব্যায়াম
+diet|পথ্য
+nutrition|পুষ্টি
+hygiene|স্বাস্থ্যবিধি
+breath|শ্বাস
+sleep|ঘুম
+dream|স্বপ্ন
+rest|বিশ্রাম
+energy|শক্তি
+food|খাবার
+meal|আহার
+breakfast|সকালের নাস্তা
+lunch|দুপুরের খাবার
+dinner|রাতের খাবার
+snack|হালকা নাস্তা
+water|পানি
+rice|ভাত
+paddy|ধান
+bread|রুটি
+flour|ময়দা
+lentil|ডাল
+fish|মাছ
+hilsa|ইলিশ
+meat|মাংস
+beef|গরুর মাংস
+mutton|খাসির মাংস
+chicken|মুরগির মাংস
+egg|ডিম
+milk|দুধ
+butter|মাখন
+ghee|ঘি
+cheese|পনির
+yogurt|দই
+curd|দই
+oil|তেল
+salt|লবণ
+sugar|চিনি
+honey|মধু
+spice|মসলা
+turmeric|হলুদ
+chili|মরিচ
+ginger|আদা
+garlic|রসুন
+onion|পেঁয়াজ
+cumin|জিরা
+coriander|ধনিয়া
+vegetable|সবজি
+potato|আলু
+tomato|টমেটো
+eggplant|বেগুন
+cucumber|শসা
+carrot|গাজর
+cabbage|বাঁধাকপি
+cauliflower|ফুলকপি
+spinach|পালং শাক
+pumpkin|মিষ্টি কুমড়া
+bitter gourd|করলা
+okra|ঢেঁড়স
+fruit|ফল
+mango|আম
+jackfruit|কাঁঠাল
+banana|কলা
+apple|আপেল
+orange|কমলা
+grape|আঙুর
+pineapple|আনারস
+watermelon|তরমুজ
+papaya|পেঁপে
+guava|পেয়ারা
+lemon|লেবু
+coconut|নারকেল
+lychee|লিচু
+tea|চা
+coffee|কফি
+juice|রস
+sweet|মিষ্টি
+dessert|মিষ্টান্ন
+cake|কেক
+biscuit|বিস্কুট
+soup|স্যুপ
+salad|সালাদ
+curry|তরকারি
+kitchen|রান্নাঘর
+cook|রাঁধুনি
+recipe|রন্ধনপ্রণালী
+plate|থালা
+bowl|বাটি
+cup|কাপ
+glass|গ্লাস
+spoon|চামচ
+fork|কাঁটাচামচ
+knife|ছুরি
+pot|হাঁড়ি
+pan|কড়াই
+stove|চুলা
+restaurant|রেস্তোরাঁ
+nature|প্রকৃতি
+earth|পৃথিবী
+world|বিশ্ব
+universe|মহাবিশ্ব
+sky|আকাশ
+sun|সূর্য
+moon|চাঁদ
+star|তারা
+planet|গ্রহ
+cloud|মেঘ
+rain|বৃষ্টি
+rainfall|বৃষ্টিপাত
+storm|ঝড়
+cyclone|ঘূর্ণিঝড়
+thunder|বজ্রপাত
+lightning|বিদ্যুৎ চমক
+wind|বাতাস
+breeze|মৃদু বাতাস
+fog|কুয়াশা
+dew|শিশির
+snow|তুষার
+ice|বরফ
+rainbow|রংধনু
+weather|আবহাওয়া
+climate|জলবায়ু
+temperature|তাপমাত্রা
+heat|তাপ
+flood|বন্যা
+drought|খরা
+earthquake|ভূমিকম্প
+environment|পরিবেশ
+pollution|দূষণ
+air|বায়ু
+fire|আগুন
+smoke|ধোঁয়া
+ash|ছাই
+soil|মাটি
+sand|বালি
+stone|পাথর
+rock|শিলা
+mud|কাদা
+dust|ধুলো
+mountain|পর্বত
+hill|পাহাড়
+valley|উপত্যকা
+forest|বন
+jungle|জঙ্গল
+desert|মরুভূমি
+island|দ্বীপ
+coast|উপকূল
+beach|সৈকত
+river|নদী
+stream|ঝর্ণা
+lake|হ্রদ
+pond|পুকুর
+canal|খাল
+sea|সমুদ্র
+ocean|মহাসাগর
+wave|ঢেউ
+tide|জোয়ার
+tree|গাছ
+plant|উদ্ভিদ
+grass|ঘাস
+leaf|পাতা
+branch|ডাল
+root|শিকড়
+seed|বীজ
+flower|ফুল
+rose|গোলাপ
+lotus|পদ্ম
+water lily|শাপলা
+sunflower|সূর্যমুখী
+marigold|গাঁদা ফুল
+jasmine|বেলি ফুল
+bamboo|বাঁশ
+banyan|বটগাছ
+palm|তালগাছ
+garden|বাগান
+animal|প্রাণী
+bird|পাখি
+insect|পোকা
+reptile|সরীসৃপ
+tiger|বাঘ
+lion|সিংহ
+elephant|হাতি
+deer|হরিণ
+bear|ভালুক
+monkey|বানর
+fox|শিয়াল
+wolf|নেকড়ে
+dog|কুকুর
+cat|বিড়াল
+cow|গরু
+goat|ছাগল
+sheep|ভেড়া
+horse|ঘোড়া
+buffalo|মহিষ
+camel|উট
+rabbit|খরগোশ
+mouse|ইঁদুর
+snake|সাপ
+crocodile|কুমির
+turtle|কচ্ছপ
+frog|ব্যাঙ
+lizard|টিকটিকি
+crow|কাক
+sparrow|চড়ুই
+pigeon|কবুতর
+parrot|টিয়া
+peacock|ময়ূর
+eagle|ঈগল
+owl|পেঁচা
+duck|হাঁস
+swan|রাজহাঁস
+cuckoo|কোকিল
+magpie robin|দোয়েল
+kingfisher|মাছরাঙা
+butterfly|প্রজাপতি
+bee|মৌমাছি
+ant|পিঁপড়া
+mosquito|মশা
+fly|মাছি
+spider|মাকড়সা
+whale|তিমি
+dolphin|ডলফিন
+shark|হাঙর
+crab|কাঁকড়া
+shrimp|চিংড়ি
+country|দেশ
+nation|জাতি
+state|রাষ্ট্র
+capital|রাজধানী
+bangladesh|বাংলাদেশ
+dhaka|ঢাকা
+chattogram|চট্টগ্রাম
+sylhet|সিলেট
+rajshahi|রাজশাহী
+khulna|খুলনা
+barishal|বরিশাল
+rangpur|রংপুর
+mymensingh|ময়মনসিংহ
+india|ভারত
+kolkata|কলকাতা
+west bengal|পশ্চিমবঙ্গ
+city|শহর
+town|নগর
+village|গ্রাম
+rural|গ্রামীণ
+urban|শহুরে
+area|এলাকা
+region|অঞ্চল
+district|জেলা
+division|বিভাগ
+border|সীমান্ত
+map|মানচিত্র
+direction|দিক
+north|উত্তর
+south|দক্ষিণ
+east|পূর্ব
+west|পশ্চিম
+center|কেন্দ্র
+corner|কোণা
+home|বাড়ি
+house|ঘর
+building|ভবন
+apartment|ফ্ল্যাট
+room|কক্ষ
+bedroom|শোবার ঘর
+living room|বসার ঘর
+bathroom|বাথরুম
+balcony|বারান্দা
+roof|ছাদ
+wall|দেয়াল
+floor|মেঝে
+door|দরজা
+window|জানালা
+stairs|সিঁড়ি
+gate|ফটক
+yard|উঠান
+bridge|সেতু
+road|রাস্তা
+street|সড়ক
+highway|মহাসড়ক
+lane|গলি
+path|পথ
+park|উদ্যান
+market|বাজার
+shop|দোকান
+store|ভান্ডার
+mall|বিপণিবিতান
+office|অফিস
+factory|কারখানা
+bank|ব্যাংক
+post office|ডাকঘর
+police station|থানা
+court|আদালত
+prison|কারাগার
+museum|জাদুঘর
+library|গ্রন্থাগার
+mosque|মসজিদ
+temple|মন্দির
+church|গির্জা
+pagoda|প্যাগোডা
+hotel|হোটেল
+airport|বিমানবন্দর
+station|স্টেশন
+port|বন্দর
+education|শিক্ষা
+knowledge|জ্ঞান
+wisdom|প্রজ্ঞা
+intelligence|বুদ্ধিমত্তা
+school|বিদ্যালয়
+college|কলেজ
+university|বিশ্ববিদ্যালয়
+institute|প্রতিষ্ঠান
+class|শ্রেণী
+classroom|শ্রেণীকক্ষ
+lesson|পাঠ
+chapter|অধ্যায়
+subject|বিষয়
+course|কোর্স
+syllabus|পাঠ্যসূচি
+degree|ডিগ্রি
+teacher|শিক্ষক
+professor|অধ্যাপক
+student|ছাত্র
+learner|শিক্ষার্থী
+principal|অধ্যক্ষ
+headmaster|প্রধান শিক্ষক
+exam|পরীক্ষা
+examination|পরীক্ষা
+test|পরীক্ষা
+question|প্রশ্ন
+answer|উত্তর
+result|ফলাফল
+grade|মান
+marks|নম্বর
+pass|উত্তীর্ণ
+fail|অকৃতকার্য
+certificate|সনদপত্র
+scholarship|বৃত্তি
+homework|বাড়ির কাজ
+study|পড়াশোনা
+research|গবেষণা
+discovery|আবিষ্কার
+invention|উদ্ভাবন
+experiment|পরীক্ষা-নিরীক্ষা
+book|বই
+notebook|খাতা
+page|পৃষ্ঠা
+paper|কাগজ
+pen|কলম
+pencil|পেন্সিল
+eraser|রাবার
+ruler|স্কেল
+bag|ব্যাগ
+board|বোর্ড
+dictionary|অভিধান
+encyclopedia|বিশ্বকোষ
+newspaper|সংবাদপত্র
+magazine|পত্রিকা
+language|ভাষা
+bangla|বাংলা
+bengali|বাংলা
+english|ইংরেজি
+word|শব্দ
+sentence|বাক্য
+paragraph|অনুচ্ছেদ
+essay|রচনা
+story|গল্প
+poem|কবিতা
+poet|কবি
+literature|সাহিত্য
+grammar|ব্যাকরণ
+spelling|বানান
+meaning|অর্থ
+translation|অনুবাদ
+pronunciation|উচ্চারণ
+vocabulary|শব্দভান্ডার
+letter|বর্ণ
+alphabet|বর্ণমালা
+science|বিজ্ঞান
+physics|পদার্থবিজ্ঞান
+chemistry|রসায়ন
+biology|জীববিজ্ঞান
+mathematics|গণিত
+math|অঙ্ক
+history|ইতিহাস
+geography|ভূগোল
+economics|অর্থনীতি
+philosophy|দর্শন
+psychology|মনোবিজ্ঞান
+sociology|সমাজবিজ্ঞান
+number|সংখ্যা
+addition|যোগ
+subtraction|বিয়োগ
+multiplication|গুণ
+equation|সমীকরণ
+angle|কোণ
+circle|বৃত্ত
+triangle|ত্রিভুজ
+square|বর্গক্ষেত্র
+rectangle|আয়তক্ষেত্র
+line|রেখা
+point|বিন্দু
+atom|পরমাণু
+molecule|অণু
+cell|কোষ
+gravity|মাধ্যাকর্ষণ
+technology|প্রযুক্তি
+computer|কম্পিউটার
+laptop|ল্যাপটপ
+mobile|মোবাইল
+phone|ফোন
+smartphone|স্মার্টফোন
+screen|পর্দা
+keyboard|কীবোর্ড
+printer|প্রিন্টার
+camera|ক্যামেরা
+battery|ব্যাটারি
+charger|চার্জার
+electricity|বিদ্যুৎ
+machine|যন্ত্র
+software|সফটওয়্যার
+hardware|হার্ডওয়্যার
+program|প্রোগ্রাম
+application|অ্যাপ্লিকেশন
+app|অ্যাপ
+website|ওয়েবসাইট
+webpage|ওয়েবপেজ
+internet|ইন্টারনেট
+network|নেটওয়ার্ক
+wifi|ওয়াইফাই
+data|তথ্য
+information|তথ্য
+file|ফাইল
+folder|ফোল্ডার
+document|নথি
+image|ছবি
+photo|ছবি
+video|ভিডিও
+audio|অডিও
+sound|শব্দ
+message|বার্তা
+email|ইমেইল
+password|পাসওয়ার্ড
+username|ব্যবহারকারীর নাম
+account|অ্যাকাউন্ট
+profile|প্রোফাইল
+search|অনুসন্ধান
+download|ডাউনলোড
+upload|আপলোড
+link|লিঙ্ক
+server|সার্ভার
+database|তথ্যভান্ডার
+code|কোড
+programming|প্রোগ্রামিং
+algorithm|অ্যালগরিদম
+artificial intelligence|কৃত্রিম বুদ্ধিমত্তা
+robot|রোবট
+bot|বট
+security|নিরাপত্তা
+cybersecurity|সাইবার নিরাপত্তা
+encryption|এনক্রিপশন
+work|কাজ
+job|চাকরি
+career|পেশা
+profession|পেশা
+business|ব্যবসা
+company|কোম্পানি
+organization|সংস্থা
+industry|শিল্প
+trade|বাণিজ্য
+commerce|বাণিজ্য
+economy|অর্থনীতি
+money|টাকা
+currency|মুদ্রা
+taka|টাকা
+dollar|ডলার
+price|দাম
+cost|খরচ
+value|মূল্য
+profit|লাভ
+loss|ক্ষতি
+income|আয়
+expense|ব্যয়
+salary|বেতন
+wage|মজুরি
+tax|কর
+budget|বাজেট
+investment|বিনিয়োগ
+loan|ঋণ
+debt|দেনা
+savings|সঞ্চয়
+rich|ধনী
+poor|গরিব
+wealth|সম্পদ
+poverty|দারিদ্র্য
+buy|কেনা
+sell|বিক্রি করা
+customer|ক্রেতা
+seller|বিক্রেতা
+product|পণ্য
+service|সেবা
+quality|মান
+quantity|পরিমাণ
+manager|ব্যবস্থাপক
+director|পরিচালক
+worker|শ্রমিক
+employee|কর্মচারী
+employer|নিয়োগকর্তা
+farmer|কৃষক
+agriculture|কৃষি
+engineer|প্রকৌশলী
+lawyer|আইনজীবী
+judge|বিচারক
+police|পুলিশ
+soldier|সৈনিক
+journalist|সাংবাদিক
+writer|লেখক
+artist|শিল্পী
+singer|গায়ক
+driver|চালক
+government|সরকার
+politics|রাজনীতি
+minister|মন্ত্রী
+president|রাষ্ট্রপতি
+prime minister|প্রধানমন্ত্রী
+parliament|সংসদ
+election|নির্বাচন
+vote|ভোট
+law|আইন
+rule|নিয়ম
+justice|ন্যায়বিচার
+right|অধিকার
+duty|কর্তব্য
+freedom|স্বাধীনতা
+independence|স্বাধীনতা
+peace|শান্তি
+war|যুদ্ধ
+victory|বিজয়
+defeat|পরাজয়
+flag|পতাকা
+good|ভালো
+bad|খারাপ
+great|মহান
+excellent|চমৎকার
+wonderful|অপূর্ব
+amazing|বিস্ময়কর
+beautiful|সুন্দর
+pretty|সুন্দর
+handsome|সুদর্শন
+ugly|কুৎসিত
+clean|পরিষ্কার
+dirty|নোংরা
+pure|খাঁটি
+fresh|তাজা
+big|বড়
+large|বিশাল
+huge|বিরাট
+small|ছোট
+tiny|ক্ষুদ্র
+long|লম্বা
+short|খাটো
+tall|উঁচু
+high|উচ্চ
+low|নিচু
+wide|প্রশস্ত
+narrow|সরু
+deep|গভীর
+shallow|অগভীর
+thick|মোটা
+thin|পাতলা
+heavy|ভারী
+light|হালকা
+hard|কঠিন
+soft|নরম
+strong|শক্তিশালী
+weak|দুর্বল
+fast|দ্রুত
+slow|ধীর
+quick|তাড়াতাড়ি
+hot|গরম
+warm|উষ্ণ
+cool|শীতল
+wet|ভেজা
+dry|শুকনো
+new|নতুন
+old|পুরাতন
+young|তরুণ
+ancient|প্রাচীন
+modern|আধুনিক
+easy|সহজ
+difficult|কঠিন
+simple|সরল
+complex|জটিল
+true|সত্য
+false|মিথ্যা
+correct|সঠিক
+wrong|ভুল
+real|আসল
+fake|নকল
+open|খোলা
+closed|বন্ধ
+full|পূর্ণ
+empty|খালি
+happy|খুশি
+joyful|আনন্দিত
+sad|দুঃখিত
+unhappy|অসুখী
+angry|রাগান্বিত
+afraid|ভীত
+scared|ভয় পাওয়া
+brave|সাহসী
+calm|শান্ত
+excited|উত্তেজিত
+nervous|বিচলিত
+worried|চিন্তিত
+proud|গর্বিত
+ashamed|লজ্জিত
+jealous|ঈর্ষান্বিত
+kind|দয়ালু
+cruel|নিষ্ঠুর
+honest|সৎ
+dishonest|অসৎ
+polite|ভদ্র
+rude|অভদ্র
+generous|উদার
+selfish|স্বার্থপর
+patient|ধৈর্যশীল
+lazy|অলস
+active|সক্রিয়
+busy|ব্যস্ত
+free|মুক্ত
+tired|ক্লান্ত
+hungry|ক্ষুধার্ত
+thirsty|তৃষ্ণার্ত
+smart|বুদ্ধিমান
+clever|চতুর
+wise|জ্ঞানী
+foolish|বোকা
+famous|বিখ্যাত
+popular|জনপ্রিয়
+important|গুরুত্বপূর্ণ
+necessary|প্রয়োজনীয়
+possible|সম্ভব
+impossible|অসম্ভব
+safe|নিরাপদ
+dangerous|বিপজ্জনক
+sour|টক
+bitter|তিতা
+salty|নোনতা
+spicy|ঝাল
+color|রং
+red|লাল
+green|সবুজ
+blue|নীল
+yellow|হলুদ
+white|সাদা
+black|কালো
+pink|গোলাপি
+purple|বেগুনি
+brown|বাদামী
+gray|ধূসর
+golden|সোনালী
+silver|রূপালী
+clothes|পোশাক
+shirt|জামা
+pant|প্যান্ট
+saree|শাড়ি
+panjabi|পাঞ্জাবি
+dress|পোশাক
+coat|কোট
+hat|টুপি
+cap|টুপি
+shoe|জুতা
+sandal|স্যান্ডেল
+sock|মোজা
+ring|আংটি
+necklace|হার
+umbrella|ছাতা
+bed|বিছানা
+pillow|বালিশ
+blanket|কম্বল
+sheet|চাদর
+chair|চেয়ার
+table|টেবিল
+desk|ডেস্ক
+sofa|সোফা
+mirror|আয়না
+comb|চিরুনি
+soap|সাবান
+towel|তোয়ালে
+brush|ব্রাশ
+key|চাবি
+lock|তালা
+lamp|বাতি
+fan|পাখা
+box|বাক্স
+bottle|বোতল
+basket|ঝুড়ি
+rope|দড়ি
+needle|সুই
+thread|সুতা
+scissors|কাঁচি
+travel|ভ্রমণ
+journey|যাত্রা
+trip|ভ্রমণ
+tour|সফর
+ticket|টিকিট
+passport|পাসপোর্ট
+visa|ভিসা
+luggage|মালপত্র
+vehicle|যানবাহন
+car|গাড়ি
+bus|বাস
+train|রেলগাড়ি
+bicycle|সাইকেল
+motorcycle|মোটরসাইকেল
+rickshaw|রিকশা
+boat|নৌকা
+ship|জাহাজ
+airplane|উড়োজাহাজ
+wheel|চাকা
+sport|খেলাধুলা
+game|খেলা
+cricket|ক্রিকেট
+football|ফুটবল
+ball|বল
+bat|ব্যাট
+goal|গোল
+team|দল
+player|খেলোয়াড়
+match|ম্যাচ
+win|জয়
+prize|পুরস্কার
+champion|চ্যাম্পিয়ন
+art|শিল্পকলা
+music|সঙ্গীত
+song|গান
+dance|নাচ
+painting|চিত্রকলা
+movie|চলচ্চিত্র
+theater|নাট্যমঞ্চ
+festival|উৎসব
+culture|সংস্কৃতি
+tradition|ঐতিহ্য
+religion|ধর্ম
+prayer|প্রার্থনা
+god|ঈশ্বর
+allah|আল্লাহ
+faith|বিশ্বাস
+truth|সত্য
+love|ভালোবাসা
+hope|আশা
+gratitude|কৃতজ্ঞতা
+patience|ধৈর্য
+courage|সাহস
+sympathy|সহানুভূতি
+empathy|সহমর্মিতা
+curiosity|কৌতূহল
+creativity|সৃজনশীলতা
+ambition|উচ্চাকাঙ্ক্ষা
+discipline|শৃঙ্খলা
+responsibility|দায়িত্ব
+integrity|সততা
+tolerance|সহনশীলতা
+harmony|সম্প্রীতি
+prosperity|সমৃদ্ধি
+progress|অগ্রগতি
+achievement|অর্জন
+success|সফলতা
+failure|ব্যর্থতা
+opportunity|সুযোগ
+challenge|চ্যালেঞ্জ
+solution|সমাধান
+decision|সিদ্ধান্ত
+strategy|কৌশল
+policy|নীতি
+system|পদ্ধতি
+process|প্রক্রিয়া
+structure|কাঠামো
+foundation|ভিত্তি
+resource|সম্পদ
+capacity|সক্ষমতা
+efficiency|দক্ষতা
+productivity|উৎপাদনশীলতা
+innovation|নতুনত্ব
+sustainability|স্থায়িত্ব
+biodiversity|জীববৈচিত্র্য
+ecosystem|বাস্তুতন্ত্র
+atmosphere|বায়ুমণ্ডল
+oxygen|অক্সিজেন
+carbon|কার্বন
+hydrogen|হাইড্রোজেন
+nitrogen|নাইট্রোজেন
+mineral|খনিজ
+metal|ধাতু
+iron|লোহা
+gold|সোনা
+copper|তামা
+steel|ইস্পাত
+plastic|প্লাস্টিক
+wood|কাঠ
+cotton|তুলা
+silk|রেশম
+leather|চামড়া
+brick|ইট
+cement|সিমেন্ট
+concrete|কংক্রিট
+architecture|স্থাপত্য
+engineering|প্রকৌশল
+construction|নির্মাণ
+machinery|যন্ত্রপাতি
+equipment|সরঞ্জাম
+instrument|যন্ত্র
+device|ডিভাইস
+sensor|সেন্সর
+circuit|বর্তনী
+voltage|ভোল্টেজ
+current|বিদ্যুৎ প্রবাহ
+frequency|কম্পাঙ্ক
+radiation|বিকিরণ
+spectrum|বর্ণালী
+velocity|বেগ
+acceleration|ত্বরণ
+momentum|ভরবেগ
+friction|ঘর্ষণ
+pressure|চাপ
+density|ঘনত্ব
+volume|আয়তন
+mass|ভর
+weight|ওজন
+temperature|তাপমাত্রা
+thermodynamics|তাপগতিবিদ্যা
+magnetism|চুম্বকত্ব
+optics|আলোকবিজ্ঞান
+astronomy|জ্যোতির্বিজ্ঞান
+galaxy|ছায়াপথ
+comet|ধূমকেতু
+asteroid|গ্রহাণু
+satellite|উপগ্রহ
+orbit|কক্ষপথ
+telescope|দূরবীন
+microscope|অণুবীক্ষণ যন্ত্র
+bacteria|ব্যাকটেরিয়া
+virus|ভাইরাস
+fungus|ছত্রাক
+protein|প্রোটিন
+vitamin|ভিটামিন
+carbohydrate|শর্করা
+calcium|ক্যালসিয়াম
+hemoglobin|হিমোগ্লোবিন
+immunity|রোগ প্রতিরোধ ক্ষমতা
+symptom|উপসর্গ
+diagnosis|রোগ নির্ণয়
+prescription|ব্যবস্থাপত্র
+therapy|থেরাপি
+rehabilitation|পুনর্বাসন
+emergency|জরুরি অবস্থা
+ambulance|অ্যাম্বুলেন্স
+pulse|নাড়ি
+blood pressure|রক্তচাপ
+diabetes|ডায়াবেটিস
+asthma|হাঁপানি
+allergy|অ্যালার্জি
+malnutrition|অপুষ্টি
+sanitation|পয়ঃনিষ্কাশন
+constitution|সংবিধান
+legislation|আইন প্রণয়ন
+judiciary|বিচার বিভাগ
+executive|নির্বাহী বিভাগ
+democracy|গণতন্ত্র
+sovereignty|সার্বভৌমত্ব
+diplomacy|কূটনীতি
+treaty|চুক্তি
+alliance|জোট
+administration|প্রশাসন
+bureaucracy|আমলাতন্ত্র
+municipality|পৌরসভা
+corporation|কর্পোরেশন
+ministry|মন্ত্রণালয়
+ambassador|রাষ্ট্রদূত
+embassy|দূতাবাস
+refugee|শরণার্থী
+migration|অভিবাসন
+census|আদমশুমারি
+statistics|পরিসংখ্যান
+survey|জরিপ
+analysis|বিশ্লেষণ
+hypothesis|অনুকল্প
+theory|তত্ত্ব
+principle|নীতি
+phenomenon|ঘটনা
+observation|পর্যবেক্ষণ
+conclusion|উপসংহার
+evidence|প্রমাণ
+argument|যুক্তি
+debate|বিতর্ক
+criticism|সমালোচনা
+perspective|দৃষ্টিভঙ্গি
+ideology|আদর্শ
+ethics|নীতিশাস্ত্র
+morality|নৈতিকতা
+conscience|বিবেক
+humanity|মানবতা
+equality|সমতা
+equity|ন্যায্যতা
+diversity|বৈচিত্র্য
+inclusion|অন্তর্ভুক্তি
+empowerment|ক্ষমতায়ন
+welfare|কল্যাণ
+charity|দানশীলতা
+volunteer|স্বেচ্ছাসেবক
+activism|সক্রিয়তা
+revolution|বিপ্লব
+renaissance|নবজাগরণ
+civilization|সভ্যতা
+heritage|ঐতিহ্য
+archaeology|প্রত্নতত্ত্ব
+monument|স্মৃতিস্তম্ভ
+sculpture|ভাস্কর্য
+calligraphy|লিপিকলা
+symphony|সুরলহরী
+melody|সুর
+rhythm|ছন্দ
+harmony|তাল
+instrument|বাদ্যযন্ত্র
+flute|বাঁশি
+drum|ঢোল
+guitar|গিটার
+piano|পিয়ানো
+violin|বেহালা
+novel|উপন্যাস
+drama|নাটক
+biography|জীবনী
+autobiography|আত্মজীবনী
+mythology|পুরাণ
+folklore|লোককথা
+proverb|প্রবাদ
+metaphor|রূপক
+simile|উপমা
+synonym|সমার্থক শব্দ
+antonym|বিপরীতার্থক শব্দ
+adjective|বিশেষণ
+noun|বিশেষ্য
+verb|ক্রিয়া
+adverb|ক্রিয়া বিশেষণ
+pronoun|সর্বনাম
+preposition|পদান্বয়ী অব্যয়
+conjunction|সংযোজক অব্যয়
+punctuation|যতিচিহ্ন
+syllable|অক্ষর
+accent|উচ্চারণভঙ্গি
+dialect|উপভাষা
+script|লিপি
+manuscript|পাণ্ডুলিপি
+publication|প্রকাশনা
+edition|সংস্করণ
+journalism|সাংবাদিকতা
+broadcasting|সম্প্রচার
+editorial|সম্পাদকীয়
+advertisement|বিজ্ঞাপন
+marketing|বিপণন
+branding|ব্র্যান্ডিং
+consumer|ভোক্তা
+retail|খুচরা
+wholesale|পাইকারি
+export|রপ্তানি
+import|আমদানি
+tariff|শুল্ক
+subsidy|ভর্তুকি
+inflation|মুদ্রাস্ফীতি
+recession|মন্দা
+gdp|মোট দেশজ উৎপাদন
+stock|শেয়ার
+shareholder|শেয়ারহোল্ডার
+dividend|লভ্যাংশ
+asset|সম্পদ
+liability|দায়
+audit|নিরীক্ষা
+accounting|হিসাববিজ্ঞান
+invoice|চালান
+receipt|রসিদ
+transaction|লেনদেন
+remittance|প্রবাসী আয়
+mortgage|বন্ধক
+insurance|বীমা
+pension|পেনশন
+unemployment|বেকারত্ব
+entrepreneur|উদ্যোক্তা
+startup|নতুন উদ্যোগ
+freelancer|মুক্তপেশাজীবী
+consultation|পরামর্শ
+negotiation|সমঝোতা
+contract|চুক্তি
+agreement|চুক্তিপত্র
+clause|ধারা
+verdict|রায়
+bail|জামিন
+witness|সাক্ষী
+evidence|সাক্ষ্যপ্রমাণ
+penalty|জরিমানা
+punishment|শাস্তি
+be|হওয়া
+have|আছে
+do|করা
+say|বলা
+go|যাওয়া
+get|পাওয়া
+make|তৈরি করা
+know|জানা
+think|ভাবা
+take|নেওয়া
+see|দেখা
+come|আসা
+want|চাওয়া
+look|তাকানো
+use|ব্যবহার করা
+find|খোঁজা
+give|দেওয়া
+tell|বলা
+call|ডাকা
+try|চেষ্টা করা
+ask|জিজ্ঞাসা করা
+need|প্রয়োজন হওয়া
+feel|অনুভব করা
+become|হয়ে ওঠা
+leave|ছেড়ে যাওয়া
+put|রাখা
+mean|বোঝানো
+keep|রাখা
+let|দিতে দেওয়া
+begin|শুরু করা
+start|শুরু করা
+seem|মনে হওয়া
+help|সাহায্য করা
+talk|কথা বলা
+turn|ঘোরা
+show|দেখানো
+hear|শোনা
+listen|শোনা
+play|খেলা করা
+run|দৌড়ানো
+move|নড়াচড়া করা
+live|বাস করা
+believe|বিশ্বাস করা
+hold|ধরা
+bring|আনা
+happen|ঘটা
+write|লেখা
+read|পড়া
+provide|সরবরাহ করা
+sit|বসা
+stand|দাঁড়ানো
+lose|হারানো
+pay|পরিশোধ করা
+meet|দেখা করা
+include|অন্তর্ভুক্ত করা
+continue|চালিয়ে যাওয়া
+set|স্থাপন করা
+learn|শেখা
+teach|শেখানো
+change|পরিবর্তন করা
+lead|নেতৃত্ব দেওয়া
+understand|বোঝা
+follow|অনুসরণ করা
+stop|থামা
+create|সৃষ্টি করা
+speak|কথা বলা
+allow|অনুমতি দেওয়া
+add|যোগ করা
+spend|ব্যয় করা
+grow|বেড়ে ওঠা
+walk|হাঁটা
+offer|প্রস্তাব দেওয়া
+remember|মনে রাখা
+forget|ভুলে যাওয়া
+hate|ঘৃণা করা
+like|পছন্দ করা
+dislike|অপছন্দ করা
+consider|বিবেচনা করা
+appear|উপস্থিত হওয়া
+wait|অপেক্ষা করা
+serve|সেবা করা
+die|মারা যাওয়া
+send|পাঠানো
+expect|আশা করা
+build|নির্মাণ করা
+stay|থাকা
+fall|পড়ে যাওয়া
+cut|কাটা
+reach|পৌঁছানো
+kill|হত্যা করা
+remain|থেকে যাওয়া
+suggest|পরামর্শ দেওয়া
+raise|তোলা
+require|প্রয়োজন হওয়া
+report|প্রতিবেদন দেওয়া
+decide|সিদ্ধান্ত নেওয়া
+pull|টানা
+push|ধাক্কা দেওয়া
+break|ভাঙা
+eat|খাওয়া
+drink|পান করা
+wake|জাগা
+wash|ধোয়া
+drive|গাড়ি চালানো
+fly|ওড়া
+swim|সাঁতার কাটা
+sing|গান গাওয়া
+laugh|হাসা
+cry|কাঁদা
+smile|মুচকি হাসা
+fear|ভয় পাওয়া
+wish|ইচ্ছা করা
+pray|প্রার্থনা করা
+bless|আশীর্বাদ করা
+protect|রক্ষা করা
+save|বাঁচানো
+solve|সমাধান করা
+check|যাচাই করা
+fix|ঠিক করা
+repair|মেরামত করা
+translate|অনুবাদ করা
+explain|ব্যাখ্যা করা
+describe|বর্ণনা করা
+share|ভাগ করা
+connect|যুক্ত করা
+support|সমর্থন করা
+respect|সম্মান করা
+agree|একমত হওয়া
+refuse|প্রত্যাখ্যান করা
+accept|গ্রহণ করা
+achieve|অর্জন করা
+succeed|সফল হওয়া
+improve|উন্নতি করা
+develop|উন্নয়ন করা
+prepare|প্রস্তুত করা
+celebrate|উদযাপন করা
+invite|আমন্ত্রণ জানানো
+abandon|পরিত্যাগ করা
+absorb|শোষণ করা
+accelerate|ত্বরান্বিত করা
+accompany|সঙ্গ দেওয়া
+accomplish|সম্পন্ন করা
+accumulate|সঞ্চয় করা
+acknowledge|স্বীকার করা
+acquire|অর্জন করা
+adapt|মানিয়ে নেওয়া
+adjust|সমন্বয় করা
+admire|প্রশংসা করা
+admit|স্বীকার করা
+adopt|গ্রহণ করা
+advance|অগ্রসর হওয়া
+advise|উপদেশ দেওয়া
+affect|প্রভাবিত করা
+afford|সামর্থ্য থাকা
+analyze|বিশ্লেষণ করা
+announce|ঘোষণা করা
+apologize|ক্ষমা চাওয়া
+appeal|আবেদন করা
+applaud|করতালি দেওয়া
+apply|আবেদন করা
+appoint|নিয়োগ দেওয়া
+appreciate|মূল্যায়ন করা
+approach|কাছে আসা
+approve|অনুমোদন করা
+argue|তর্ক করা
+arrange|আয়োজন করা
+arrest|গ্রেপ্তার করা
+arrive|পৌঁছানো
+assemble|একত্রিত করা
+assess|মূল্যায়ন করা
+assign|দায়িত্ব দেওয়া
+assist|সহায়তা করা
+assume|অনুমান করা
+assure|নিশ্চয়তা দেওয়া
+attach|সংযুক্ত করা
+attack|আক্রমণ করা
+attempt|চেষ্টা করা
+attend|উপস্থিত থাকা
+attract|আকর্ষণ করা
+avoid|এড়িয়ে চলা
+awake|জাগ্রত হওয়া
+award|পুরস্কৃত করা
+bake|সেঁকা
+balance|ভারসাম্য রাখা
+ban|নিষিদ্ধ করা
+bargain|দরকষাকষি করা
+bark|ঘেউ ঘেউ করা
+bathe|গোসল করা
+beat|প্রহার করা
+beg|ভিক্ষা করা
+behave|আচরণ করা
+bend|বাঁকানো
+benefit|উপকৃত হওয়া
+betray|বিশ্বাসঘাতকতা করা
+bind|বাঁধা
+bite|কামড়ানো
+blame|দোষারোপ করা
+bleed|রক্তপাত হওয়া
+blend|মিশ্রিত করা
+blink|চোখ পিটপিট করা
+block|বাধা দেওয়া
+bloom|ফোটা
+blow|প্রবাহিত হওয়া
+boast|গর্ব করা
+boil|সিদ্ধ করা
+borrow|ধার নেওয়া
+bother|বিরক্ত করা
+bounce|লাফিয়ে ওঠা
+bow|মাথা নত করা
+breathe|শ্বাস নেওয়া
+breed|প্রজনন করা
+broadcast|সম্প্রচার করা
+brush|মাজা
+burn|পোড়ানো
+burst|ফেটে যাওয়া
+bury|কবর দেওয়া
+calculate|গণনা করা
+capture|বন্দী করা
+care|যত্ন নেওয়া
+carry|বহন করা
+carve|খোদাই করা
+catch|ধরা
+cause|কারণ হওয়া
+cease|বন্ধ করা
+challenge|আহ্বান করা
+charge|অভিযোগ করা
+chase|তাড়া করা
+cheat|প্রতারণা করা
+cheer|উল্লাস করা
+chew|চিবানো
+choose|পছন্দ করা
+circulate|প্রচার করা
+claim|দাবি করা
+clap|হাততালি দেওয়া
+clarify|স্পষ্ট করা
+classify|শ্রেণীবদ্ধ করা
+climb|আরোহণ করা
+collapse|ধসে পড়া
+collect|সংগ্রহ করা
+collide|ধাক্কা লাগা
+combine|একত্রিত করা
+comfort|সান্ত্বনা দেওয়া
+command|আদেশ দেওয়া
+comment|মন্তব্য করা
+commit|প্রতিশ্রুতিবদ্ধ হওয়া
+communicate|যোগাযোগ করা
+compare|তুলনা করা
+compete|প্রতিযোগিতা করা
+complain|অভিযোগ করা
+complete|সম্পূর্ণ করা
+compose|রচনা করা
+compute|গণনা করা
+conceal|লুকানো
+concentrate|মনোযোগ দেওয়া
+conclude|উপসংহারে আসা
+condemn|নিন্দা করা
+conduct|পরিচালনা করা
+confess|স্বীকার করা
+confirm|নিশ্চিত করা
+confront|মুখোমুখি হওয়া
+confuse|বিভ্রান্ত করা
+congratulate|অভিনন্দন জানানো
+conquer|জয় করা
+consent|সম্মতি দেওয়া
+conserve|সংরক্ষণ করা
+consist|গঠিত হওয়া
+construct|নির্মাণ করা
+consult|পরামর্শ করা
+consume|ভোগ করা
+contain|ধারণ করা
+contribute|অবদান রাখা
+control|নিয়ন্ত্রণ করা
+convert|রূপান্তর করা
+convince|বোঝানো
+cooperate|সহযোগিতা করা
+coordinate|সমন্বয় করা
+copy|অনুলিপি করা
+correct|সংশোধন করা
+cough|কাশি দেওয়া
+count|গণনা করা
+cover|ঢাকা
+crack|ফাটল ধরা
+crash|বিধ্বস্ত হওয়া
+crawl|হামাগুড়ি দেওয়া
+criticize|সমালোচনা করা
+cross|পার হওয়া
+crush|পিষে ফেলা
+cure|আরোগ্য করা
+curse|অভিশাপ দেওয়া
+curve|বাঁকানো
+damage|ক্ষতি করা
+dare|সাহস করা
+debate|বিতর্ক করা
+decay|ক্ষয় হওয়া
+deceive|প্রতারণা করা
+declare|ঘোষণা করা
+decline|হ্রাস পাওয়া
+decorate|সাজানো
+decrease|কমানো
+dedicate|উৎসর্গ করা
+defend|রক্ষা করা
+define|সংজ্ঞায়িত করা
+delay|বিলম্ব করা
+delete|মুছে ফেলা
+deliver|সরবরাহ করা
+demand|দাবি করা
+demonstrate|প্রদর্শন করা
+deny|অস্বীকার করা
+depend|নির্ভর করা
+deposit|জমা দেওয়া
+deprive|বঞ্চিত করা
+derive|উৎপত্তি হওয়া
+deserve|যোগ্য হওয়া
+design|নকশা করা
+desire|কামনা করা
+destroy|ধ্বংস করা
+detect|শনাক্ত করা
+determine|নির্ধারণ করা
+devote|উৎসর্গ করা
+differ|ভিন্ন হওয়া
+digest|হজম করা
+dig|খনন করা
+diminish|হ্রাস করা
+direct|নির্দেশনা দেওয়া
+disappear|অদৃশ্য হওয়া
+disappoint|হতাশ করা
+discover|আবিষ্কার করা
+discuss|আলোচনা করা
+dismiss|বরখাস্ত করা
+display|প্রদর্শন করা
+dissolve|দ্রবীভূত করা
+distribute|বণ্টন করা
+disturb|বিরক্ত করা
+divide|ভাগ করা
+donate|দান করা
+doubt|সন্দেহ করা
+drag|টেনে নিয়ে যাওয়া
+drain|নিষ্কাশন করা
+draw|আঁকা
+drip|ফোঁটা ফোঁটা করে পড়া
+drop|ফেলে দেওয়া
+drown|ডুবে যাওয়া
+earn|উপার্জন করা
+educate|শিক্ষিত করা
+elect|নির্বাচিত করা
+eliminate|দূর করা
+embarrass|বিব্রত করা
+embrace|আলিঙ্গন করা
+emerge|আবির্ভূত হওয়া
+emphasize|জোর দেওয়া
+employ|নিয়োগ করা
+enable|সক্ষম করা
+encourage|উৎসাহিত করা
+endure|সহ্য করা
+enforce|বলবৎ করা
+engage|নিযুক্ত করা
+enhance|বৃদ্ধি করা
+enjoy|উপভোগ করা
+enlarge|বড় করা
+ensure|নিশ্চিত করা
+enter|প্রবেশ করা
+entertain|বিনোদন দেওয়া
+envy|হিংসা করা
+escape|পালানো
+establish|প্রতিষ্ঠা করা
+estimate|অনুমান করা
+evaluate|মূল্যায়ন করা
+evolve|বিবর্তিত হওয়া
+examine|পরীক্ষা করা
+exceed|অতিক্রম করা
+exchange|বিনিময় করা
+excite|উত্তেজিত করা
+exclude|বাদ দেওয়া
+excuse|ক্ষমা করা
+execute|সম্পাদন করা
+exist|বিদ্যমান থাকা
+expand|সম্প্রসারণ করা
+experience|অভিজ্ঞতা লাভ করা
+expire|মেয়াদ শেষ হওয়া
+explore|অন্বেষণ করা
+export|রপ্তানি করা
+expose|প্রকাশ করা
+express|প্রকাশ করা
+extend|বর্ধিত করা
+extract|নিষ্কাশন করা
+face|মুখোমুখি হওয়া
+fade|ম্লান হওয়া
+fascinate|মুগ্ধ করা
+fasten|বাঁধা
+favor|অনুগ্রহ করা
+feed|খাওয়ানো
+fetch|নিয়ে আসা
+fight|লড়াই করা
+fill|পূরণ করা
+finance|অর্থায়ন করা
+finish|শেষ করা
+float|ভাসা
+flow|প্রবাহিত হওয়া
+focus|মনোযোগ কেন্দ্রীভূত করা
+fold|ভাজ করা
+forbid|নিষেধ করা
+force|বাধ্য করা
+forecast|পূর্বাভাস দেওয়া
+forgive|ক্ষমা করা
+form|গঠন করা
+found|প্রতিষ্ঠা করা
+freeze|জমে যাওয়া
+frighten|ভয় দেখানো
+fulfill|পূরণ করা
+function|কাজ করা
+gain|অর্জন করা
+gather|জড়ো হওয়া
+gaze|একদৃষ্টিতে তাকানো
+generate|উৎপাদন করা
+glow|জ্বলজ্বল করা
+govern|শাসন করা
+grab|আঁকড়ে ধরা
+grant|মঞ্জুর করা
+grasp|উপলব্ধি করা
+greet|অভিবাদন জানানো
+grind|পেষা
+guarantee|নিশ্চয়তা দেওয়া
+guard|পাহারা দেওয়া
+guess|অনুমান করা
+guide|পথ দেখানো
+handle|সামলানো
+hang|ঝোলানো
+harm|ক্ষতি করা
+harvest|ফসল কাটা
+heal|সুস্থ হওয়া
+hesitate|দ্বিধা করা
+hide|লুকানো
+highlight|তুলে ধরা
+hire|ভাড়া করা
+honor|সম্মান করা
+hug|আলিঙ্গন করা
+hunt|শিকার করা
+hurry|তাড়াহুড়ো করা
+hurt|আঘাত করা
+identify|চিহ্নিত করা
+ignore|উপেক্ষা করা
+illustrate|চিত্রিত করা
+imagine|কল্পনা করা
+imitate|অনুকরণ করা
+immerse|নিমজ্জিত করা
+implement|বাস্তবায়ন করা
+imply|ইঙ্গিত করা
+import|আমদানি করা
+impose|আরোপ করা
+impress|মুগ্ধ করা
+increase|বৃদ্ধি করা
+indicate|নির্দেশ করা
+influence|প্রভাবিত করা
+inform|জানানো
+inherit|উত্তরাধিকারসূত্রে পাওয়া
+initiate|সূচনা করা
+inject|প্রবেশ করানো
+injure|আহত করা
+inquire|অনুসন্ধান করা
+insert|প্রবেশ করানো
+insist|জোর দেওয়া
+inspect|পরিদর্শন করা
+inspire|অনুপ্রাণিত করা
+install|স্থাপন করা
+instruct|নির্দেশ দেওয়া
+insult|অপমান করা
+integrate|একীভূত করা
+intend|ইচ্ছা করা
+interact|মিথস্ক্রিয়া করা
+interfere|হস্তক্ষেপ করা
+interpret|ব্যাখ্যা করা
+interrupt|বাধা দেওয়া
+introduce|পরিচয় করিয়ে দেওয়া
+invade|আক্রমণ করা
+invent|আবিষ্কার করা
+invest|বিনিয়োগ করা
+investigate|তদন্ত করা
+involve|জড়িত করা
+isolate|আলাদা করা
+join|যোগদান করা
+judge|বিচার করা
+jump|লাফ দেওয়া
+justify|ন্যায্যতা প্রমাণ করা
+kick|লাথি মারা
+kiss|চুম্বন করা
+kneel|হাঁটু গেড়ে বসা
+knit|বোনা
+knock|কড়া নাড়া
+label|চিহ্নিত করা
+land|অবতরণ করা
+last|স্থায়ী হওয়া
+launch|চালু করা
+lean|হেলান দেওয়া
+leap|লাফ দেওয়া
+lend|ধার দেওয়া
+lift|উত্তোলন করা
+limit|সীমাবদ্ধ করা
+link|সংযুক্ত করা
+load|বোঝাই করা
+locate|অবস্থান নির্ণয় করা
+lock|তালা দেওয়া
+maintain|বজায় রাখা
+manage|পরিচালনা করা
+manufacture|উৎপাদন করা
+march|কুচকাওয়াজ করা
+mark|চিহ্নিত করা
+marry|বিয়ে করা
+master|আয়ত্ত করা
+matter|গুরুত্বপূর্ণ হওয়া
+measure|পরিমাপ করা
+melt|গলে যাওয়া
+memorize|মুখস্থ করা
+mend|মেরামত করা
+mention|উল্লেখ করা
+merge|একত্রিত হওয়া
+migrate|অভিবাসন করা
+mix|মেশানো
+modify|পরিবর্তন করা
+monitor|পর্যবেক্ষণ করা
+motivate|অনুপ্রাণিত করা
+mourn|শোক করা
+multiply|গুণ করা
+murder|হত্যা করা
+murmur|বিড়বিড় করা
+name|নামকরণ করা
+navigate|পথ চলা
+neglect|অবহেলা করা
+negotiate|আলোচনা করা
+nod|মাথা নাড়া
+nominate|মনোনীত করা
+notice|লক্ষ্য করা
+notify|বিজ্ঞপ্তি দেওয়া
+nourish|পুষ্টি জোগানো
+obey|মান্য করা
+object|আপত্তি করা
+observe|পর্যবেক্ষণ করা
+obtain|অর্জন করা
+occupy|দখল করা
+occur|ঘটা
+offend|অপমান করা
+operate|পরিচালনা করা
+oppose|বিরোধিতা করা
+organize|সংগঠিত করা
+originate|উৎপত্তি হওয়া
+overcome|অতিক্রম করা
+overlook|উপেক্ষা করা
+owe|ঋণী থাকা
+own|মালিক হওয়া
+pack|গুছানো
+paint|রং করা
+participate|অংশগ্রহণ করা
+pause|বিরতি নেওয়া
+peel|খোসা ছাড়ানো
+penetrate|প্রবেশ করা
+perceive|উপলব্ধি করা
+perform|সম্পাদন করা
+permit|অনুমতি দেওয়া
+persuade|প্ররোচিত করা
+pick|তোলা
+pierce|ছিদ্র করা
+pinch|চিমটি কাটা
+pity|করুণা করা
+plan|পরিকল্পনা করা
+plant|রোপণ করা
+plead|মিনতি করা
+please|সন্তুষ্ট করা
+plough|চাষ করা
+pluck|ছেঁড়া
+point|নির্দেশ করা
+polish|পালিশ করা
+pollute|দূষিত করা
+possess|অধিকারী হওয়া
+postpone|স্থগিত করা
+pour|ঢালা
+practice|অনুশীলন করা
+praise|প্রশংসা করা
+predict|ভবিষ্যদ্বাণী করা
+prefer|অধিক পছন্দ করা
+prescribe|নির্দেশ দেওয়া
+present|উপস্থাপন করা
+preserve|সংরক্ষণ করা
+press|চাপ দেওয়া
+pretend|ভান করা
+prevent|প্রতিরোধ করা
+print|মুদ্রণ করা
+proceed|অগ্রসর হওয়া
+produce|উৎপাদন করা
+prohibit|নিষেধ করা
+promise|প্রতিশ্রুতি দেওয়া
+promote|প্রচার করা
+pronounce|উচ্চারণ করা
+propose|প্রস্তাব করা
+prosecute|মামলা করা
+protest|প্রতিবাদ করা
+prove|প্রমাণ করা
+publish|প্রকাশ করা
+punish|শাস্তি দেওয়া
+purchase|ক্রয় করা
+purify|বিশুদ্ধ করা
+pursue|অনুসরণ করা
+qualify|যোগ্যতা অর্জন করা
+quarrel|ঝগড়া করা
+question|প্রশ্ন করা
+quit|ত্যাগ করা
+quote|উদ্ধৃত করা
+react|প্রতিক্রিয়া জানানো
+realize|উপলব্ধি করা
+reap|ফসল কাটা
+reason|যুক্তি দেখানো
+rebel|বিদ্রোহ করা
+recall|স্মরণ করা
+receive|গ্রহণ করা
+recognize|চিনতে পারা
+recommend|সুপারিশ করা
+record|রেকর্ড করা
+recover|পুনরুদ্ধার করা
+reduce|হ্রাস করা
+refer|উল্লেখ করা
+reflect|প্রতিফলিত করা
+reform|সংস্কার করা
+regret|অনুতাপ করা
+regulate|নিয়ন্ত্রণ করা
+reject|প্রত্যাখ্যান করা
+relate|সম্পর্কিত করা
+relax|বিশ্রাম নেওয়া
+release|মুক্তি দেওয়া
+rely|নির্ভর করা
+remind|মনে করিয়ে দেওয়া
+remove|অপসারণ করা
+render|প্রদান করা
+renew|নবায়ন করা
+rent|ভাড়া দেওয়া
+repeat|পুনরাবৃত্তি করা
+replace|প্রতিস্থাপন করা
+reply|উত্তর দেওয়া
+represent|প্রতিনিধিত্ব করা
+reproduce|প্রজনন করা
+request|অনুরোধ করা
+rescue|উদ্ধার করা
+research|গবেষণা করা
+resemble|সদৃশ হওয়া
+reside|বসবাস করা
+resign|পদত্যাগ করা
+resist|প্রতিরোধ করা
+resolve|সমাধান করা
+respond|সাড়া দেওয়া
+restore|পুনরুদ্ধার করা
+restrict|সীমাবদ্ধ করা
+retain|বজায় রাখা
+retire|অবসর নেওয়া
+retreat|পিছু হটা
+return|ফিরে আসা
+reveal|প্রকাশ করা
+revenge|প্রতিশোধ নেওয়া
+review|পর্যালোচনা করা
+revise|সংশোধন করা
+reward|পুরস্কৃত করা
+ride|চড়া
+ring|বাজানো
+rise|ওঠা
+risk|ঝুঁকি নেওয়া
+roam|ঘুরে বেড়ানো
+roar|গর্জন করা
+rob|ডাকাতি করা
+roll|গড়ানো
+rotate|ঘোরা
+rub|ঘষা
+ruin|ধ্বংস করা
+rule|শাসন করা
+rush|তাড়াহুড়ো করা
+sacrifice|ত্যাগ করা
+sail|পাল তোলা
+satisfy|সন্তুষ্ট করা
+scan|পরীক্ষা করা
+scatter|ছড়িয়ে দেওয়া
+scold|বকা দেওয়া
+scratch|আঁচড়ানো
+scream|চিৎকার করা
+seal|সিল করা
+search|খোঁজা
+secure|নিরাপদ করা
+seek|অনুসন্ধান করা
+seize|দখল করা
+select|নির্বাচন করা
+separate|আলাদা করা
+settle|মীমাংসা করা
+sew|সেলাই করা
+shake|ঝাঁকানো
+shape|আকার দেওয়া
+shatter|চূর্ণবিচূর্ণ করা
+shave|কামানো
+shelter|আশ্রয় দেওয়া
+shine|কিরণ দেওয়া
+shiver|কাঁপা
+shoot|গুলি করা
+shout|চিৎকার করা
+shrink|সংকুচিত হওয়া
+shut|বন্ধ করা
+sigh|দীর্ঘশ্বাস ফেলা
+sign|স্বাক্ষর করা
+simplify|সহজ করা
+sink|ডুবে যাওয়া
+sketch|নকশা আঁকা
+skip|বাদ দেওয়া
+slap|চড় মারা
+slice|টুকরা করা
+slide|পিছলে যাওয়া
+slip|পিছলে পড়া
+smell|গন্ধ নেওয়া
+snatch|ছিনিয়ে নেওয়া
+sneeze|হাঁচি দেওয়া
+soak|ভিজানো
+soothe|প্রশমিত করা
+sort|সাজানো
+sow|বপন করা
+sparkle|ঝিকমিক করা
+spill|ছড়িয়ে পড়া
+spin|ঘোরানো
+spit|থুতু ফেলা
+split|বিভক্ত করা
+spoil|নষ্ট করা
+spread|ছড়িয়ে দেওয়া
+squeeze|নিংড়ানো
+stab|ছুরিকাঘাত করা
+stain|দাগ লাগানো
+stare|একদৃষ্টিতে তাকানো
+starve|অনাহারে থাকা
+steal|চুরি করা
+steer|চালনা করা
+step|পা ফেলা
+stick|লেগে থাকা
+stimulate|উদ্দীপ্ত করা
+stir|নাড়া দেওয়া
+stitch|সেলাই করা
+store|সংরক্ষণ করা
+strengthen|শক্তিশালী করা
+stretch|প্রসারিত করা
+strike|আঘাত করা
+strive|চেষ্টা করা
+struggle|সংগ্রাম করা
+submit|জমা দেওয়া
+subscribe|সদস্যতা নেওয়া
+substitute|বিকল্প ব্যবহার করা
+subtract|বিয়োগ করা
+suffer|কষ্ট পাওয়া
+summarize|সংক্ষেপ করা
+summon|তলব করা
+supervise|তত্ত্বাবধান করা
+supply|সরবরাহ করা
+suppose|মনে করা
+suppress|দমন করা
+surrender|আত্মসমর্পণ করা
+surround|ঘিরে রাখা
+survive|বেঁচে থাকা
+suspect|সন্দেহ করা
+suspend|স্থগিত করা
+swallow|গিলে ফেলা
+swear|শপথ করা
+sweep|ঝাড়ু দেওয়া
+swell|ফুলে ওঠা
+swing|দোল খাওয়া
+switch|পরিবর্তন করা
+symbolize|প্রতীকী হওয়া
+tackle|মোকাবেলা করা
+tailor|তৈরি করা
+tame|পোষ মানানো
+tap|টোকা দেওয়া
+taste|স্বাদ নেওয়া
+tear|ছিঁড়ে ফেলা
+tease|উত্ত্যক্ত করা
+tempt|প্রলুব্ধ করা
+tend|যত্ন নেওয়া
+terminate|সমাপ্ত করা
+terrify|আতঙ্কিত করা
+testify|সাক্ষ্য দেওয়া
+thank|ধন্যবাদ দেওয়া
+thaw|গলে যাওয়া
+threaten|হুমকি দেওয়া
+thrive|উন্নতি করা
+throw|নিক্ষেপ করা
+tie|বাঁধা
+tighten|শক্ত করা
+tilt|কাত করা
+tolerate|সহ্য করা
+torture|নির্যাতন করা
+toss|নিক্ষেপ করা
+touch|স্পর্শ করা
+trace|চিহ্ন খুঁজে বের করা
+train|প্রশিক্ষণ দেওয়া
+transfer|স্থানান্তর করা
+transform|রূপান্তর করা
+transmit|প্রেরণ করা
+transport|পরিবহন করা
+trap|ফাঁদে ফেলা
+treat|আচরণ করা
+tremble|কাঁপা
+trick|প্রতারণা করা
+trim|ছাঁটা
+triumph|বিজয়ী হওয়া
+trust|বিশ্বাস করা
+twist|মোচড়ানো
+type|টাইপ করা
+uncover|উন্মোচন করা
+undergo|অভিজ্ঞতা লাভ করা
+underline|নিচে দাগ দেওয়া
+undertake|দায়িত্ব গ্রহণ করা
+undo|বাতিল করা
+unfold|খোলা
+unify|একত্রিত করা
+unite|ঐক্যবদ্ধ হওয়া
+unlock|তালা খোলা
+update|হালনাগাদ করা
+upgrade|উন্নত করা
+uphold|সমর্থন করা
+upset|বিচলিত করা
+urge|অনুরোধ করা
+utilize|ব্যবহার করা
+utter|উচ্চারণ করা
+vacate|খালি করা
+validate|বৈধতা দেওয়া
+value|মূল্য দেওয়া
+vanish|অদৃশ্য হওয়া
+vary|ভিন্ন হওয়া
+verify|যাচাই করা
+vibrate|কম্পিত হওয়া
+violate|লঙ্ঘন করা
+visit|পরিদর্শন করা
+visualize|কল্পনা করা
+volunteer|স্বেচ্ছায় কাজ করা
+vomit|বমি করা
+vote|ভোট দেওয়া
+wander|ঘুরে বেড়ানো
+warn|সতর্ক করা
+waste|অপচয় করা
+wave|হাত নাড়া
+weaken|দুর্বল করা
+wear|পরিধান করা
+weave|বোনা
+weep|কান্না করা
+weigh|ওজন করা
+welcome|স্বাগত জানানো
+whisper|ফিসফিস করা
+whistle|শিষ দেওয়া
+widen|প্রশস্ত করা
+withdraw|প্রত্যাহার করা
+withstand|সহ্য করা
+witness|প্রত্যক্ষ করা
+wonder|অবাক হওয়া
+worship|উপাসনা করা
+wrap|মোড়ানো
+wrestle|কুস্তি করা
+yawn|হাই তোলা
+yell|চিৎকার করা
+yield|উৎপাদন করা
+`;
+
+      /* -------------------------------------------------------------------
+         2B. LEXICON PARSER + MORPHOLOGICAL EXPANSION ENGINE
+         Parses the embedded lexicon and expands Bangla verb paradigms,
+         Bangla noun case/plural inflections, and English morphological forms
+         into tens of thousands of searchable offline word entries.
+      -------------------------------------------------------------------- */
+      const BANGLA_VERB_PARADIGMS = [
+        ["কর", "কর", "করল", "do", "doing", "did"],
+        ["যা", "যা", "গেল", "go", "going", "went"],
+        ["খা", "খা", "খেল", "eat", "eating", "ate"],
+        ["দেখ", "দেখ", "দেখল", "see", "seeing", "saw"],
+        ["বল", "বল", "বলল", "say", "saying", "said"],
+        ["লেখ", "লিখ", "লিখল", "write", "writing", "wrote"],
+        ["পড়", "পড়", "পড়ল", "read", "reading", "read"],
+        ["শোন", "শুন", "শুনল", "hear", "hearing", "heard"],
+        ["আস", "আস", "এল", "come", "coming", "came"],
+        ["দে", "দি", "দিল", "give", "giving", "gave"],
+        ["নে", "নি", "নিল", "take", "taking", "took"],
+        ["থাক", "থাক", "থাকল", "stay", "staying", "stayed"],
+        ["পার", "পার", "পারল", "can", "being able", "could"],
+        ["জান", "জান", "জানল", "know", "knowing", "knew"],
+        ["বোঝ", "বুঝ", "বুঝল", "understand", "understanding", "understood"],
+        ["চা", "চাই", "চাইল", "want", "wanting", "wanted"],
+        ["ভালোবাস", "ভালোবাস", "ভালোবাসল", "love", "loving", "loved"],
+        ["পছন্দ কর", "পছন্দ কর", "পছন্দ করল", "like", "liking", "liked"],
+        ["সাহায্য কর", "সাহায্য কর", "সাহায্য করল", "help", "helping", "helped"],
+        ["কাজ কর", "কাজ কর", "কাজ করল", "work", "working", "worked"],
+        ["শেখ", "শিখ", "শিখল", "learn", "learning", "learned"],
+        ["শেখা", "শেখা", "শেখাল", "teach", "teaching", "taught"],
+        ["হাঁট", "হাঁট", "হাঁটল", "walk", "walking", "walked"],
+        ["দৌড়া", "দৌড়া", "দৌড়াল", "run", "running", "ran"],
+        ["ঘুমা", "ঘুমা", "ঘুমাল", "sleep", "sleeping", "slept"],
+        ["বস", "বস", "বসল", "sit", "sitting", "sat"],
+        ["দাঁড়া", "দাঁড়া", "দাঁড়াল", "stand", "standing", "stood"],
+        ["খেল", "খেল", "খেলল", "play", "playing", "played"],
+        ["হাস", "হাস", "হাসল", "laugh", "laughing", "laughed"],
+        ["কাঁদ", "কাঁদ", "কাঁদল", "cry", "crying", "cried"],
+        ["ভাব", "ভাব", "ভাবল", "think", "thinking", "thought"],
+        ["খোঁজ", "খুঁজ", "খুঁজল", "search", "searching", "searched"],
+        ["পা", "পা", "পেল", "get", "getting", "got"],
+        ["কেন", "কিন", "কিনল", "buy", "buying", "bought"],
+        ["বেচ", "বেচ", "বেচল", "sell", "selling", "sold"],
+        ["পাঠা", "পাঠা", "পাঠাল", "send", "sending", "sent"],
+        ["রাখ", "রাখ", "রাখল", "keep", "keeping", "kept"],
+        ["খোল", "খুল", "খুলল", "open", "opening", "opened"],
+        ["বন্ধ কর", "বন্ধ কর", "বন্ধ করল", "close", "closing", "closed"],
+        ["শুরু কর", "শুরু কর", "শুরু করল", "start", "starting", "started"],
+        ["শেষ কর", "শেষ কর", "শেষ করল", "finish", "finishing", "finished"],
+        ["চেষ্টা কর", "চেষ্টা কর", "চেষ্টা করল", "try", "trying", "tried"],
+        ["অপেক্ষা কর", "অপেক্ষা কর", "অপেক্ষা করল", "wait", "waiting", "waited"],
+        ["অনুবাদ কর", "অনুবাদ কর", "অনুবাদ করল", "translate", "translating", "translated"],
+        ["ঠিক কর", "ঠিক কর", "ঠিক করল", "fix", "fixing", "fixed"],
+        ["রান্না কর", "রান্না কর", "রান্না করল", "cook", "cooking", "cooked"],
+        ["পান কর", "পান কর", "পান করল", "drink", "drinking", "drank"],
+        ["তৈরি কর", "তৈরি কর", "তৈরি করল", "make", "making", "made"],
+        ["ব্যবহার কর", "ব্যবহার কর", "ব্যবহার করল", "use", "using", "used"],
+        ["মনে রাখ", "মনে রাখ", "মনে রাখল", "remember", "remembering", "remembered"],
+        ["ভুলে যা", "ভুলে যা", "ভুলে গেল", "forget", "forgetting", "forgot"],
+        ["পরীক্ষা কর", "পরীক্ষা কর", "পরীক্ষা করল", "test", "testing", "tested"],
+        ["সমাধান কর", "সমাধান কর", "সমাধান করল", "solve", "solving", "solved"],
+        ["প্রকাশ কর", "প্রকাশ কর", "প্রকাশ করল", "express", "expressing", "expressed"],
+        ["গ্রহণ কর", "গ্রহণ কর", "গ্রহণ করল", "accept", "accepting", "accepted"],
+        ["অর্জন কর", "অর্জন কর", "অর্জন করল", "achieve", "achieving", "achieved"],
+        ["উন্নতি কর", "উন্নতি কর", "উন্নতি করল", "improve", "improving", "improved"],
+        ["পরিকল্পনা কর", "পরিকল্পনা কর", "পরিকল্পনা করল", "plan", "planning", "planned"],
+        ["অনুসন্ধান কর", "অনুসন্ধান কর", "অনুসন্ধান করল", "explore", "exploring", "explored"],
+        ["রক্ষা কর", "রক্ষা কর", "রক্ষা করল", "protect", "protecting", "protected"],
+        ["সংরক্ষণ কর", "সংরক্ষণ কর", "সংরক্ষণ করল", "save", "saving", "saved"]
+      ];
+
+      // Build Fast Lookup Maps + Searchable Array
+      const OFFLINE_EN_TO_BN = {};
+      const OFFLINE_BN_TO_EN = {};
+      const CORE_DICTIONARY_ENTRIES = []; // Distinct embedded root word pairs
+      const INFLECTED_DICTIONARY_ENTRIES = []; // Expanded morphological entries
+      let TOTAL_GENERATED_FORMS = 0;
+
+      function registerPair(en, bn, category = 'core') {
+        const cleanEn = en.toLowerCase().trim();
+        const cleanBn = bn.trim();
+        if (!cleanEn || !cleanBn) return;
+
+        let addedNew = false;
+        if (!OFFLINE_EN_TO_BN[cleanEn]) {
+          OFFLINE_EN_TO_BN[cleanEn] = cleanBn;
+          TOTAL_GENERATED_FORMS++;
+          addedNew = true;
+        }
+        if (!OFFLINE_BN_TO_EN[cleanBn]) {
+          OFFLINE_BN_TO_EN[cleanBn] = cleanEn;
+          TOTAL_GENERATED_FORMS++;
+          addedNew = true;
+        }
+        if (addedNew) {
+          const entry = { en: cleanEn, bn: cleanBn, type: category };
+          if (category === 'core') {
+            CORE_DICTIONARY_ENTRIES.push(entry);
+          } else {
+            INFLECTED_DICTIONARY_ENTRIES.push(entry);
+          }
+        }
+      }
+
+      // 1. Parse COMPACT_LEXICON_BLOB into distinct root word pairs
+      const RAW_LINES = COMPACT_LEXICON_BLOB.split('\n');
+      for (let i = 0; i < RAW_LINES.length; i++) {
+        const line = RAW_LINES[i].trim();
+        if (!line) continue;
+        const sepIdx = line.indexOf('|');
+        if (sepIdx > 0) {
+          const en = line.slice(0, sepIdx);
+          const bn = line.slice(sepIdx + 1);
+          registerPair(en, bn, 'core');
+        }
+      }
+
+      // 2. Expand Bangla & English Verb Inflections
+      for (const [sPres, sAlt, sPast, enBase, enIng, enPast] of BANGLA_VERB_PARADIGMS) {
+        const forms = [
+          [`${sPres}ি`, `I ${enBase}`],
+          [`${sPres}ো`, `you ${enBase}`],
+          [`${sPres}ে`, `he/she ${enBase}s`],
+          [`${sPres}েন`, `you/they ${enBase}`],
+          [`${sAlt}ছি`, `I am ${enIng}`],
+          [`${sAlt}ছো`, `you are ${enIng}`],
+          [`${sAlt}ছে`, `he/she is ${enIng}`],
+          [`${sAlt}ছেন`, `you/they are ${enIng}`],
+          [`${sAlt}লাম`, `I ${enPast}`],
+          [`${sAlt}লে`, `you ${enPast}`],
+          [`${sAlt}লো`, `he/she ${enPast}`],
+          [`${sAlt}লেন`, `you/they ${enPast}`],
+          [`${sAlt}ব`, `I/we will ${enBase}`],
+          [`${sAlt}বে`, `you/he will ${enBase}`],
+          [`${sAlt}বেন`, `you/they will ${enBase}`],
+          [`${sAlt}েছি`, `I have ${enPast}`],
+          [`${sAlt}েছো`, `you have ${enPast}`],
+          [`${sAlt}েছে`, `he/she has ${enPast}`],
+          [`${sAlt}েছেন`, `you/they have ${enPast}`]
+        ];
+        for (const [bnForm, enForm] of forms) {
+          registerPair(enForm, bnForm, 'inflected');
+        }
+        registerPair(enIng, `${sAlt}ছে`, 'inflected');
+        registerPair(enPast, `${sAlt}লো`, 'inflected');
+      }
+
+      // 3. Expand Bangla Noun Case / Plural / Classifier Inflections & English Plurals/Adverbs
+      const BANGLA_NOUN_SUFFIXES = [
+        { bn: 'গুলো', enSuffix: 's' },
+        { bn: 'গুলি', enSuffix: 's' },
+        { bn: 'টি', enSuffix: '' },
+        { bn: 'টা', enSuffix: '' },
+        { bn: 'র', enSuffix: "'s" },
+        { bn: 'এর', enSuffix: "'s" },
+        { bn: 'কে', enSuffix: '' },
+        { bn: 'তে', enSuffix: '' },
+        { bn: 'দের', enSuffix: "s'" },
+        { bn: 'রা', enSuffix: 's' }
+      ];
+
+      const CORE_SNAPSHOT = [...CORE_DICTIONARY_ENTRIES];
+      for (const item of CORE_SNAPSHOT) {
+        const en = item.en;
+        const bn = item.bn;
+        if (!en.includes(' ') && !bn.includes(' ') && en.length > 2) {
+          const enPlural = /(s|x|z|ch|sh)$/.test(en) ? `${en}es`
+            : (/[^aeiou]y$/.test(en) ? `${en.slice(0, -1)}ies` : `${en}s`);
+          registerPair(enPlural, `${bn}গুলো`, 'inflected');
+
+          for (const suf of BANGLA_NOUN_SUFFIXES) {
+            const bnInflected = `${bn}${suf.bn}`;
+            const enInflected = suf.enSuffix === 's' ? enPlural : `${en}${suf.enSuffix}`;
+            registerPair(enInflected, bnInflected, 'inflected');
+          }
+
+          if (en.length >= 4 && !en.endsWith('ly')) {
+            registerPair(`${en}ly`, `${bn}ভাবে`, 'inflected');
+          }
+          if (en.length >= 4 && !en.startsWith('un')) {
+            registerPair(`un${en}`, `অ${bn}`, 'inflected');
+          }
+        }
+      }
+
+      // Dynamic Runtime Morphological Stemmer for Unseen Inflected Words Offline
+      function lookupOfflineToken(rawWord) {
+        const clean = rawWord.trim();
+        if (!clean) return null;
+        const lower = clean.toLowerCase();
+
+        // Direct hit
+        if (OFFLINE_EN_TO_BN[lower]) return OFFLINE_EN_TO_BN[lower];
+        if (OFFLINE_BN_TO_EN[clean]) return OFFLINE_BN_TO_EN[clean];
+
+        // English morphological stem fallback (-ing, -ed, -ies, -es, -s, -ly, -ness, -ment, un-)
+        if (/^[a-z]+$/.test(lower) && lower.length > 3) {
+          if (lower.startsWith('un') && OFFLINE_EN_TO_BN[lower.slice(2)]) {
+            return `অ${OFFLINE_EN_TO_BN[lower.slice(2)]}`;
+          }
+          if (lower.endsWith('ing')) {
+            const stem1 = lower.slice(0, -3);
+            const stem2 = stem1 + 'e';
+            if (OFFLINE_EN_TO_BN[stem1]) return OFFLINE_EN_TO_BN[stem1];
+            if (OFFLINE_EN_TO_BN[stem2]) return OFFLINE_EN_TO_BN[stem2];
+          }
+          if (lower.endsWith('ed')) {
+            const stem1 = lower.slice(0, -2);
+            const stem2 = lower.slice(0, -1);
+            if (OFFLINE_EN_TO_BN[stem1]) return OFFLINE_EN_TO_BN[stem1];
+            if (OFFLINE_EN_TO_BN[stem2]) return OFFLINE_EN_TO_BN[stem2];
+          }
+          if (lower.endsWith('ies') && OFFLINE_EN_TO_BN[lower.slice(0, -3) + 'y']) {
+            return OFFLINE_EN_TO_BN[lower.slice(0, -3) + 'y'];
+          }
+          if (lower.endsWith('es') && OFFLINE_EN_TO_BN[lower.slice(0, -2)]) {
+            return OFFLINE_EN_TO_BN[lower.slice(0, -2)];
+          }
+          if (lower.endsWith('s') && OFFLINE_EN_TO_BN[lower.slice(0, -1)]) {
+            return OFFLINE_EN_TO_BN[lower.slice(0, -1)];
+          }
+          if (lower.endsWith('ly') && OFFLINE_EN_TO_BN[lower.slice(0, -2)]) {
+            return `${OFFLINE_EN_TO_BN[lower.slice(0, -2)]}ভাবে`;
+          }
+          if (lower.endsWith('ness') && OFFLINE_EN_TO_BN[lower.slice(0, -4)]) {
+            return `${OFFLINE_EN_TO_BN[lower.slice(0, -4)]}তা`;
+          }
+        }
+
+        // Bangla morphological suffix stemmer
+        if (/[\u0980-\u09FF]/.test(clean) && clean.length > 2) {
+          const bnEndings = ['গুলোকে', 'গুলির', 'গুলো', 'গুলি', 'দেরকে', 'দের', 'খানা', 'খানি', 'রা', 'কে', 'তে', 'ের', 'টি', 'টা', 'র', 'য়', 'ে'];
+          for (const end of bnEndings) {
+            if (clean.endsWith(end) && clean.length > end.length + 1) {
+              const root = clean.slice(0, -end.length);
+              if (OFFLINE_BN_TO_EN[root]) {
+                if (end.startsWith('গুলো') || end.startsWith('গুলি') || end === 'রা') {
+                  return `${OFFLINE_BN_TO_EN[root]}s`;
+                }
+                if (end === 'ের' || end === 'র' || end.startsWith('দের')) {
+                  return `${OFFLINE_BN_TO_EN[root]}'s`;
+                }
+                if (end === 'তে' || end === 'য়' || end === 'ে') {
+                  return `in ${OFFLINE_BN_TO_EN[root]}`;
+                }
+                return OFFLINE_BN_TO_EN[root];
+              }
+            }
+          }
+        }
+
+        return null;
+      }
+
+      // Smart Multi-Word Greedy Phrase + Stem Offline Translator
+      function translateOfflineSmart(text, sourceLang) {
+        const directFull = lookupOfflineToken(text);
+        if (directFull) return directFull;
+
+        const tokens = text.split(/(\s+|[.,!?;:।"'()]+)/);
+        const wordIndices = [];
+        tokens.forEach((t, idx) => {
+          if (t && !/^(\s+|[.,!?;:।"'()]+)$/.test(t)) {
+            wordIndices.push(idx);
+          }
+        });
+
+        const outTokens = [...tokens];
+        let i = 0;
+        while (i < wordIndices.length) {
+          let matchedSpan = 0;
+          for (let span = Math.min(4, wordIndices.length - i); span >= 2; span--) {
+            const startIdx = wordIndices[i];
+            const endIdx = wordIndices[i + span - 1];
+            const phrase = tokens.slice(startIdx, endIdx + 1).join('');
+            const phraseHit = lookupOfflineToken(phrase);
+            if (phraseHit) {
+              outTokens[startIdx] = phraseHit;
+              for (let k = startIdx + 1; k <= endIdx; k++) {
+                outTokens[k] = '';
+              }
+              matchedSpan = span;
+              break;
+            }
+          }
+          if (matchedSpan > 0) {
+            i += matchedSpan;
+          } else {
+            const idx = wordIndices[i];
+            const hit = lookupOfflineToken(tokens[idx]);
+            if (hit) outTokens[idx] = hit;
+            i++;
+          }
+        }
+
+        let result = outTokens.join('');
+        if (sourceLang === 'en') {
+          result = result.replace(/[0-9]/g, d => '০১২৩৪৫৬৭৮৯'[Number(d)]);
+        } else {
+          result = result.replace(/[০-৯]/g, d => String('০১২৩৪৫৬৭৮৯'.indexOf(d)));
+        }
+        return result;
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function showToast(msg) {
+        const toast = document.getElementById('toastBanner');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.remove('hidden');
+        clearTimeout(window.__bhasaToastTimer);
+        window.__bhasaToastTimer = setTimeout(() => {
+          toast.classList.add('hidden');
+        }, 2200);
+      }
+
+      function copyTextReliable(text, successMsg = 'Copied to clipboard!') {
+        if (!text) return;
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast(successMsg);
+        } catch (err) {
+          showToast('Copy failed — please select and copy manually.');
+        }
+        document.body.removeChild(ta);
+      }
+
+      // Split long text into safe <= 450-char chunks preserving sentence boundaries
+      function chunkTextForApi(text, maxLen = 450) {
+        if (text.length <= maxLen) return [text];
+        const sentences = text.match(/[^.!?।\n]+[.!?।\n]*/g) || [text];
+        const chunks = [];
+        let current = '';
+        for (const s of sentences) {
+          if ((current + s).length > maxLen) {
+            if (current) chunks.push(current.trim());
+            if (s.length > maxLen) {
+              for (let i = 0; i < s.length; i += maxLen) {
+                chunks.push(s.slice(i, i + maxLen));
+              }
+              current = '';
+            } else {
+              current = s;
+            }
+          } else {
+            current += s;
+          }
+        }
+        if (current.trim()) chunks.push(current.trim());
+        return chunks;
+      }
+
+      /* -------------------------------------------------------------------
+         5. MULTI-TIER BIDIRECTIONAL TRANSLATION ENGINE (BN <-> EN)
+         Supports Auto Hybrid (Online NMT + Offline Fallback) & Force Offline
+      -------------------------------------------------------------------- */
+      async function translateText(rawText, direction = 'auto', netMode = 'hybrid') {
+        const text = (rawText || '').trim();
+        if (!text) return { translated: '', sourceLang: 'en', targetLang: 'bn', engine: 'Ready' };
+
+        let sourceLang = 'en';
+        let targetLang = 'bn';
+        if (direction === 'en-bn') {
+          sourceLang = 'en';
+          targetLang = 'bn';
+        } else if (direction === 'bn-en') {
+          sourceLang = 'bn';
+          targetLang = 'en';
+        } else {
+          sourceLang = detectLanguage(text);
+          targetLang = sourceLang === 'bn' ? 'en' : 'bn';
+        }
+
+        // Force Offline Mode OR Browser Offline
+        if (netMode === 'offline' || !navigator.onLine) {
+          const offlineRes = translateOfflineSmart(text, sourceLang);
+          return {
+            translated: offlineRes,
+            sourceLang,
+            targetLang,
+            engine: `Offline Lexicon (${TOTAL_GENERATED_FORMS.toLocaleString()} forms)`
+          };
+        }
+
+        // Tier A: Try public GTX Neural Translation endpoint
+        try {
+          const gtxUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+          const res = await fetch(gtxUrl);
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && Array.isArray(data[0])) {
+              const combined = data[0].map(part => part && part[0] ? part[0] : '').join('');
+              if (combined.trim()) {
+                return { translated: combined.trim(), sourceLang, targetLang, engine: 'Neural NMT (Live)' };
+              }
+            }
+          }
+        } catch (e) {
+          // Proceed to Tier B
+        }
+
+        // Tier B: Try MyMemory Public Translation API (chunked for long paragraphs)
+        try {
+          const chunks = chunkTextForApi(text, 450);
+          const translatedChunks = [];
+          for (const chunk of chunks) {
+            const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=${sourceLang}|${targetLang}`;
+            const res = await fetch(mmUrl);
+            if (!res.ok) throw new Error('MyMemory HTTP error');
+            const data = await res.json();
+            if (data && data.responseData && data.responseData.translatedText) {
+              translatedChunks.push(data.responseData.translatedText);
+            } else {
+              throw new Error('MyMemory empty response');
+            }
+          }
+          return {
+            translated: translatedChunks.join(' ').trim(),
+            sourceLang,
+            targetLang,
+            engine: 'MyMemory Cloud NMT'
+          };
+        } catch (e) {
+          // Proceed to Tier C Offline Morphological Dictionary
+        }
+
+        // Tier C: Built-in Massive Offline Dictionary & Morphological Stemmer Fallback
+        const offlineFallback = translateOfflineSmart(text, sourceLang);
+        return {
+          translated: offlineFallback,
+          sourceLang,
+          targetLang,
+          engine: `Offline Lexicon (${TOTAL_GENERATED_FORMS.toLocaleString()} forms)`
+        };
+      }
+
+      /* -------------------------------------------------------------------
+         6. TYPO, SPELLING & GRAMMAR CATCHER + AUTO-FIXER (BANGLA & ENGLISH)
+      -------------------------------------------------------------------- */
+      async function analyzeAndFixEnglish(text) {
+        const mistakes = [];
+        let fixedText = text;
+
+        // First: Try LanguageTool Public API (free, CORS-enabled, catches grammar + typos)
+        try {
+          const params = new URLSearchParams();
+          params.append('text', text);
+          params.append('language', 'en-US');
+
+          const res = await fetch('https://api.languagetool.org/v2/check', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data && Array.isArray(data.matches) && data.matches.length > 0) {
+              // Sort matches descending by offset so replacements don't shift indices
+              const matches = [...data.matches]
+                .filter(m => m.replacements && m.replacements.length > 0)
+                .sort((a, b) => b.offset - a.offset);
+
+              for (const m of matches) {
+                const original = fixedText.slice(m.offset, m.offset + m.length);
+                const replacement = m.replacements[0].value;
+                if (original !== replacement) {
+                  fixedText = fixedText.slice(0, m.offset) + replacement + fixedText.slice(m.offset + m.length);
+                  mistakes.unshift({
+                    original,
+                    fixed: replacement,
+                    reason: m.message || m.shortMessage || 'Grammar or spelling correction'
+                  });
+                }
+              }
+              return { fixedText, mistakes, engine: 'LanguageTool Grammar AI' };
+            } else if (data && Array.isArray(data.matches)) {
+              return { fixedText: text, mistakes: [], engine: 'LanguageTool Grammar AI' };
+            }
+          }
+        } catch (e) {
+          // Fallback to local English rule engine if offline
+        }
+
+        // Local Offline English Fixer Engine
+        // 1. Standalone lowercase "i" -> "I"
+        fixedText = fixedText.replace(/\bi\b/g, (m) => {
+          mistakes.push({ original: 'i', fixed: 'I', reason: 'Pronoun "I" must always be capitalized' });
+          return 'I';
+        });
+
+        // 2. Common typo dictionary
+        fixedText = fixedText.replace(/\b([A-Za-z']+)\b/g, (word) => {
+          const lower = word.toLowerCase();
+          if (ENGLISH_COMMON_TYPOS[lower]) {
+            let rep = ENGLISH_COMMON_TYPOS[lower];
+            if (word[0] === word[0].toUpperCase() && rep[0] !== 'I') {
+              rep = rep[0].toUpperCase() + rep.slice(1);
+            }
+            if (word !== rep) {
+              mistakes.push({ original: word, fixed: rep, reason: `Spelling / contraction fix ("${word}" → "${rep}")` });
+            }
+            return rep;
+          }
+          return word;
+        });
+
+        // 3. Basic Subject-Verb Agreement ("I has" -> "I have", "he have" -> "he has")
+        fixedText = fixedText.replace(/\b(I|you|we|they)\s+has\b/gi, (m, subj) => {
+          const rep = `${subj} have`;
+          mistakes.push({ original: m, fixed: rep, reason: 'Subject-verb agreement: use "have" with I/you/we/they' });
+          return rep;
+        });
+        fixedText = fixedText.replace(/\b(he|she|it)\s+have\b/gi, (m, subj) => {
+          const rep = `${subj} has`;
+          mistakes.push({ original: m, fixed: rep, reason: 'Subject-verb agreement: use "has" with he/she/it' });
+          return rep;
+        });
+
+        // 4. Capitalize first letter of sentence & remove duplicate spaces
+        fixedText = fixedText.replace(/\s{2,}/g, ' ');
+        fixedText = fixedText.replace(/(^\s*[a-z]|[.!?]\s+[a-z])/g, (m) => m.toUpperCase());
+
+        return { fixedText: fixedText.trim(), mistakes, engine: 'Local English Rules' };
+      }
+
+      async function analyzeAndFixBangla(text) {
+        const mistakes = [];
+        let fixedText = text;
+
+        // 1. Clean extra whitespace & space before দাঁড়ি (।), comma, question mark
+        const beforePunct = fixedText;
+        fixedText = fixedText
+          .replace(/\s+([।,?!;:])/g, '$1')
+          .replace(/([।?!])([^\s"'\)\]])/g, '$1 $2')
+          .replace(/\s{2,}/g, ' ')
+          .trim();
+
+        if (beforePunct !== fixedText) {
+          mistakes.push({
+            original: 'অতিরিক্ত স্পেস / যতিচিহ্ন',
+            fixed: 'যতিচিহ্নের সঠিক বিন্যাস',
+            reason: 'দাঁড়ি (।) বা কমার আগে অপ্রয়োজনীয় স্পেস সরানো হয়েছে'
+          });
+        }
+
+        // 2. Apply Bangla Spelling & Orthography Dictionary Rules
+        for (const rule of BANGLA_SPELLING_RULES) {
+          if (fixedText.includes(rule.wrong)) {
+            fixedText = fixedText.split(rule.wrong).join(rule.right);
+            mistakes.push({
+              original: rule.wrong,
+              fixed: rule.right,
+              reason: rule.reason
+            });
+          }
+        }
+
+        // 3. Apply Bangla Grammar & Subject-Verb Agreement Rules
+        for (const gRule of BANGLA_GRAMMAR_PATTERNS) {
+          fixedText = fixedText.replace(gRule.regex, (...args) => {
+            const fullMatch = args[0];
+            const replacement = gRule.replace(...args);
+            if (fullMatch !== replacement) {
+              mistakes.push({
+                original: fullMatch,
+                fixed: replacement,
+                reason: gRule.reason
+              });
+            }
+            return replacement;
+          });
+        }
+
+        // 4. Catch accidental consecutive duplicate Bangla words (e.g. "আমি আমি", "করে করে" excluded if valid reduplication, focus on pronouns/particles)
+        fixedText = fixedText.replace(/\b(আমি|তুমি|আপনি|সে|তারা|এবং|কিন্তু|যদি|তবে|যে)\s+\1\b/g, (m, word) => {
+          mistakes.push({
+            original: m,
+            fixed: word,
+            reason: `একই শব্দ "${word}" পরপর দুইবার টাইপ হয়েছে`
+          });
+          return word;
+        });
+
+        return { fixedText, mistakes, engine: 'Bangla Orthography & Grammar Engine' };
+      }
+
+      async function checkAndFixText(rawText, langPref = 'auto') {
+        const text = (rawText || '').trim();
+        if (!text) return { fixedText: '', mistakes: [], lang: 'en', engine: '' };
+
+        const lang = langPref === 'auto' ? detectLanguage(text) : langPref;
+        if (lang === 'bn') {
+          const res = await analyzeAndFixBangla(text);
+          return { ...res, lang: 'bn' };
+        } else {
+          const res = await analyzeAndFixEnglish(text);
+          return { ...res, lang: 'en' };
+        }
+      }
+
+      /* -------------------------------------------------------------------
+         7. INTERACTIVE BOT CONTROLLER (Binds to Any Instance: Main or Floating)
+      -------------------------------------------------------------------- */
+      function mountBotInstance(containerEl) {
+        const tpl = document.getElementById('botAppTemplate');
+        containerEl.innerHTML = '';
+        containerEl.appendChild(tpl.content.cloneNode(true));
+
+        // State for this bot instance
+        let activeTab = 'translate';
+        let transDirection = 'auto';
+        let netMode = 'hybrid';
+        let fixLang = 'auto';
+        let latestFixedText = '';
+
+        // Query elements inside this instance
+        const tabBtns = containerEl.querySelectorAll('.tab-btn');
+        const panels = containerEl.querySelectorAll('[data-panel]');
+
+        // Translator elements
+        const dirBtns = containerEl.querySelectorAll('.dir-btn');
+        const netModeBtns = containerEl.querySelectorAll('.netmode-btn');
+        const transInput = containerEl.querySelector('.trans-input');
+        const transOutput = containerEl.querySelector('.trans-output');
+        const detectedLangLabel = containerEl.querySelector('.detected-lang-label');
+        const targetLangLabel = containerEl.querySelector('.target-lang-label');
+        const charCount = containerEl.querySelector('.char-count');
+        const engineBadge = containerEl.querySelector('.engine-badge span:last-child');
+        const runTransBtn = containerEl.querySelector('.run-trans-btn');
+        const fixBeforeTransBtn = containerEl.querySelector('.fix-before-trans-btn');
+        const swapTransBtn = containerEl.querySelector('.swap-trans-btn');
+        const copyTransBtn = containerEl.querySelector('.copy-trans-btn');
+        const clearTransBtn = containerEl.querySelector('.clear-trans-btn');
+
+        // Fixer elements
+        const fixLangBtns = containerEl.querySelectorAll('.fixlang-btn');
+        const fixerInput = containerEl.querySelector('.fixer-input');
+        const fixerLangStatus = containerEl.querySelector('.fixer-lang-status');
+        const clearFixerBtn = containerEl.querySelector('.clear-fixer-btn');
+        const runFixerBtn = containerEl.querySelector('.run-fixer-btn');
+        const fixerResults = containerEl.querySelector('.fixer-results');
+        const issueCountPill = containerEl.querySelector('.issue-count-pill');
+        const fixedCleanOutput = containerEl.querySelector('.fixed-clean-output');
+        const diffPreview = containerEl.querySelector('.diff-preview');
+        const mistakesList = containerEl.querySelector('.mistakes-list');
+        const applyFixedBtn = containerEl.querySelector('.apply-fixed-btn');
+        const sendToTransBtn = containerEl.querySelector('.send-to-trans-btn');
+        const copyFixedBtn = containerEl.querySelector('.copy-fixed-btn');
+
+        // Tab Switching
+        function setTab(tabName) {
+          activeTab = tabName;
+          tabBtns.forEach(btn => {
+            const isActive = btn.dataset.tab === tabName;
+            btn.classList.toggle('bg-white', isActive);
+            btn.classList.toggle('dark:bg-slate-800', isActive);
+            btn.classList.toggle('text-indigo-600', isActive && tabName === 'translate');
+            btn.classList.toggle('dark:text-indigo-400', isActive && tabName === 'translate');
+            btn.classList.toggle('text-emerald-600', isActive && tabName === 'fixer');
+            btn.classList.toggle('dark:text-emerald-400', isActive && tabName === 'fixer');
+            btn.classList.toggle('shadow-sm', isActive);
+            btn.classList.toggle('text-slate-500', !isActive);
+          });
+          panels.forEach(p => {
+            p.classList.toggle('hidden', p.dataset.panel !== tabName);
+          });
+        }
+
+        // Direction Pill Styling
+        function setDirection(dir) {
+          transDirection = dir;
+          dirBtns.forEach(btn => {
+            const active = btn.dataset.dir === dir;
+            btn.classList.toggle('bg-white', active);
+            btn.classList.toggle('dark:bg-slate-900', active);
+            btn.classList.toggle('text-indigo-600', active);
+            btn.classList.toggle('dark:text-indigo-400', active);
+            btn.classList.toggle('shadow-sm', active);
+            btn.classList.toggle('text-slate-500', !active);
+          });
+          updateTransLabels();
+        }
+
+        function setFixLang(lang) {
+          fixLang = lang;
+          fixLangBtns.forEach(btn => {
+            const active = btn.dataset.fixlang === lang;
+            btn.classList.toggle('bg-white', active);
+            btn.classList.toggle('dark:bg-slate-900', active);
+            btn.classList.toggle('text-emerald-600', active);
+            btn.classList.toggle('dark:text-emerald-400', active);
+            btn.classList.toggle('shadow-sm', active);
+            btn.classList.toggle('text-slate-500', !active);
+          });
+        }
+
+        function setNetMode(mode) {
+          netMode = mode;
+          netModeBtns.forEach(btn => {
+            const active = btn.dataset.netmode === mode;
+            btn.classList.toggle('bg-white', active);
+            btn.classList.toggle('dark:bg-slate-900', active);
+            btn.classList.toggle('text-indigo-600', active);
+            btn.classList.toggle('dark:text-indigo-400', active);
+            btn.classList.toggle('shadow-sm', active);
+            btn.classList.toggle('text-slate-500', !active);
+          });
+          engineBadge.textContent = mode === 'offline'
+            ? `Offline Mode (${TOTAL_GENERATED_FORMS.toLocaleString()} forms)`
+            : 'Massive Lexicon + Neural Ready';
+        }
+
+        function updateTransLabels() {
+          const val = transInput.value;
+          charCount.textContent = `${val.length} chars`;
+          const detected = transDirection === 'auto'
+            ? detectLanguage(val)
+            : (transDirection === 'bn-en' ? 'bn' : 'en');
+          if (!val.trim() && transDirection === 'auto') {
+            detectedLangLabel.textContent = 'Source (Auto-Detect)';
+            targetLangLabel.textContent = 'Translation Output';
+          } else if (detected === 'bn') {
+            detectedLangLabel.textContent = 'Source: বাংলা (Bangla)';
+            targetLangLabel.textContent = 'Target: English';
+          } else {
+            detectedLangLabel.textContent = 'Source: English';
+            targetLangLabel.textContent = 'Target: বাংলা (Bangla)';
+          }
+        }
+
+        // Execute Translation
+        async function executeTranslation(fixFirst = false) {
+          let inputVal = transInput.value.trim();
+          if (!inputVal) {
+            showToast('Please enter some Bangla or English text first.');
+            return;
+          }
+
+          if (fixFirst) {
+            const fixedRes = await checkAndFixText(inputVal, 'auto');
+            if (fixedRes.fixedText && fixedRes.fixedText !== inputVal) {
+              inputVal = fixedRes.fixedText;
+              transInput.value = inputVal;
+              showToast(`Auto-fixed ${fixedRes.mistakes.length} issue(s) before translating!`);
+            }
+          }
+
+          runTransBtn.disabled = true;
+          runTransBtn.innerHTML = '<span>Translating...</span>';
+          transOutput.innerHTML = '<span class="text-slate-400 animate-pulse">Translating...</span>';
+
+          const result = await translateText(inputVal, transDirection, netMode);
+          transOutput.textContent = result.translated;
+          engineBadge.textContent = result.engine;
+          targetLangLabel.textContent = result.targetLang === 'bn'
+            ? 'Target: বাংলা (Bangla)'
+            : 'Target: English';
+
+          runTransBtn.disabled = false;
+          runTransBtn.innerHTML = '<span>Translate Now</span>';
+        }
+
+        // Execute Typo & Grammar Catcher + Auto-Fixer
+        async function executeFixer() {
+          const raw = fixerInput.value.trim();
+          if (!raw) {
+            showToast('Please paste Bangla or English text to check.');
+            return;
+          }
+
+          runFixerBtn.disabled = true;
+          runFixerBtn.innerHTML = '<span>Checking &amp; Fixing...</span>';
+
+          const result = await checkAndFixText(raw, fixLang);
+          latestFixedText = result.fixedText;
+
+          fixerResults.classList.remove('hidden');
+          fixedCleanOutput.textContent = result.fixedText;
+
+          const count = result.mistakes.length;
+          issueCountPill.textContent = count === 0
+            ? 'Perfect! 0 mistakes'
+            : `${count} mistake${count > 1 ? 's' : ''} fixed`;
+
+          fixerLangStatus.textContent = `Checked with ${result.engine} (${result.lang === 'bn' ? 'বাংলা' : 'English'})`;
+
+          // Render visual diff & itemized mistake cards
+          if (count === 0) {
+            diffPreview.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400 font-medium">✓ No spelling, typing, or grammar mistakes detected!</span>`;
+            mistakesList.innerHTML = '';
+          } else {
+            // Build highlighted diff summary
+            diffPreview.innerHTML = result.mistakes.map(m =>
+              `<span class="inline-flex items-center gap-1 mr-2 mb-1">
+                <span class="err-strike">${escapeHtml(m.original)}</span>
+                <span class="text-slate-400">→</span>
+                <span class="fix-badge">${escapeHtml(m.fixed)}</span>
+              </span>`
+            ).join('');
+
+            mistakesList.innerHTML = result.mistakes.map((m, idx) =>
+              `<li class="flex items-start gap-2 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400">${idx + 1}.</span>
+                <div>
+                  <span class="err-strike">${escapeHtml(m.original)}</span>
+                  <span class="mx-1 text-slate-400">→</span>
+                  <span class="fix-badge">${escapeHtml(m.fixed)}</span>
+                  <p class="text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(m.reason)}</p>
+                </div>
+              </li>`
+            ).join('');
+          }
+
+          runFixerBtn.disabled = false;
+          runFixerBtn.innerHTML = '<span>Catch Mistakes &amp; Auto-Fix</span>';
+        }
+
+        // Bind Tab & Pill Events
+        tabBtns.forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+        dirBtns.forEach(btn => btn.addEventListener('click', () => setDirection(btn.dataset.dir)));
+        netModeBtns.forEach(btn => btn.addEventListener('click', () => setNetMode(btn.dataset.netmode)));
+        fixLangBtns.forEach(btn => btn.addEventListener('click', () => setFixLang(btn.dataset.fixlang)));
+
+        // Sample Quick-Test Buttons
+        containerEl.querySelectorAll('[data-sample]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const type = btn.dataset.sample;
+            if (type === 'trans-en') {
+              setTab('translate');
+              setDirection('en-bn');
+              transInput.value = 'Knowledge is power, and learning a new language opens doors to the entire world.';
+              updateTransLabels();
+              executeTranslation(false);
+            } else if (type === 'trans-bn') {
+              setTab('translate');
+              setDirection('bn-en');
+              transInput.value = 'ভাষা মানুষের মনের ভাব প্রকাশের সবচেয়ে সুন্দর মাধ্যম।';
+              updateTransLabels();
+              executeTranslation(false);
+            } else if (type === 'fix-en') {
+              setTab('fixer');
+              setFixLang('en');
+              fixerInput.value = 'i has alot of freinds who definately loves to learn new langauge tommorow.';
+              executeFixer();
+            } else if (type === 'fix-bn') {
+              setTab('fixer');
+              setFixLang('bn');
+              fixerInput.value = 'আমি সাকুল্যে পড়াশুনা করছে এবং সব মানুষগুলো ব্যাকরন ভূল করে ।';
+              executeFixer();
+            }
+          });
+        });
+
+        // Translator Events
+        let debounceTimer = null;
+        transInput.addEventListener('input', () => {
+          updateTransLabels();
+          clearTimeout(debounceTimer);
+          if (transInput.value.trim().length > 0 && transInput.value.trim().length <= 220) {
+            debounceTimer = setTimeout(() => executeTranslation(false), 650);
+          }
+        });
+
+        runTransBtn.addEventListener('click', () => executeTranslation(false));
+        fixBeforeTransBtn.addEventListener('click', () => executeTranslation(true));
+
+        swapTransBtn.addEventListener('click', () => {
+          const outText = transOutput.textContent.trim();
+          if (!outText || outText === 'Translation will appear here...') return;
+          transInput.value = outText;
+          setDirection('auto');
+          updateTransLabels();
+          executeTranslation(false);
+        });
+
+        copyTransBtn.addEventListener('click', () => {
+          const outText = transOutput.textContent.trim();
+          if (outText && outText !== 'Translation will appear here...') {
+            copyTextReliable(outText, 'Translation copied!');
+          }
+        });
+
+        clearTransBtn.addEventListener('click', () => {
+          transInput.value = '';
+          transOutput.innerHTML = '<span class="text-slate-400 italic text-sm">Translation will appear here...</span>';
+          updateTransLabels();
+        });
+
+        // Fixer Events
+        runFixerBtn.addEventListener('click', executeFixer);
+
+        clearFixerBtn.addEventListener('click', () => {
+          fixerInput.value = '';
+          fixerResults.classList.add('hidden');
+          latestFixedText = '';
+        });
+
+        applyFixedBtn.addEventListener('click', () => {
+          if (latestFixedText) {
+            fixerInput.value = latestFixedText;
+            showToast('Replaced input with corrected text!');
+          }
+        });
+
+        copyFixedBtn.addEventListener('click', () => {
+          if (latestFixedText) {
+            copyTextReliable(latestFixedText, 'Corrected text copied!');
+          }
+        });
+
+        sendToTransBtn.addEventListener('click', () => {
+          if (!latestFixedText) return;
+          transInput.value = latestFixedText;
+          setTab('translate');
+          setDirection('auto');
+          updateTransLabels();
+          executeTranslation(false);
+        });
+
+        // Initialize defaults
+        setTab('translate');
+        setDirection('auto');
+        setNetMode('hybrid');
+        setFixLang('auto');
+      }
+
+      function fixLocalText(input) {
+        const original = String(input || '');
+        const lang = detectLanguage(original);
+        let fixedText = original;
+        if (lang === 'bn') {
+          fixedText = fixedText.replace(/\s+([।,?!;:])/g, '$1').replace(/([।?!])([^\s"'\)\]])/g, '$1 $2').replace(/\s{2,}/g, ' ').trim();
+          for (const rule of BANGLA_SPELLING_RULES) fixedText = fixedText.split(rule.wrong).join(rule.right);
+        } else {
+          fixedText = fixedText.replace(/\bi\b/g, 'I').replace(/\b([A-Za-z']+)\b/g, word => {
+            const replacement = ENGLISH_COMMON_TYPOS[word.toLowerCase()];
+            if (!replacement) return word;
+            return word[0] === word[0].toUpperCase() && replacement[0] !== 'I'
+              ? replacement[0].toUpperCase() + replacement.slice(1) : replacement;
+          });
+        }
+        return { fixedText, lang, changed: fixedText !== original };
+      }
+
+      window.BhasaBot = Object.freeze({
+        mount: mountBotInstance,
+        translate: translateText,
+        checkAndFix: checkAndFixText,
+        fixLocal: fixLocalText,
+        detectLanguage,
+        vocabularySize: () => TOTAL_GENERATED_FORMS
+      });
+    })();
+  </script>
   <script>
     (() => {
       "use strict";
@@ -493,13 +4149,15 @@
         language: localStorage.getItem("identity-language") === "bn" ? "bn" : "en",
         theme: localStorage.getItem("identity-theme") === "light" ? "light" : "dark",
         profiles: [], view: "home", currentProfile: null, contactMode: null,
-        loaded: false, loadingError: false, searchTimer: null, lastSearchedQuery: ""
+        loaded: false, loadingError: false, searchTimer: { home: null, sheet: null },
+        searchSeq: { home: 0, sheet: 0 }, resultViews: { home: null, sheet: null }, lastSearchedQuery: ""
       };
       const t = key => translations[state.language][key];
 
       function applyTheme(theme) {
         state.theme = theme === "light" ? "light" : "dark";
         document.documentElement.dataset.theme = state.theme;
+        document.documentElement.classList.toggle("dark", state.theme === "dark");
         document.documentElement.style.colorScheme = state.theme;
         localStorage.setItem("identity-theme", state.theme);
         $("#brandLogo").src = state.theme === "dark" ? DARK_LOGO : LIGHT_LOGO;
@@ -530,8 +4188,10 @@
         $("#headerSearchButton").setAttribute("aria-label", state.language === "en" ? "Open search" : "অনুসন্ধান খুলুন");
         $("#headerLanguageButton").setAttribute("aria-label", state.language === "en" ? "Choose language" : "ভাষা নির্বাচন করুন");
         $("#menuButton").setAttribute("aria-label", state.language === "en" ? "Open menu" : "মেনু খুলুন");
-        if (state.loaded && state.view === "home" && state.lastSearchedQuery) updateSearchResults(state.lastSearchedQuery, "home");
-        if (state.loaded && $("#searchSheet").classList.contains("open") && state.lastSearchedQuery) updateSearchResults(state.lastSearchedQuery, "sheet");
+        if (state.loaded && state.lastSearchedQuery) {
+          queueSearch(state.lastSearchedQuery, "home", true);
+          if ($("#searchSheet").classList.contains("open")) queueSearch(state.lastSearchedQuery, "sheet", true);
+        }
         if (state.loaded && state.view === "identity" && state.currentProfile) renderIdentity(state.currentProfile, false);
         if (state.view === "legal") renderLegal(state.currentProfile);
         if (state.contactMode) setContactMode(state.contactMode, false);
@@ -543,7 +4203,7 @@
         $("#identityView").hidden = view !== "identity";
         $("#legalView").hidden = view !== "legal";
         $("#siteFooter").hidden = view !== "home";
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo(0, 0);
       }
 
       function openDrawer() {
@@ -570,7 +4230,7 @@
         $("#searchSheet").classList.add("open"); $("#searchScrim").classList.add("open");
         $("#searchSheet").setAttribute("aria-hidden", "false");
         $("#sheetSearchInput").value = $("#homeSearchInput").value;
-        if (state.lastSearchedQuery && normalize($("#sheetSearchInput").value) === normalize(state.lastSearchedQuery)) updateSearchResults(state.lastSearchedQuery, "sheet");
+        if (safeText($("#sheetSearchInput").value)) queueSearch($("#sheetSearchInput").value, "sheet", true);
         else renderResults("sheet", "", []);
         setTimeout(() => $("#sheetSearchInput").focus(), 80);
       }
@@ -609,8 +4269,11 @@
       function profileFromMarkdown(path, markdown) {
         const { meta, body } = parseFrontMatter(markdown);
         const fileName = path.split("/").pop().replace(/\.md$/i, "").replace(/[-_]+/g, " ");
+        // Ignore Bangla/localized front-matter: people/ Markdown is the English source of truth.
+        for (const key of Object.keys(meta)) {
+          if (/(^bn_|_bn$|bangla|bengali)/i.test(key)) delete meta[key];
+        }
         const nameEn = safeText(meta.name_en || meta.name || fileName);
-        const nameBn = safeText(meta.name_bn || meta.bangla_name || "");
         const aliases = [...splitList(meta.aliases), ...splitList(meta.alternative_names), ...splitList(meta.alternate_names)];
         const nickname = safeText(meta.nickname);
         const imageMeta = safeText(meta.image || meta.image_url || splitList(meta.images)[0] || "");
@@ -618,15 +4281,15 @@
         const image = imageMeta || (firstMarkdownImage ? firstMarkdownImage[1].trim() : "");
         const summary = safeText(meta.summary || meta.description || meta.short_bio);
         const searchable = [path, ...Object.values(meta).flatMap(v => Array.isArray(v) ? v : [v]), body].join(" ");
-        const tokenBuckets = {};
-        for (const token of new Set(normalize(searchable).split(" ").filter(word => Array.from(word).length > 1))) {
-          const tokenLength = Array.from(token).length;
-          (tokenBuckets[tokenLength] ||= []).push(token);
-        }
         return {
-          path, nameEn, nameBn,
+          path, nameEn, nameBn: "", localized: null, previewBn: null, previewPromise: null, translationPromise: null,
           aliases: [...new Set([...aliases, ...(nickname ? [nickname] : [])])], nickname,
-          image, summary, body, meta, searchable, tokenBuckets,
+          image, summary, body, meta, searchable, searchNormalized: normalize(searchable),
+          nameNormalized: normalize(nameEn), aliasNormalized: normalize(aliases.join(" ")),
+          pathNormalized: normalize(path.replace(/\.md$/i, "").replace(/[\/_-]/g, " ")),
+          nameTokens: normalize(nameEn).split(" ").filter(Boolean),
+          aliasTokens: normalize(aliases.join(" ")).split(" ").filter(Boolean),
+          pathTokens: normalize(path.replace(/\.md$/i, "").replace(/[\/_-]/g, " ")).split(" ").filter(Boolean),
           birth: safeText(meta.date_of_birth || meta.birth_date || meta.born),
           death: safeText(meta.date_of_death || meta.death_date || meta.died),
           nationality: safeText(meta.nationality), occupation: safeText(meta.occupation || meta.profession),
@@ -677,45 +4340,39 @@
         return diceSimilarity(queryToken, candidateToken) * .78;
       }
       function scoreProfile(query, profile) {
-        const q = normalize(query); if (!q) return 0;
-        const name = normalize([profile.nameEn, profile.nameBn].join(" "));
-        const aliases = normalize(profile.aliases.join(" "));
-        const path = normalize(profile.path.replace(/\.md$/i, "").replace(/[\/_-]/g, " "));
-        const all = normalize(profile.searchable);
-        if (name === q) return 120;
-        if (aliases === q || path === q) return 112;
-        if (name.includes(q)) return 106;
-        if (aliases.includes(q)) return 100;
-        if (path.includes(q)) return 94;
-        if (all.includes(q)) return 83;
+        const q = normalize(query);
+        if (!q) return 0;
+        const name = profile.nameNormalized || normalize(profile.nameEn);
+        const aliases = profile.aliasNormalized || normalize(profile.aliases.join(" "));
+        const path = profile.pathNormalized || normalize(profile.path);
+        const all = profile.searchNormalized || normalize(profile.searchable);
+        const localizedName = profile.localized?.name ? normalize(profile.localized.name) : "";
+        const localizedSummary = profile.localized?.summary ? normalize(profile.localized.summary) : "";
+        if (localizedName === q || name === q) return 125;
+        if (aliases === q || path === q) return 115;
+        if (localizedName && localizedName.includes(q)) return 110;
+        if (localizedSummary && localizedSummary.includes(q)) return 86;
+        if (name.includes(q)) return 108;
+        if (aliases.includes(q)) return 101;
+        if (path.includes(q)) return 95;
+        if (all.includes(q)) return 84;
 
         const queryTokens = q.split(" ").filter(Boolean);
-        const nameTokens = name.split(" ");
-        const aliasTokens = aliases.split(" ");
-        const pathTokens = path.split(" ");
-        let nameTotal = 0, aliasTotal = 0, allTotal = 0;
-        queryTokens.forEach(token => {
-          const bestName = Math.max(0, ...nameTokens.map(candidate => matchToken(token, candidate)));
-          const bestAlias = Math.max(0, ...aliasTokens.map(candidate => matchToken(token, candidate)));
-          const bestPath = Math.max(0, ...pathTokens.map(candidate => matchToken(token, candidate)));
-          const queryLength = Array.from(token).length;
-          let bestAll = 0;
-          for (let length = Math.max(2, queryLength - 2); length <= queryLength + 2; length++) {
-            for (const candidate of (profile.tokenBuckets[length] || [])) {
-              const similarity = matchToken(token, candidate);
-              if (similarity > bestAll) bestAll = similarity;
-              if (bestAll >= 1) break;
-            }
-            if (bestAll >= 1) break;
+        const identityTokens = [...(profile.nameTokens || []), ...(profile.aliasTokens || []), ...(profile.pathTokens || [])];
+        if (!identityTokens.length || !queryTokens.length) return 0;
+        let identityTotal = 0;
+        for (const token of queryTokens) {
+          let best = 0;
+          for (const candidate of identityTokens) {
+            const similarity = matchToken(token, candidate);
+            if (similarity > best) best = similarity;
+            if (best >= 1) break;
           }
-          nameTotal += bestName; aliasTotal += Math.max(bestAlias, bestPath); allTotal += bestAll;
-        });
-        const count = queryTokens.length || 1;
-        const nameScore = (nameTotal / count) * 88;
-        const aliasScore = (aliasTotal / count) * 79;
-        const allScore = (allTotal / count) * 65;
-        const coverage = queryTokens.filter(token => all.includes(token)).length / count;
-        return Math.max(nameScore, aliasScore, allScore) + coverage * 9;
+          identityTotal += best;
+        }
+        const identityScore = (identityTotal / queryTokens.length) * 92;
+        const coverage = queryTokens.filter(token => all.includes(token)).length / queryTokens.length;
+        return Math.max(identityScore, coverage * 64);
       }
 
       function resolvePageAsset(reference, markdownPath) {
@@ -850,11 +4507,135 @@
       }
 
       function profileDisplayName(profile) {
-        return state.language === "bn" ? (profile.nameBn || profile.nameEn) : (profile.nameEn || profile.nameBn);
+        if (state.language === "bn") return profile.localized?.name || profile.previewBn?.name || profile.nameEn;
+        return profile.nameEn;
       }
-      function renderResults(target, query, matches) {
+
+      const RESULTS_PAGE_SIZE = 15;
+      function makeResultCard(profile) {
+        const card = document.createElement("button");
+        card.type = "button"; card.className = "result-card"; card.dataset.profilePath = profile.path;
+        const imageUrl = profile.image ? resolvePageAsset(profile.image, profile.path) : "";
+        if (imageUrl) {
+          const img = document.createElement("img");
+          img.className = "result-avatar"; img.src = imageUrl; img.alt = "";
+          img.loading = "lazy"; img.decoding = "async";
+          img.onerror = () => {
+            const fallback = document.createElement("div"); fallback.className = "result-avatar avatar-placeholder";
+            fallback.textContent = (profileDisplayName(profile) || "?").trim().slice(0, 1).toUpperCase(); img.replaceWith(fallback);
+          };
+          card.append(img);
+        } else {
+          const fallback = document.createElement("div"); fallback.className = "result-avatar avatar-placeholder";
+          fallback.textContent = (profileDisplayName(profile) || "?").trim().slice(0, 1).toUpperCase(); card.append(fallback);
+        }
+        const copy = document.createElement("span"); copy.className = "result-copy";
+        const name = document.createElement("span"); name.className = "result-name"; name.textContent = profileDisplayName(profile);
+        const summary = document.createElement("span"); summary.className = "result-summary";
+        const fallbackSummary = profile.summary || profile.aliases.join(" · ") || profile.occupation || profile.nameEn;
+        summary.textContent = state.language === "bn" ? (profile.localized?.summary || profile.previewBn?.summary || fallbackSummary) : fallbackSummary;
+        copy.append(name, summary); card.append(copy);
+        const arrow = document.createElement("span"); arrow.className = "result-arrow"; arrow.textContent = "↗"; card.append(arrow);
+        card.addEventListener("click", () => openIdentity(profile));
+        return card;
+      }
+
+      function appendResultBatch(target) {
+        const view = state.resultViews[target];
+        if (!view) return;
+        if (view.observer) { view.observer.disconnect(); view.observer = null; }
+        const fragment = document.createDocumentFragment();
+        const batch = view.matches.slice(view.rendered, view.rendered + RESULTS_PAGE_SIZE);
+        batch.forEach(match => fragment.append(makeResultCard(match.profile)));
+        view.list.append(fragment);
+        requestPreviewTranslations(batch.map(match => match.profile), target, view.query, view.sequence);
+        view.rendered += batch.length;
+        if (view.sentinel) view.sentinel.remove();
+        if (view.rendered < view.matches.length) {
+          const sentinel = document.createElement("div");
+          sentinel.className = "results-sentinel"; sentinel.setAttribute("aria-hidden", "true");
+          sentinel.style.height = "1px"; view.list.append(sentinel); view.sentinel = sentinel;
+          if ("IntersectionObserver" in window) {
+            view.observer = new IntersectionObserver(entries => {
+              if (entries.some(entry => entry.isIntersecting)) appendResultBatch(target);
+            }, { root: target === "sheet" ? $("#searchSheet") : null, rootMargin: "220px 0px" });
+            view.observer.observe(sentinel);
+          } else {
+            const button = document.createElement("button");
+            button.type = "button"; button.className = "load-more-results";
+            button.textContent = state.language === "bn" ? "আরও ১৫ জন দেখুন" : "Load 15 more";
+            button.addEventListener("click", () => { button.remove(); appendResultBatch(target); });
+            view.list.append(button);
+          }
+        }
+      }
+
+      function updateVisibleTranslatedCards(profiles) {
+        ["home", "sheet"].forEach(target => {
+          const container = target === "home" ? $("#homeResults") : $("#sheetResults");
+          if (!container) return;
+          profiles.forEach(profile => {
+            const card = [...container.querySelectorAll(".result-card")].find(node => node.dataset.profilePath === profile.path);
+            if (!card) return;
+            const name = card.querySelector(".result-name");
+            const summary = card.querySelector(".result-summary");
+            if (name) name.textContent = profile.localized?.name || profile.previewBn?.name || profile.nameEn;
+            if (summary) summary.textContent = profile.localized?.summary || profile.previewBn?.summary || profile.summary || profile.occupation || profile.nameEn;
+          });
+        });
+      }
+
+      async function translateFields(values) {
+        const cleanValues = values.map(value => safeText(value));
+        const output = [...cleanValues];
+        const active = cleanValues.map((value, index) => ({ value, index })).filter(item => item.value);
+        if (!active.length || !window.BhasaBot) return output;
+        const separator = " ZXQIDENTITYFIELDSEPZXQ ";
+        try {
+          const combined = active.map(item => item.value).join(separator);
+          const response = await window.BhasaBot.translate(combined, "en-bn", "hybrid");
+          const translated = String(response?.translated || "").split("ZXQIDENTITYFIELDSEPZXQ");
+          if (translated.length === active.length) {
+            active.forEach((item, index) => { output[item.index] = translated[index].trim() || item.value; });
+            return output;
+          }
+        } catch (_) { /* Use per-field fallback below. */ }
+        const translatedValues = await Promise.all(active.map(async item => {
+          try {
+            const result = await window.BhasaBot.translate(item.value, "en-bn", "hybrid");
+            return result?.translated?.trim() || item.value;
+          } catch (_) { return item.value; }
+        }));
+        active.forEach((item, index) => { output[item.index] = translatedValues[index]; });
+        return output;
+      }
+
+      function requestPreviewTranslations(profiles, target, query, sequence) {
+        if (state.language !== "bn" || !window.BhasaBot) return;
+        const pending = profiles.filter(profile => !profile.previewBn && !profile.previewPromise);
+        if (!pending.length) return;
+        // Work in small batches so a low-memory phone never sends one very large translation request.
+        const groups = [];
+        for (let i = 0; i < pending.length; i += 8) groups.push(pending.slice(i, i + 8));
+        groups.forEach(group => {
+          group.forEach(profile => { profile.previewPromise = true; });
+          const values = group.flatMap(profile => [profile.nameEn, profile.summary || profile.aliases.join(" · ") || profile.occupation || profile.nameEn]);
+          translateFields(values).then(translated => {
+            group.forEach((profile, index) => {
+              profile.previewBn = { name: translated[index * 2] || profile.nameEn, summary: translated[index * 2 + 1] || profile.summary || profile.nameEn };
+              profile.previewPromise = null;
+            });
+            if (state.language === "bn") updateVisibleTranslatedCards(group);
+          }).catch(() => group.forEach(profile => { profile.previewPromise = null; }));
+        });
+      }
+
+      function renderResults(target, query, matches, sequence = state.searchSeq[target] || 0) {
         const container = target === "home" ? $("#homeResults") : $("#sheetResults");
+        const oldView = state.resultViews[target];
+        if (oldView?.observer) oldView.observer.disconnect();
         container.innerHTML = "";
+        state.resultViews[target] = null;
         if (!query.trim()) {
           if (state.loaded && state.profiles.length === 0) container.innerHTML = `<div class="empty-state">${escapeHtml(t("emptyCollection"))}</div>`;
           return;
@@ -866,46 +4647,100 @@
         if (!matches.length) {
           const empty = document.createElement("div"); empty.className = "empty-state"; empty.textContent = t("noResults")(query); container.append(empty); return;
         }
-        const list = document.createElement("div"); list.className = "results-list";
-        matches.slice(0, 12).forEach((match, index) => {
-          const profile = match.profile;
-          const card = document.createElement("button"); card.type = "button"; card.className = "result-card";
-          card.style.setProperty("--delay", `${Math.min(index * 45, 360)}ms`);
-          const imageUrl = profile.image ? resolvePageAsset(profile.image, profile.path) : "";
-          if (imageUrl) {
-            const img = document.createElement("img"); img.className = "result-avatar"; img.src = imageUrl; img.alt = ""; img.loading = "lazy";
-            img.onerror = () => { const fallback = document.createElement("div"); fallback.className = "result-avatar avatar-placeholder"; fallback.textContent = (profileDisplayName(profile) || "?").trim().slice(0, 1).toUpperCase(); img.replaceWith(fallback); };
-            card.append(img);
-          } else {
-            const fallback = document.createElement("div"); fallback.className = "result-avatar avatar-placeholder"; fallback.textContent = (profileDisplayName(profile) || "?").trim().slice(0, 1).toUpperCase(); card.append(fallback);
-          }
-          const copy = document.createElement("span"); copy.className = "result-copy";
-          const name = document.createElement("span"); name.className = "result-name"; name.textContent = profileDisplayName(profile);
-          const summary = document.createElement("span"); summary.className = "result-summary";
-          summary.textContent = profile.summary || profile.aliases.join(" · ") || profile.occupation || profile.nameEn;
-          copy.append(name, summary); card.append(copy);
-          const arrow = document.createElement("span"); arrow.className = "result-arrow"; arrow.textContent = "↗"; card.append(arrow);
-          card.addEventListener("click", () => openIdentity(profile)); list.append(card);
-        });
-        container.append(list);
+        const list = document.createElement("div"); list.className = "results-list"; container.append(list);
+        state.resultViews[target] = { matches, rendered: 0, list, observer: null, sentinel: null, query, sequence };
+        appendResultBatch(target);
       }
-      function updateSearchResults(query, target) {
-        if (!state.loaded) return;
+
+      function findMatches(query) {
         const clean = safeText(query);
-        if (!clean) { renderResults(target, "", []); return; }
-        const matches = state.profiles.map(profile => ({ profile, score: scoreProfile(clean, profile) }))
-          .filter(item => item.score >= (normalize(clean).split(" ").length > 1 ? 27 : 34))
+        if (!clean || !state.loaded) return [];
+        const normalized = normalize(clean);
+        const threshold = normalized.split(" ").length > 1 ? 25 : 32;
+        return state.profiles.map(profile => ({ profile, score: scoreProfile(clean, profile) }))
+          .filter(item => item.score >= threshold)
           .sort((a, b) => b.score - a.score || a.profile.nameEn.localeCompare(b.profile.nameEn));
-        renderResults(target, clean, matches);
       }
-      function renderSearchInto(query, target) {
+
+      async function runLiveSearch(query, target, sequence) {
         const clean = safeText(query);
-        if (!clean || normalize(clean) !== normalize(state.lastSearchedQuery)) { renderResults(target, "", []); return; }
-        updateSearchResults(clean, target);
+        if (!state.loaded) return;
+        if (!clean) { renderResults(target, "", [], sequence); return; }
+        const localFix = window.BhasaBot?.fixLocal(clean)?.fixedText || clean;
+        const directMatches = findMatches(localFix);
+        renderResults(target, clean, directMatches, sequence);
+
+        if (!window.BhasaBot || window.BhasaBot.detectLanguage(clean) !== "bn") return;
+        try {
+          const offline = await window.BhasaBot.translate(localFix, "bn-en", "offline");
+          if (state.searchSeq[target] !== sequence) return;
+          const offlineQuery = safeText(offline?.translated);
+          if (offlineQuery && normalize(offlineQuery) !== normalize(clean)) {
+            const offlineMatches = findMatches(window.BhasaBot.fixLocal(offlineQuery).fixedText || offlineQuery);
+            if (offlineMatches.length > directMatches.length) renderResults(target, clean, offlineMatches, sequence);
+          }
+          if (navigator.onLine) {
+            const online = await window.BhasaBot.translate(localFix, "bn-en", "hybrid");
+            if (state.searchSeq[target] !== sequence) return;
+            const englishQuery = safeText(online?.translated);
+            if (englishQuery && normalize(englishQuery) !== normalize(clean)) {
+              const translatedMatches = findMatches(window.BhasaBot.fixLocal(englishQuery).fixedText || englishQuery);
+              if (translatedMatches.length) renderResults(target, clean, translatedMatches, sequence);
+            }
+          }
+        } catch (_) { /* Keep any direct/offline search results already displayed. */ }
       }
-      function queueSearch(query, target) {
-        clearTimeout(state.searchTimer);
-        state.searchTimer = setTimeout(() => updateSearchResults(query, target), 90);
+
+      function queueSearch(query, target, immediate = false) {
+        clearTimeout(state.searchTimer[target]);
+        state.lastSearchedQuery = safeText(query);
+        const sequence = ++state.searchSeq[target];
+        const run = () => runLiveSearch(query, target, sequence);
+        if (immediate) run();
+        else state.searchTimer[target] = setTimeout(run, 55);
+      }
+
+      function updateSearchResults(query, target) { queueSearch(query, target, true); }
+      function renderSearchInto(query, target) { queueSearch(query, target, true); }
+
+      async function ensureProfileTranslation(profile) {
+        if (profile.localized) return profile.localized;
+        if (profile.translationPromise) return profile.translationPromise;
+        profile.translationPromise = (async () => {
+          const values = [profile.nameEn, profile.summary, profile.aliases.join(" · "), profile.nickname,
+            profile.birth, profile.death, profile.nationality, profile.occupation, profile.famousLine];
+          const translated = await translateFields(values);
+          let translatedBody = profile.body;
+          if (profile.body.trim() && window.BhasaBot) {
+            try {
+              // Keep Markdown link destinations, bare URLs, and code blocks untouched during translation.
+              const protectedParts = [];
+              let protectedBody = profile.body.replace(/```[\s\S]*?```|~~~[\s\S]*?~~~/g, value => {
+                const token = `ZXQCODE${protectedParts.length}QXZ`; protectedParts.push(value); return token;
+              });
+              protectedBody = protectedBody.replace(/\]\(([^)]+)\)|https?:\/\/[^\s)]+/g, value => {
+                const token = `ZXQURL${protectedParts.length}QXZ`; protectedParts.push(value); return token;
+              });
+              const bodyResult = await window.BhasaBot.translate(protectedBody, "en-bn", "hybrid");
+              translatedBody = String(bodyResult?.translated || protectedBody);
+              protectedParts.forEach((value, index) => {
+                translatedBody = translatedBody.replace(new RegExp(`ZXQ(?:CODE|URL)${index}QXZ`, "g"), value);
+              });
+            } catch (_) { translatedBody = profile.body; }
+          }
+          profile.localized = {
+            name: translated[0] || profile.nameEn,
+            summary: translated[1] || profile.summary,
+            aliases: safeText(translated[2]).split(" · ").filter(Boolean),
+            nickname: translated[3] || profile.nickname,
+            birth: translated[4] || profile.birth, death: translated[5] || profile.death,
+            nationality: translated[6] || profile.nationality, occupation: translated[7] || profile.occupation,
+            famousLine: translated[8] || profile.famousLine, body: translatedBody
+          };
+          profile.nameBn = profile.localized.name;
+          return profile.localized;
+        })();
+        return profile.translationPromise;
       }
 
       function makeFact(label, value) {
@@ -914,34 +4749,45 @@
       }
       function renderIdentity(profile, animate = true) {
         const identity = $("#identityView");
+        const localized = state.language === "bn" ? profile.localized : null;
+        const displayName = localized?.name || profile.nameEn;
         const image = profile.image ? resolvePageAsset(profile.image, profile.path) : "";
         const imgHtml = image
-          ? `<img class="profile-image" src="${escapeHtml(image)}" alt="${escapeHtml(profileDisplayName(profile))}" loading="lazy">`
-          : `<div class="profile-image profile-image-placeholder" aria-hidden="true">${escapeHtml((profileDisplayName(profile) || "?").slice(0, 1).toUpperCase())}</div>`;
+          ? `<img class="profile-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayName)}" loading="lazy" decoding="async">`
+          : `<div class="profile-image profile-image-placeholder" aria-hidden="true">${escapeHtml((displayName || "?").slice(0, 1).toUpperCase())}</div>`;
         const facts = [
-          makeFact(t("birth"), profile.birth), makeFact(t("death"), profile.death),
-          makeFact(t("nationality"), profile.nationality), makeFact(t("occupation"), profile.occupation),
-          makeFact(t("nickname"), profile.nickname)
+          makeFact(t("birth"), localized?.birth || profile.birth), makeFact(t("death"), localized?.death || profile.death),
+          makeFact(t("nationality"), localized?.nationality || profile.nationality), makeFact(t("occupation"), localized?.occupation || profile.occupation),
+          makeFact(t("nickname"), localized?.nickname || profile.nickname)
         ].filter(Boolean).join("");
-        const aliasLine = profile.aliases.length ? `<p class="profile-aliases"><strong>${escapeHtml(t("aliases"))}:</strong> ${escapeHtml(profile.aliases.join(" · "))}</p>` : "";
-        const summary = profile.summary ? `<p class="profile-summary">${escapeHtml(profile.summary)}</p>` : "";
-        const quote = profile.famousLine ? `<blockquote class="quote-card">${escapeHtml(profile.famousLine)}</blockquote>` : "";
-        const body = renderMarkdown(profile.body, profile.path) || `<p>${escapeHtml(t("noDetails"))}</p>`;
+        const aliases = localized?.aliases || profile.aliases;
+        const aliasLine = aliases.length ? `<p class="profile-aliases"><strong>${escapeHtml(t("aliases"))}:</strong> ${escapeHtml(aliases.join(" · "))}</p>` : "";
+        const summaryText = localized?.summary || profile.summary;
+        const summary = summaryText ? `<p class="profile-summary">${escapeHtml(summaryText)}</p>` : "";
+        const quoteText = localized?.famousLine || profile.famousLine;
+        const quote = quoteText ? `<blockquote class="quote-card">${escapeHtml(quoteText)}</blockquote>` : "";
+        const body = renderMarkdown(localized?.body || profile.body, profile.path) || `<p>${escapeHtml(t("noDetails"))}</p>`;
+        const translationStatus = state.language === "bn" && !localized
+          ? `<p class="translation-status" role="status">BhasaBot বাংলা পরিচিতি তৈরি করছে…</p>` : "";
         identity.innerHTML = `
           <button class="back-button" id="backFromIdentity" type="button">← ${escapeHtml(t("back"))}</button>
-          <div class="profile-hero ${animate ? "animate-in" : ""}">${imgHtml}<div class="profile-hero-copy"><span class="profile-kicker">${escapeHtml(t("profileLabel"))}</span><h1 class="profile-title">${escapeHtml(profileDisplayName(profile))}</h1>${summary}${aliasLine}</div></div>
-          ${facts ? `<div class="fact-grid animate-in">${facts}</div>` : ""}${quote}
-          <article class="markdown-content ${animate ? "animate-in" : ""}">${body}</article>
+          <div class="profile-hero ${animate ? "animate-in" : ""}">${imgHtml}<div class="profile-hero-copy"><span class="profile-kicker">${escapeHtml(t("profileLabel"))}</span><h1 class="profile-title">${escapeHtml(displayName)}</h1>${summary}${aliasLine}${translationStatus}</div></div>
+          ${facts ? `<div class="fact-grid">${facts}</div>` : ""}${quote}
+          <article class="markdown-content">${body}</article>
           <p class="profile-source-note">${escapeHtml(t("sourceNote"))}</p>`;
         const profileImage = identity.querySelector("img.profile-image");
         if (profileImage) profileImage.addEventListener("error", () => {
-          const fallback = document.createElement("div");
-          fallback.className = "profile-image profile-image-placeholder";
-          fallback.textContent = (profileDisplayName(profile) || "?").slice(0, 1).toUpperCase();
-          profileImage.replaceWith(fallback);
+          const fallback = document.createElement("div"); fallback.className = "profile-image profile-image-placeholder";
+          fallback.textContent = (displayName || "?").slice(0, 1).toUpperCase(); profileImage.replaceWith(fallback);
         }, { once: true });
         $("#backFromIdentity").addEventListener("click", goHome);
+        if (state.language === "bn" && !localized && !profile.translationPromise) {
+          ensureProfileTranslation(profile).then(() => {
+            if (state.view === "identity" && state.currentProfile?.path === profile.path && state.language === "bn") renderIdentity(profile, false);
+          });
+        }
       }
+
       function openIdentity(profile) {
         state.currentProfile = profile; setMainView("identity"); renderIdentity(profile, true);
         history.pushState({ view: "identity", path: profile.path }, "", `#person/${encodeURIComponent(profile.path)}`);
@@ -1009,11 +4855,28 @@
       $("#termsButton").addEventListener("click", () => openLegal("terms"));
       $("#privacyButton").addEventListener("click", () => openLegal("privacy"));
       $("#contactForm").addEventListener("submit", submitContact);
-      $("#homeSearchInput").addEventListener("input", () => { state.lastSearchedQuery = ""; $("#homeResults").innerHTML = ""; $("#sheetResults").innerHTML = ""; });
-      $("#sheetSearchInput").addEventListener("input", event => { $("#homeSearchInput").value = event.target.value; state.lastSearchedQuery = ""; $("#sheetResults").innerHTML = ""; $("#homeResults").innerHTML = ""; });
-      $("#homeSearchForm").addEventListener("submit", event => { event.preventDefault(); state.lastSearchedQuery = safeText($("#homeSearchInput").value); updateSearchResults(state.lastSearchedQuery, "home"); });
-      $("#sheetSearchForm").addEventListener("submit", event => { event.preventDefault(); state.lastSearchedQuery = safeText($("#sheetSearchInput").value); $("#homeSearchInput").value = state.lastSearchedQuery; updateSearchResults(state.lastSearchedQuery, "sheet"); updateSearchResults(state.lastSearchedQuery, "home"); });
+      $("#homeSearchInput").addEventListener("input", event => {
+        const query = event.target.value;
+        if ($("#searchSheet").classList.contains("open")) $("#sheetSearchInput").value = query;
+        queueSearch(query, "home");
+        if ($("#searchSheet").classList.contains("open")) queueSearch(query, "sheet");
+      });
+      $("#sheetSearchInput").addEventListener("input", event => {
+        const query = event.target.value; $("#homeSearchInput").value = query;
+        queueSearch(query, "sheet"); queueSearch(query, "home");
+      });
+      $("#homeSearchForm").addEventListener("submit", event => { event.preventDefault(); queueSearch($("#homeSearchInput").value, "home", true); });
+      $("#sheetSearchForm").addEventListener("submit", event => { event.preventDefault(); const query = $("#sheetSearchInput").value; $("#homeSearchInput").value = query; queueSearch(query, "sheet", true); queueSearch(query, "home", true); });
       $("#brandLogo").addEventListener("error", () => { $("#brandLogo").style.display = "none"; $("#brandFallback").style.display = "inline"; });
+
+      const bhasaBotModal = $("#bhasaBotModal");
+      function openBhasaBot() { bhasaBotModal.hidden = false; document.body.style.overflow = "hidden"; }
+      function closeBhasaBot() { bhasaBotModal.hidden = true; document.body.style.overflow = ""; }
+      $("#bhasaBotButton").addEventListener("click", openBhasaBot);
+      $("#bhasaBotClose").addEventListener("click", closeBhasaBot);
+      bhasaBotModal.addEventListener("click", event => { if (event.target === bhasaBotModal) closeBhasaBot(); });
+      document.addEventListener("keydown", event => { if (event.key === "Escape") closeBhasaBot(); });
+      window.BhasaBot.mount($("#mainBotMount"));
       document.addEventListener("keydown", event => {
         if (event.key === "Escape") { closeDrawer(); closeSearchSheet(); closeQuickLanguage(); }
       });
