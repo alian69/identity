@@ -7,6 +7,9 @@ date_of_birth: June 28, 1971
 nationality: South African-born American
 occupation: Entrepreneur, business executive, engineer
 summary: Elon Reeve Musk is a South African-born American entrepreneur known for leading companies in electric vehicles, spaceflight, artificial intelligence, and related technologies.
+images:
+  - https://alian69.github.io/identity/assets/people/elon-musk.jpg
+  - https://alian69.github.io/identity/assets/people/elon-musk2.jpg
 ---
 
 # Elon Musk
